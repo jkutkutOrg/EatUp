@@ -12,5 +12,7 @@ fn rocket() -> _ {
         address: Ipv4Addr::new(0, 0, 0, 0).into(),
         ..rocket::Config::debug_default()
     };
-    rocket::custom(&config).mount("/", routes![hello])
+    rocket::custom(&config)
+        .mount("/", routes![hello])
+        .mount("/public", rocket::fs::FileServer::from("/db/public"))
 }
