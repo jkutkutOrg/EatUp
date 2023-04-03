@@ -1,3 +1,0 @@
-[submodule ".tools/Docker4Rust"]
-	path = .tools/Docker4Rust
-	url = git@github.com:Jkutkut/Docker4Rust.git
