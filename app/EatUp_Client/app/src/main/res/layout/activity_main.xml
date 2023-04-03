@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_activity"
+    android:background="@drawable/st_background_welcome"
     tools:context=".MainActivity">
 
     <ImageView
@@ -23,9 +23,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:text="Food for\nEvery Mood"
+        android:text="@string/welcome_title"
         android:fontFamily="@font/sf_pro_rounded_heavy"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="42sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:id="@+id/imgBoy"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_boy"
+        android:src="@drawable/ic_img_boy"
         app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -43,7 +43,7 @@
         android:id="@+id/imgHamburger"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_hamburger"
+        android:src="@drawable/ic_img_hamburger"
         app:layout_constraintBottom_toTopOf="@+id/btnNext"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -51,7 +51,7 @@
         android:id="@+id/imgPizza"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/img_pizza"
+        android:src="@drawable/ic_img_pizza"
         app:layout_constraintBottom_toTopOf="@+id/imgHamburger"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -59,13 +59,13 @@
         android:id="@+id/btnNext"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_margin="32dp"
-        android:background="@drawable/button_rounded"
-        android:text="Get Started"
+        android:layout_margin="@dimen/std_margin"
+        android:background="@drawable/st_button_rounded"
+        android:text="@string/welcome_button"
         android:fontFamily="@font/sf_pro_rounded_heavy"
-        android:textColor="#FFC83A"
+        android:textColor="@color/text_color_yellow"
         android:textStyle="bold"
-        android:textSize="18dp"
+        android:textSize="@dimen/primary_btn_text_size"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
