@@ -7,3 +7,5 @@ authors = ["Jkutkut"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+rocket = "0.5.0-rc.3"
+serde = "1.0.159"
