@@ -7,10 +7,28 @@ fn hello() -> &'static str {
 }
 
 mod api {
-    // Products
-    #[get("/products")]
-    fn products() -> &'static str {
-        "v1 product"
+    use rocket::serde::{/*Serialize,*/ Deserialize};
+
+    #[derive(Debug, Deserialize, FromForm)]
+    #[form(field = "categories", field = "allergies")]
+    struct ProductQuery {
+        categories: Option<String>,
+        allergies: Option<String>,
+    }
+
+    #[get("/products?<filters..>")]
+    fn products(filters: ProductQuery) -> String {
+        let mut s: String = "v1 product".to_string();
+
+        match filters.categories {
+            Some(c) => s.push_str(&format!(" with categories {:?}", c)),
+            None => (),
+        }
+        match filters.allergies {
+            Some(a) => s.push_str(&format!(" with allergies {:?}", a)),
+            None => (),
+        }
+        s
     }
 
     // Sessions
@@ -43,6 +61,9 @@ mod api {
     pub fn get_all_routes() -> Vec<rocket::Route> {
         routes![
             products,
+            // products_with_categories,
+            // products_with_allergies,
+            // products_without_filters,
             sessions,
             create_session,
             end_session,
