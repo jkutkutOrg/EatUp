@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_img_boy"
-        app:layout_constraintBottom_toTopOf="@+id/btnNext"
+        app:layout_constraintBottom_toTopOf="@+id/btnGetStarted"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <ImageView
@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_img_hamburger"
-        app:layout_constraintBottom_toTopOf="@+id/btnNext"
+        app:layout_constraintBottom_toTopOf="@+id/btnGetStarted"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
@@ -56,21 +56,21 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/btnNext"
+        android:id="@+id/btnGetStarted"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="@dimen/std_margin"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/st_button_rounded"
-        android:text="@string/welcome_button"
         android:fontFamily="@font/sf_pro_rounded_heavy"
+        android:text="@string/welcome_button"
         android:textColor="@color/text_color_yellow"
-        android:textStyle="bold"
         android:textSize="@dimen/primary_btn_text_size"
+        android:textStyle="bold"
         app:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
