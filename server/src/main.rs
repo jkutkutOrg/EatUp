@@ -7,27 +7,38 @@ fn hello() -> &'static str {
 }
 
 mod api {
-    use rocket::serde::{/*Serialize,*/ Deserialize};
+    use rocket::serde::{Deserialize, Deserializer};
 
     #[derive(Debug, Deserialize, FromForm)]
-    #[form(field = "categories", field = "allergies")]
     struct ProductQuery {
-        categories: Option<String>,
-        allergies: Option<String>,
+        #[field(name = "category")]
+        categories: Vec<String>,
+        #[field(name = "allergy")]
+        allergies: Vec<String>,
     }
 
     #[get("/products?<filters..>")]
     fn products(filters: ProductQuery) -> String {
         let mut s: String = "v1 product".to_string();
 
-        match filters.categories {
-            Some(c) => s.push_str(&format!(" with categories {:?}", c)),
-            None => (),
+        if filters.categories.len() > 1 {
+            s.push_str(&format!(" with categories {:?}", filters.categories));
+        } else if let Some(category) = filters.categories.get(0) {
+            s.push_str(&format!(" with category {:?}", category));
         }
-        match filters.allergies {
-            Some(a) => s.push_str(&format!(" with allergies {:?}", a)),
-            None => (),
+        else {
+            s.push_str(" with no category");
         }
+
+        if filters.allergies.len() > 1 {
+            s.push_str(&format!(" with allergies {:?}", filters.allergies));
+        } else if let Some(allergy) = filters.allergies.get(0) {
+           s.push_str(&format!(" with allergy {:?}", allergy));
+        }
+        else {
+            s.push_str(" with no allergy");
+        }
+
         s
     }
 
@@ -61,9 +72,6 @@ mod api {
     pub fn get_all_routes() -> Vec<rocket::Route> {
         routes![
             products,
-            // products_with_categories,
-            // products_with_allergies,
-            // products_without_filters,
             sessions,
             create_session,
             end_session,
