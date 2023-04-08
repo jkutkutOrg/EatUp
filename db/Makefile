@@ -15,3 +15,6 @@ start_all: ${SECRETS}
 
 stop_all: ${SECRETS}
 	@bash ${SCRIPT_DIR}/stop_all_db.sh
+
+uninstall_all: ${SECRETS}
+	@bash ${SCRIPT_DIR}/uninstall_all_db.sh
