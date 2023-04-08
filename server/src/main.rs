@@ -7,7 +7,8 @@ fn hello() -> &'static str {
 }
 
 mod api {
-    use rocket::serde::{Deserialize, Deserializer};
+    use rocket::http::{Status};
+    use rocket::serde::{Deserialize};
 
     #[derive(Debug, Deserialize, FromForm)]
     struct ProductQuery {
@@ -18,7 +19,7 @@ mod api {
     }
 
     #[get("/products?<filters..>")]
-    fn products(filters: ProductQuery) -> String {
+    fn products(filters: ProductQuery) -> Result<String, Status> {
         let mut s: String = "v1 product".to_string();
 
         if filters.categories.len() > 1 {
@@ -37,9 +38,10 @@ mod api {
         }
         else {
             s.push_str(" with no allergy");
+            return Err(Status::BadRequest);
         }
 
-        s
+        Ok(s)
     }
 
     // Sessions
