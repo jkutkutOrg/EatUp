@@ -84,13 +84,37 @@ mod api {
 
 }
 
+use std::env;
+use postgres::{Client, NoTls};
+
 #[launch]
 fn rocket() -> _ {
+    dotenv::from_path("/db/.env").ok();
+    let db_params = format!(
+        "host=localhost port={} user={} password={} dbname={}",
+        env::var("DB_PORT").unwrap(),
+        env::var("DB_USR").unwrap(),
+        env::var("DB_USR_PASSWD").unwrap(),
+        env::var("DB_NAME").unwrap(),
+    );
+
+    match Client::connect(&db_params, NoTls) {
+        Ok(db) => {
+            println!("Connected to database");
+            // DB = db;
+            db
+        },
+        Err(e) => {
+            panic!("Error connecting to database:\n{}", e);
+        }
+    };
+
     let config = rocket::Config {
         address: Ipv4Addr::new(0, 0, 0, 0).into(),
         ..rocket::Config::debug_default()
     };
     rocket::custom(&config)
+        // .manage(DB)
         .mount("/", routes![hello])
         .mount("/api/v1", api::get_all_routes())
         .mount("/public", rocket::fs::FileServer::from("/db/public"))

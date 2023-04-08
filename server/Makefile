@@ -8,10 +8,12 @@ endif
 
 PORT = 8000
 
-DOCKER_EXEC = docker run -it --rm \
-	-p ${PORT}:8000 \
+ATTRS = -p ${PORT}:8000 \
 	-v ${CURRENT_PATH}:/app -w /app \
-	-v ${CURRENT_PATH}/../db:/db \
+	-v ${CURRENT_PATH}/../db:/db
+
+DOCKER_EXEC = docker run -it --rm \
+	${ATTRS} \
 	--entrypoint "/root/.cargo/bin/cargo" \
 	-v eatup_cargo_registy:/root/.cargo/registry \
 	jkutkut/docker4rust
@@ -23,4 +25,4 @@ build:
 	${DOCKER_EXEC} build
 
 init_docker:
-	docker run -it --rm -p ${PORT}:8000 -v ${CURRENT_PATH}:/app -w /app -v eatup_cargo_registy:/root/.cargo/registry jkutkut/docker4rust
+	docker run -it --rm ${ATTRS} -w /app -v eatup_cargo_registy:/root/.cargo/registry jkutkut/docker4rust
