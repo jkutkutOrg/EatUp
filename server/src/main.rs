@@ -108,9 +108,18 @@ async fn rocket() -> _ {
         env::var("DB_USR_PASSWD").unwrap(),
     );
 
-    let (client, connection) = tokio_postgres::connect(&db_properties, NoTls).await.unwrap();
-    tokio::spawn(async move { // Await the connection.
-        if let Err(e) = connection.await { // TODO stop on error
+    let (client, connection) = match tokio_postgres::connect(&db_properties, NoTls).await {
+        Ok((client, connection)) => (client, connection),
+        Err(e) => {
+            eprintln!("Not able to connect with DB:\n{}", e);
+            eprintln!("Is the DB running?");
+            std::process::exit(1);
+        }
+    };
+    
+    // Create the thread that will handle the communication with the database
+    tokio::spawn(async move {
+        if let Err(e) = connection.await {
             eprintln!("connection error: {}", e);
         }
     });
