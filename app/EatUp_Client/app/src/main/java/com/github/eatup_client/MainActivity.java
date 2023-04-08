@@ -2,6 +2,7 @@ package com.github.eatup_client;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -22,6 +23,12 @@ public class MainActivity extends AppCompatActivity {
 
         btnGetStarted.setOnClickListener(v -> {
             System.out.println("Get Started");
+            Intent intent = new Intent(MainActivity.this, QRActivity.class);
+
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+
         });
     }
 }
