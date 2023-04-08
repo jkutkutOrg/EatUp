@@ -1,5 +1,4 @@
-
-SECRETS = .env
+SECRETS = .secrets
 SCRIPT_DIR = .scripts
 
 ${SECRETS}:

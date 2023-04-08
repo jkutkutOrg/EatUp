@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source .env
+source .secrets
 
 os=$(uname -s);
 if [ "$os" = "Darwin" ]; then
@@ -11,16 +11,17 @@ fi
 
 
 echo "Starting DB";
-docker start $DB_NAME &&
-echo "DB: $ip:$DB_PORT" &&
-echo "  Usr: $DB_USR" &&
-echo "  Passwd: $DB_USR_PASSWD" ||
+docker start $DB_CONTAINER_NAME ||
 echo "Failed to start DB";
+
+db_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $DB_CONTAINER_NAME)
+cp .secrets .env
+echo "DB_IP='$db_ip'" >> .env
 
 echo
 echo "Starting DB Web Controller";
-docker start $WEB_CONTROLLER_NAME &&
-echo "Controller: $ip:$WEB_CONTROLLER_PORT" &&
+docker start $WEB_CONTROLLER_CONTAINER_NAME &&
+echo "Controller: http://$ip:$WEB_CONTROLLER_PORT" &&
 echo "  Email: $WEB_CONTROLLER_EMAIL" &&
 echo "  Passwd: $WEB_CONTROLLER_PASSWD" ||
 echo "Failed to start DB Web Controller";
