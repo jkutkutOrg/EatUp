@@ -9,6 +9,5 @@ authors = ["Jkutkut"]
 [dependencies]
 rocket = "0.5.0-rc.3"
 serde = "1.0.159"
-postgres = "0.19.5"
 dotenv = "0.15.0"
-lazy_static = "1.4.0"
+tokio-postgres = "0.7.8"

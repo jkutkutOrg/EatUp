@@ -7,8 +7,11 @@ fn hello() -> &'static str {
 }
 
 mod api {
+    use rocket::{State};
     use rocket::http::{Status};
     use rocket::serde::{Deserialize};
+
+    use tokio_postgres::Client;
 
     #[derive(Debug, Deserialize, FromForm)]
     struct ProductQuery {
@@ -38,7 +41,7 @@ mod api {
         }
         else {
             s.push_str(" with no allergy");
-            return Err(Status::BadRequest);
+            // return Err(Status::BadRequest);
         }
 
         Ok(s)
@@ -46,7 +49,12 @@ mod api {
 
     // Sessions
     #[get("/sessions")]
-    fn sessions() -> &'static str {
+    async fn sessions(db: &State<Client>) -> &'static str {
+        let stmt = db.query("SELECT name FROM product", &[]).await.unwrap();
+        for row in stmt {
+            let name: String = row.get(0);
+            println!("name: {}", name);
+        }
         "v1 sessions"
     }
 
@@ -85,36 +93,34 @@ mod api {
 }
 
 use std::env;
-use postgres::{Client, NoTls};
+use rocket::tokio;
+use tokio_postgres::NoTls;
 
 #[launch]
-fn rocket() -> _ {
+async fn rocket() -> _ {
     dotenv::from_path("/db/.env").ok();
-    let db_params = format!(
-        "host=localhost port={} user={} password={} dbname={}",
+    let db_properties = format!(
+        "host={} port={} dbname={} user={} password={}",
+        env::var("DB_IP").unwrap(),
         env::var("DB_PORT").unwrap(),
+        env::var("DB_NAME").unwrap(),
         env::var("DB_USR").unwrap(),
         env::var("DB_USR_PASSWD").unwrap(),
-        env::var("DB_NAME").unwrap(),
     );
 
-    match Client::connect(&db_params, NoTls) {
-        Ok(db) => {
-            println!("Connected to database");
-            // DB = db;
-            db
-        },
-        Err(e) => {
-            panic!("Error connecting to database:\n{}", e);
+    let (client, connection) = tokio_postgres::connect(&db_properties, NoTls).await.unwrap();
+    tokio::spawn(async move { // Await the connection.
+        if let Err(e) = connection.await { // TODO stop on error
+            eprintln!("connection error: {}", e);
         }
-    };
+    });
 
     let config = rocket::Config {
         address: Ipv4Addr::new(0, 0, 0, 0).into(),
         ..rocket::Config::debug_default()
     };
     rocket::custom(&config)
-        // .manage(DB)
+        .manage(client)
         .mount("/", routes![hello])
         .mount("/api/v1", api::get_all_routes())
         .mount("/public", rocket::fs::FileServer::from("/db/public"))
