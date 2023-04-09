@@ -1,6 +1,7 @@
 package com.github.eatup_client;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class QRActivity extends AppCompatActivity {
 
     private SurfaceView sfvQR;
     private TextView tvQR;
+    private Button btnProblemScanner;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -37,6 +40,15 @@ public class QRActivity extends AppCompatActivity {
 
         tvQR = findViewById(R.id.tvWelcomeTitle);
         sfvQR = findViewById(R.id.sfvQR);
+        btnProblemScanner = findViewById(R.id.btnProblemScanner);
+
+        // On click btnProblemScanner, the user will be redirected to the problem scanner activity
+        btnProblemScanner.setOnClickListener(v -> {
+            Intent intent = new Intent(QRActivity.this, QRManualActivity.class);
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        });
 
         initCameraAndDetector();
     }
