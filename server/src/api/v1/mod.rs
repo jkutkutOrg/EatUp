@@ -1,7 +1,7 @@
 use rocket::routes;
 use rocket::FromForm;
 use rocket::serde::Deserialize;
-use crate::tools::UuidWrapper;
+// use crate::tools::UuidWrapper;
 
 #[derive(Debug, Deserialize, FromForm)]
 pub struct ProductQuery {
@@ -13,8 +13,9 @@ pub struct ProductQuery {
 
 #[derive(Debug, Deserialize, FromForm)]
 pub struct SessionQuery {
-    pub table_id: Option<UuidWrapper>,
-    pub in_progress: bool
+    #[field(name = "table_id")]
+    pub table_ids: Vec<String>,
+    pub in_progress: Option<bool>,
 }
 
 mod product;

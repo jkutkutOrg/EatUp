@@ -72,15 +72,12 @@ pub async fn get_products(
                 )", count
             ).as_str());
             params.push(&filters.allergies);
-            //count += 1;
         }
     }
 
-    let params: &[&(dyn tokio_postgres::types::ToSql + Sync)] = &params;
-
     let mut products: Vec<Product> = Vec::new();
     let stmt = db.prepare(&query).await.unwrap();
-    for row in db.query(&stmt, params).await.unwrap() {
+    for row in db.query(&stmt, &params).await.unwrap() {
         let product = Product {
             id: row.get(0),
             name: row.get(1),
@@ -142,13 +139,43 @@ async fn get_product_categories(
 
 #[derive(Debug, Serialize)]
 pub struct Session {
+    id: Uuid,
+    table_id: String,
+    in_progress: bool
 }
 
 pub async fn get_sessions(
     db: &State<Client>,
     filters: SessionQuery
 ) -> Result<Vec<Session>, Status> {
-    println!("get_sessions");
-    println!("{:?}", filters);
-    Err(Status::NotImplemented)
+    let mut query: String = "SELECT * FROM session".to_string();
+    let mut params: Vec<&(dyn tokio_postgres::types::ToSql + Sync)> = Vec::new();
+    let mut count = 1;
+
+    if filters.table_ids.len() > 0 {
+        query.push_str(format!(" WHERE table_id = ANY(${})", count).as_str());
+        params.push(&filters.table_ids);
+        count += 1;
+    }
+    if filters.in_progress.is_some() {
+        if count > 1 {
+            query.push_str(" and ");
+        } else {
+            query.push_str(" WHERE ");
+        }
+        query.push_str(format!(" in_progress = ${}", count).as_str());
+        params.push(&filters.in_progress);
+    }
+
+    let mut sessions: Vec<Session> = Vec::new();
+    let stmt = db.prepare(&query).await.unwrap();
+    for row in db.query(&stmt, &params).await.unwrap() {
+        let session = Session {
+            id: row.get(0),
+            table_id: row.get(1),
+            in_progress: row.get(2)
+        };
+        sessions.push(session);
+    }
+    Ok(sessions)
 }
