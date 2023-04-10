@@ -148,5 +148,7 @@ pub async fn get_sessions(
     db: &State<Client>,
     filters: SessionQuery
 ) -> Result<Vec<Session>, Status> {
+    println!("get_sessions");
+    println!("{:?}", filters);
     Err(Status::NotImplemented)
 }

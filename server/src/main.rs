@@ -6,6 +6,7 @@ use std::net::Ipv4Addr;
 
 mod api;
 mod db;
+mod tools;
 
 #[get("/")]
 fn hello() -> &'static str {

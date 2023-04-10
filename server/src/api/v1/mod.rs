@@ -1,10 +1,7 @@
 use rocket::routes;
-// use rocket::serde::{Deserialize};
-
-// use tokio_postgres::Client;
-
 use rocket::FromForm;
 use rocket::serde::Deserialize;
+use crate::tools::UuidWrapper;
 
 #[derive(Debug, Deserialize, FromForm)]
 pub struct ProductQuery {
@@ -16,9 +13,7 @@ pub struct ProductQuery {
 
 #[derive(Debug, Deserialize, FromForm)]
 pub struct SessionQuery {
-    #[field(name = "table_id")]
-    pub tables: Option<u32>, // TODO use uuid
-    #[field(name = "in_progress")]
+    pub table_id: Option<UuidWrapper>,
     pub in_progress: bool
 }
 
