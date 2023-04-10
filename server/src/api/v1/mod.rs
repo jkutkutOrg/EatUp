@@ -14,6 +14,14 @@ pub struct ProductQuery {
     pub allergies: Vec<String>,
 }
 
+#[derive(Debug, Deserialize, FromForm)]
+pub struct SessionQuery {
+    #[field(name = "table_id")]
+    pub tables: Option<u32>, // TODO use uuid
+    #[field(name = "in_progress")]
+    pub in_progress: bool
+}
+
 mod product;
 mod session;
 mod order;

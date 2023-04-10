@@ -4,7 +4,7 @@ use uuid::Uuid;
 use rocket::http::{Status};
 use serde::Serialize;
 
-use crate::api::ProductQuery;
+use crate::api::{ProductQuery, SessionQuery};
 
 #[derive(Debug, Serialize)]
 struct Allergy {
@@ -29,6 +29,8 @@ pub struct Product {
     allergies: Vec<Allergy>,
     categories: Vec<ProductCategory>
 }
+
+// TODO refactor get_* with generics
 
 pub async fn get_products(
     db: &State<Client>,
@@ -134,4 +136,17 @@ async fn get_product_categories(
         categories.push(category);
     }
     categories
+}
+
+// ---------------------------------------------
+
+#[derive(Debug, Serialize)]
+pub struct Session {
+}
+
+pub async fn get_sessions(
+    db: &State<Client>,
+    filters: SessionQuery
+) -> Result<Vec<Session>, Status> {
+    Err(Status::NotImplemented)
 }
