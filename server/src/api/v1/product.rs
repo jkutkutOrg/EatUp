@@ -1,30 +1,19 @@
-use rocket::{get};
+use rocket::{State, get};
 use rocket::http::{Status};
+use tokio_postgres::{Client};
+use serde_json;
 
-use super::ProductQuery;
+use crate::api::ProductQuery;
+use crate::db;
 
 #[get("/products?<filters..>")]
-pub(super) fn products(filters: ProductQuery) -> Result<String, Status> {
-    let mut s: String = "v1 product".to_string();
+pub(super) fn products(
+    db: &State<Client>,
+    filters: ProductQuery
+) -> Result<String, Status> {
 
-    if filters.categories.len() > 1 {
-        s.push_str(&format!(" with categories {:?}", filters.categories));
-    } else if let Some(category) = filters.categories.get(0) {
-        s.push_str(&format!(" with category {:?}", category));
+    match db::get_products(db, filters) {
+        Err(e) => Err(e),
+        Ok(products) => Ok(serde_json::to_string(&products).unwrap())
     }
-    else {
-        s.push_str(" with no category");
-    }
-
-    if filters.allergies.len() > 1 {
-        s.push_str(&format!(" with allergies {:?}", filters.allergies));
-    } else if let Some(allergy) = filters.allergies.get(0) {
-        s.push_str(&format!(" with allergy {:?}", allergy));
-    }
-    else {
-        s.push_str(" with no allergy");
-    }
-
-    // Ok(s)
-    return Err(Status::NotImplemented);
 }

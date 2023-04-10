@@ -7,11 +7,11 @@ use rocket::FromForm;
 use rocket::serde::Deserialize;
 
 #[derive(Debug, Deserialize, FromForm)]
-struct ProductQuery {
+pub struct ProductQuery {
     #[field(name = "category")]
-    categories: Vec<String>,
+    pub categories: Vec<String>,
     #[field(name = "allergy")]
-    allergies: Vec<String>,
+    pub allergies: Vec<String>,
 }
 
 mod product;

@@ -194,6 +194,7 @@ dependencies = [
  "dotenv",
  "rocket",
  "serde",
+ "serde_json",
  "tokio-postgres",
 ]
 

@@ -5,6 +5,7 @@ use tokio_postgres::NoTls;
 use std::net::Ipv4Addr;
 
 mod api;
+mod db;
 
 #[get("/")]
 fn hello() -> &'static str {
