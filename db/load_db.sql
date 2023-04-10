@@ -185,6 +185,10 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
 
 -- ** Starters **
 -- Caprese Salad
+INSERT INTO product_allergy (product_id, allergy_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Caprese Salad'),
+    (SELECT id FROM allergy WHERE name = 'Lactose')
+);
 
 -- Caesar Salad
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
@@ -361,6 +365,14 @@ INSERT INTO product_category (product_id, category_id) VALUES (
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
     (SELECT id FROM product WHERE name = 'Wine'),
+    (SELECT id FROM category WHERE name = 'Drinks')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Coffee'),
+    (SELECT id FROM category WHERE name = 'Drinks')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Tea'),
     (SELECT id FROM category WHERE name = 'Drinks')
 );
 

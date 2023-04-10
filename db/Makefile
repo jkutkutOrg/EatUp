@@ -18,3 +18,10 @@ stop_all: ${SECRETS}
 
 uninstall_all: ${SECRETS}
 	@bash ${SCRIPT_DIR}/uninstall_all_db.sh
+
+destroy_db:
+	docker stop eatup_db
+	docker rm eatup_db
+
+reset_db: destroy_db create_db start_all
+
