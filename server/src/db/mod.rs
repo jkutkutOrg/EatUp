@@ -1,43 +1,114 @@
 use rocket::{State};
 use tokio_postgres::{Client};
+use uuid::Uuid;
 use rocket::http::{Status};
 use serde::Serialize;
 
 use crate::api::ProductQuery;
 
 #[derive(Debug, Serialize)]
-pub struct Product {
-
+struct Allergy {
+    id: Uuid,
+    name: String,
+    img_id: String
 }
 
-pub fn get_products(
+#[derive(Debug, Serialize)]
+struct ProductCategory {
+    id: Uuid,
+    name: String
+}
+
+#[derive(Debug, Serialize)]
+struct Product {
+    id: Uuid,
+    name: String,
+    description: String,
+    img_id: String,
+    price: f32,
+    allergies: Vec<Allergy>,
+    categories: Vec<ProductCategory>
+}
+
+pub async fn get_products(
     db: &State<Client>,
     filters: ProductQuery
-) -> Result<Vec<Product>, Status> {
+) -> Result<String, Status> {
+    let query: String = "SELECT * FROM product".to_string();
+    
 
-    let mut s: String = "v1 product".to_string();
-
-    if filters.categories.len() > 1 {
-        s.push_str(&format!(" with categories {:?}", filters.categories));
-    } else if let Some(category) = filters.categories.get(0) {
-        s.push_str(&format!(" with category {:?}", category));
+    let mut products: Vec<Product> = Vec::new();
+    let stmt = db.prepare(&query).await.unwrap();
+    for row in db.query(&stmt, &[]).await.unwrap() {
+        let product = Product {
+            id: row.get(0),
+            name: row.get(1),
+            description: row.get(2),
+            img_id: row.get(3),
+            price: row.get(4),
+            allergies: get_allergies(db, row.get(0)).await,
+            categories: get_product_categories(db, row.get(0)).await
+        };
+        products.push(product);
     }
-    else {
-        s.push_str(" with no category");
+    to_string(products)
+}
+
+async fn get_allergies(
+    db: &State<Client>,
+    product_id: Uuid
+) -> Vec<Allergy> {
+    let query: String = "
+        SELECT allergy.* FROM allergy, product_allergy
+        WHERE allergy.id = product_allergy.allergy_id and product_allergy.product_id = $1
+    ".to_string();
+    
+    let mut allergies: Vec<Allergy> = Vec::new();
+    let stmt = db.prepare(&query).await.unwrap();
+    for row in db.query(&stmt, &[&product_id]).await.unwrap() {
+        let allergy = Allergy {
+            id: row.get(0),
+            name: row.get(1),
+            img_id: row.get(2)
+        };
+        allergies.push(allergy);
     }
+    allergies
+}
 
-    if filters.allergies.len() > 1 {
-        s.push_str(&format!(" with allergies {:?}", filters.allergies));
-    } else if let Some(allergy) = filters.allergies.get(0) {
-        s.push_str(&format!(" with allergy {:?}", allergy));
+async fn get_product_categories(
+    db: &State<Client>,
+    product_id: Uuid
+) -> Vec<ProductCategory> {
+    let query: String = "
+        SELECT category.* FROM product_category pc, category
+        WHERE pc.category_id = category.id and pc.product_id = $1
+    ".to_string();
+
+    let mut categories: Vec<ProductCategory> = Vec::new();
+    let stmt = db.prepare(&query).await.unwrap();
+    for row in db.query(&stmt, &[&product_id]).await.unwrap() {
+        let category = ProductCategory {
+            id: row.get(0),
+            name: row.get(1)
+        };
+        categories.push(category);
     }
-    else {
-        s.push_str(" with no allergy");
+    categories
+}
+
+// TODO move to api
+// TODO use rocket_contrib::json::Json;
+//  -> Json<MyResponse> 
+// JSON(data)
+fn to_string<T: Serialize>(
+    result: Vec<T>
+) -> Result<String, Status> {
+    match serde_json::to_string(&result) {
+        Ok(s) => Ok(s),
+        Err(e) => {
+            eprintln!("Error while serializing to JSON: {}", e);
+            Err(Status::InternalServerError)
+        }
     }
-
-    println!("get_products: {}", s);
-
-    // let mut products: Vec<Product> = Vec::new();
-
-    Err(Status::NotImplemented)
 }
