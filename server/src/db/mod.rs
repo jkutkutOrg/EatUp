@@ -20,7 +20,7 @@ struct ProductCategory {
 }
 
 #[derive(Debug, Serialize)]
-struct Product {
+pub struct Product {
     id: Uuid,
     name: String,
     description: String,
@@ -33,9 +33,9 @@ struct Product {
 pub async fn get_products(
     db: &State<Client>,
     filters: ProductQuery
-) -> Result<String, Status> {
+) -> Result<Vec<Product>, Status> {
     let query: String = "SELECT * FROM product".to_string();
-    
+    // TODO filters
 
     let mut products: Vec<Product> = Vec::new();
     let stmt = db.prepare(&query).await.unwrap();
@@ -51,7 +51,7 @@ pub async fn get_products(
         };
         products.push(product);
     }
-    to_string(products)
+    Ok(products)
 }
 
 async fn get_allergies(
@@ -95,20 +95,4 @@ async fn get_product_categories(
         categories.push(category);
     }
     categories
-}
-
-// TODO move to api
-// TODO use rocket_contrib::json::Json;
-//  -> Json<MyResponse> 
-// JSON(data)
-fn to_string<T: Serialize>(
-    result: Vec<T>
-) -> Result<String, Status> {
-    match serde_json::to_string(&result) {
-        Ok(s) => Ok(s),
-        Err(e) => {
-            eprintln!("Error while serializing to JSON: {}", e);
-            Err(Status::InternalServerError)
-        }
-    }
 }
