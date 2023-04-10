@@ -15,7 +15,7 @@ CREATE TABLE product (
     name text NOT NULL,
     description text NOT NULL,
     icon text DEFAULT 'generic_product.png',
-    price numeric NOT NULL
+    price real NOT NULL
 );
 
 -- ____________ Allergy ____________
