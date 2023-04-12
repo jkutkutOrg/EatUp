@@ -179,3 +179,27 @@ pub async fn get_sessions(
     }
     Ok(sessions)
 }
+
+#[derive(Debug, Serialize)]
+pub struct SessionMap { // TOOD find a better name
+    simple_id: String,
+    id: Uuid
+}
+
+pub async fn create_session(
+    db: &State<Client>,
+    table_id: String
+) -> Result<SessionMap, Status> {
+    let query: String = "SELECT * FROM create_session($1)".to_string();
+    let stmt = db.prepare(&query).await.unwrap();
+    match db.query_one(&stmt, &[&table_id]).await {
+        Ok(row) => Ok(SessionMap {
+            simple_id: row.get(0),
+            id: row.get(1)
+        }),
+        Err(e) => {
+            println!("Error: {}", e); // TODO handle error
+            return Err(Status::InternalServerError);
+        }
+    }
+}

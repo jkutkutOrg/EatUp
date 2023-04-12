@@ -16,16 +16,20 @@ pub(super) async fn sessions(
     }
 }
 
-// #[post("/sessions/<table_id>")]
-// pub(super) fn create_session(table_id: u32) -> Result<String, Status> {
-#[post("/sessions/<_table_id>")]
-pub(super) fn create_session(_table_id: u32) -> Result<String, Status> {
-    return Err(Status::NotImplemented);
+#[post("/session/<table_id>")]
+pub(super) async fn create_session(
+    db: &State<Client>,
+    table_id: String
+) -> Result<Json<db::SessionMap>, Status> {
+    match db::create_session(db, table_id).await {
+        Err(e) => Err(e),
+        Ok(new_session) => Ok(Json(new_session))
+    }
 }
 
-// #[patch("/sessions/<session_id>/end")]
-// pub(super) fn end_session(session_id: u32) -> Result<String, Status> {
-#[patch("/sessions/<_session_id>/end")]
-pub(super) fn end_session(_session_id: u32) -> Result<String, Status> {
+// #[patch("/session/<session_id>/end")]
+// pub(super) fn end_session(session_id: String) -> Result<String, Status> {
+#[patch("/session/<_session_id>/end")]
+pub(super) fn end_session(_session_id: String) -> Result<String, Status> {
     return Err(Status::NotImplemented);
 }

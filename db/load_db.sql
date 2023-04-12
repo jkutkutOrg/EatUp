@@ -512,7 +512,7 @@ CREATE TABLE map_session_uuid (
 -- Add the simple_id and the uuid to the map_session_uuid table
 -- Return row from map_session_uuid table
 CREATE OR REPLACE FUNCTION create_session(mesa_id TEXT)
- RETURNS TABLE(simple_id TEXT, uuid UUID)
+ RETURNS SETOF map_session_uuid
     LANGUAGE 'plpgsql'
 AS $$
 DECLARE
@@ -526,7 +526,7 @@ BEGIN
     SELECT id INTO session_id FROM session WHERE table_id = mesa_id and in_progress = true;-- ORDER BY id DESC LIMIT 1;
     simple_id := generate_simple_uuid(session_id);
     INSERT INTO map_session_uuid (simple_id, id) VALUES (simple_id, session_id);
-    RETURN QUERY SELECT simple_id, session_id;
+    RETURN QUERY SELECT * FROM map_session_uuid WHERE id = session_id;
 END
 
 -- CREATE OR REPLACE FUNCTION end_session(session_id uuid)
