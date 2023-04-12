@@ -500,59 +500,39 @@ CREATE TABLE map_session_uuid (
   FOREIGN KEY (id) REFERENCES session(id)
 );
 
--- TODO prevent creating a session with a table_id in use
+-- create_session
+-- inputs:
+--     table_id
+-- First, check if there is a session in progress for the table_id
+-- If there is, return error code
+-- If not, continue
+-- Add a new session to the session table
+-- Query the uuid of the new session
+-- Generate a simple_id for the new session
+-- Add the simple_id and the uuid to the map_session_uuid table
+-- Return row from map_session_uuid table
+CREATE OR REPLACE FUNCTION create_session(mesa_id TEXT)
+ RETURNS TABLE(simple_id TEXT, uuid UUID)
+    LANGUAGE 'plpgsql'
+AS $$
+DECLARE
+    session_id UUID;
+    simple_id TEXT;
+BEGIN
+    IF EXISTS (SELECT * FROM session WHERE table_id = mesa_id AND in_progress = true) THEN
+        RAISE EXCEPTION 'There is already a session in progress for table %', mesa_id;
+    END IF;
+    INSERT INTO session (table_id) VALUES (mesa_id);
+    SELECT id INTO session_id FROM session WHERE table_id = mesa_id and in_progress = true;-- ORDER BY id DESC LIMIT 1;
+    simple_id := generate_simple_uuid(session_id);
+    INSERT INTO map_session_uuid (simple_id, id) VALUES (simple_id, session_id);
+    RETURN QUERY SELECT simple_id, session_id;
+END
 
-
--- CREATE OR REPLACE FUNCTION add_session_to_map(session_id uuid) RETURNS VOID
+-- CREATE OR REPLACE FUNCTION end_session(session_id uuid)
+--  RETURNS VOID
 --     LANGUAGE 'plpgsql'
 -- AS $$
--- BEGIN
---     INSERT INTO map_session_uuid (simple_id, id)
---     VALUES (generate_simple_uuid(session_id), session_id);
--- END $$;
-
-
--- CREATE OR REPLACE TRIGGER onNewSession
--- AFTER INSERT ON session
--- FOR EACH ROW
--- EXECUTE FUNCTION add_session_to_map(NEW.id);
-
-
--- EXECUTE FUNCTION add_session_to_map(
---     (SELECT id FROM session WHERE table_id = NEW.table_id and in_progress = true ORDER BY id DESC LIMIT 1)
--- );
-
-
--- CREATE OR REPLACE FUNCTION add_session_to_map(session_id uuid) RETURNS VOID
---     LANGUAGE 'plpgsql'
--- AS $$
--- BEGIN
---     INSERT INTO map_session_uuid (simple_id, id)
---     VALUES (generate_simple_uuid(session_id), session_id);
--- END $$;
-
--- takes the table_id and the true in_progress value to obtain the session id
--- stores the uuid in a temp variable
--- CREATE OR REPLACE FUNCTION add_session_to_map(
---     table_id TEXT, in_progress BOOLEAN
--- ) RETURNS VOID
---     LANGUAGE 'plpgsql'
--- AS $$
--- DECLARE
---     session_id uuid;
--- BEGIN
---     SELECT id INTO session_id FROM session
---     WHERE
---         table_id = table_id and
---         in_progress = in_progress
---     ORDER BY id DESC LIMIT 1;
-
---     INSERT INTO map_session_uuid (simple_id, id)
---     VALUES (generate_simple_uuid(session_id), session_id);
--- END $$;
-
-
--- CREATE OR REPLACE TRIGGER onNewSession
--- AFTER INSERT ON session
--- FOR EACH ROW
--- EXECUTE FUNCTION add_session_to_map(NEW.table_id, NEW.in_progress);
+-- BEGIN -- ? Error handleling?
+--     UPDATE session SET in_progress = false WHERE id = session_id;
+-- END
