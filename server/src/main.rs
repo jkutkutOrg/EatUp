@@ -52,7 +52,5 @@ async fn rocket() -> Rocket<Build> {
         .manage(client)
         .mount("/", routes![hello])
         .mount("/api/v1", api::get_v1_routes())
-        .mount("/public", rocket::fs::FileServer::from("/db/public"))
-
+        .mount("/", rocket::fs::FileServer::from("/db/public"))
 }
-

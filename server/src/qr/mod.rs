@@ -30,6 +30,7 @@ pub fn generate(content: &str, output_file: &str) {
         1024,
         output_file
     ).unwrap();
+}
 
 pub fn generate_with_debug(content: &str, output_file: &str) {
     generate(content, output_file);

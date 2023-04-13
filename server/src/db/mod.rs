@@ -5,6 +5,7 @@ use rocket::http::{Status};
 use serde::Serialize;
 
 use crate::api::{ProductQuery, SessionQuery};
+use crate::qr;
 
 #[derive(Debug, Serialize)]
 struct Allergy {
@@ -183,7 +184,8 @@ pub async fn get_sessions(
 #[derive(Debug, Serialize)]
 pub struct SessionMap { // TOOD find a better name
     simple_id: String,
-    id: Uuid
+    id: Uuid,
+    qr_img: String
 }
 
 pub async fn create_session(
@@ -193,10 +195,21 @@ pub async fn create_session(
     let query: String = "SELECT * FROM create_session($1)".to_string();
     let stmt = db.prepare(&query).await.unwrap();
     match db.query_one(&stmt, &[&table_id]).await {
-        Ok(row) => Ok(SessionMap {
-            simple_id: row.get(0),
-            id: row.get(1)
-        }),
+        Ok(row) => {
+            let simple_id: String = row.get(0);
+            let id: Uuid = row.get(1);
+            let id_str = id.to_string();
+
+            let qr_path = format!("/qr/{}.png", &id_str);
+            let qr_real_path = format!("/db/public{}", &qr_path);
+
+            qr::generate_with_debug(&id_str, &qr_real_path);
+            Ok(SessionMap {
+                simple_id,
+                id,
+                qr_img: qr_path
+            })
+        },
         Err(e) => {
             println!("Error: {}", e); // TODO handle error
             return Err(Status::InternalServerError);
