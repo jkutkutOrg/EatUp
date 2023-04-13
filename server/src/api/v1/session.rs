@@ -1,9 +1,10 @@
 use rocket::{State, get, post, patch};
 use rocket::http::{Status};
 use tokio_postgres::{Client};
+use rocket::serde::json::Json;
+use crate::tools::UuidWrapper;
 use super::SessionQuery;
 use crate::db;
-use rocket::serde::json::Json;
 
 #[get("/sessions?<filters..>")]
 pub(super) async fn sessions(
@@ -27,9 +28,13 @@ pub(super) async fn create_session(
     }
 }
 
-// #[patch("/session/<session_id>/end")]
-// pub(super) fn end_session(session_id: String) -> Result<String, Status> {
-#[patch("/session/<_session_id>/end")]
-pub(super) fn end_session(_session_id: String) -> Result<String, Status> {
-    return Err(Status::NotImplemented);
+#[patch("/session/<session_id>/end")]
+pub(super) async fn end_session(
+    db: &State<Client>,
+    session_id: UuidWrapper
+) -> Result<Json<&'static str>, Status> {
+    match db::end_session(db, session_id).await {
+        Err(e) => Err(e),
+        Ok(_) => Ok(Json("Session ended"))
+    }
 }

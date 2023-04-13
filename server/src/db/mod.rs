@@ -6,6 +6,7 @@ use serde::Serialize;
 
 use crate::api::{ProductQuery, SessionQuery};
 use crate::qr;
+use crate::tools::UuidWrapper;
 
 #[derive(Debug, Serialize)]
 struct Allergy {
@@ -182,7 +183,7 @@ pub async fn get_sessions(
 }
 
 #[derive(Debug, Serialize)]
-pub struct SessionMap { // TOOD find a better name
+pub struct SessionMap { // TODO find a better name
     simple_id: String,
     id: Uuid,
     qr_img: String
@@ -215,4 +216,17 @@ pub async fn create_session(
             return Err(Status::InternalServerError);
         }
     }
+}
+
+pub async fn end_session(
+    db: &State<Client>,
+    session_id: UuidWrapper
+) -> Result<(), Status> {
+    let session_id: Uuid = session_id.unwrap();
+    let query: String = "UPDATE session SET in_progress = false WHERE id = $1;".to_string();
+    let stmt = db.prepare(&query).await.unwrap();
+    db.execute(&stmt, &[&session_id]).await.unwrap();
+    let file = format!("/db/public/qr/{}.png", session_id.to_string());
+    std::fs::remove_file(file).unwrap();
+    Ok(())
 }
