@@ -40,4 +40,6 @@ google-services.json
 out/
 target/
 .idea/
-res/
+
+# Eatup:
+db/public/qr/

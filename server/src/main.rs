@@ -7,6 +7,7 @@ use std::net::Ipv4Addr;
 mod api;
 mod db;
 mod tools;
+mod qr;
 
 #[get("/")]
 fn hello() -> &'static str {
@@ -33,7 +34,7 @@ async fn rocket() -> Rocket<Build> {
             std::process::exit(1);
         }
     };
-    
+ 
     // Create the thread that will handle the communication with the database
     tokio::spawn(async move {
         if let Err(e) = connection.await {
@@ -52,4 +53,6 @@ async fn rocket() -> Rocket<Build> {
         .mount("/", routes![hello])
         .mount("/api/v1", api::get_v1_routes())
         .mount("/public", rocket::fs::FileServer::from("/db/public"))
+
 }
+
