@@ -3,6 +3,7 @@ use tokio_postgres::{Client};
 use uuid::Uuid;
 use rocket::http::{Status};
 use serde::Serialize;
+use rocket::Responder;
 
 use crate::api::{ProductQuery, SessionQuery};
 use crate::qr;
@@ -183,16 +184,22 @@ pub async fn get_sessions(
 }
 
 #[derive(Debug, Serialize)]
-pub struct SessionMap { // TODO find a better name
+pub struct SessionUuid {
     simple_id: String,
     id: Uuid,
     qr_img: String
 }
 
+#[derive(Responder)]
+#[response(status = 409, content_type = "json")]
+pub struct SessionError {
+    message: String
+}
+
 pub async fn create_session(
     db: &State<Client>,
     table_id: String
-) -> Result<SessionMap, Status> {
+) -> Result<SessionUuid, SessionError> {
     let query: String = "SELECT * FROM create_session($1)".to_string();
     let stmt = db.prepare(&query).await.unwrap();
     match db.query_one(&stmt, &[&table_id]).await {
@@ -205,15 +212,16 @@ pub async fn create_session(
             let qr_real_path = format!("/db/public{}", &qr_path);
 
             qr::generate_with_debug(&id_str, &qr_real_path);
-            Ok(SessionMap {
+            Ok(SessionUuid {
                 simple_id,
                 id,
                 qr_img: qr_path
             })
         },
-        Err(e) => {
-            println!("Error: {}", e); // TODO handle error
-            return Err(Status::InternalServerError);
+        Err(_) => {
+            Err(SessionError {
+                message: format!("There is already a session in progress for table {table_id}")
+            })
         }
     }
 }
