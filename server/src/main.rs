@@ -1,4 +1,4 @@
-use rocket::{Build, Rocket, launch, get, routes};
+use rocket::{Build, Rocket, launch, routes, catchers};
 use std::env;
 use rocket::tokio;
 use tokio_postgres::NoTls;
@@ -9,10 +9,31 @@ mod db;
 mod tools;
 mod qr;
 
-#[get("/")]
-fn hello() -> &'static str {
-    "Eatup up and running!"
+mod route_tools {
+    use rocket::{get, catch};
+    use rocket::serde::json::Json;
+
+    #[get("/")]
+    pub fn ping() -> Json<&'static str> {
+        Json("Eatup up and running!")
+    }
+
+    #[catch(404)]
+    pub fn qr_not_found() -> Json<&'static str> {
+        Json("QR not found. Are you sure the QR should be valid?")
+    }
+
+    #[catch(501)]
+    pub fn api_not_implemented() -> Json<&'static str> {
+        Json("Ups, this feature is not implemented yet.")
+    }
+
+    #[catch(500)]
+    pub fn internal_server_error() -> Json<&'static str> {
+        Json("Well, this is embarrassing. Something went wrong on our side. Turns out, rust can fail too.")
+    }
 }
+
 
 #[launch]
 async fn rocket() -> Rocket<Build> {
@@ -50,7 +71,9 @@ async fn rocket() -> Rocket<Build> {
     };
     rocket::custom(&config)
         .manage(client)
-        .mount("/", routes![hello])
+        .mount("/", routes![route_tools::ping])
         .mount("/api/v1", api::get_v1_routes())
+        .register("/api", catchers![route_tools::api_not_implemented])
         .mount("/", rocket::fs::FileServer::from("/db/public"))
+        .register("/qr/", catchers![route_tools::qr_not_found, route_tools::internal_server_error])
 }
