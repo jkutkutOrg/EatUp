@@ -1,5 +1,5 @@
 -- Delete logic
-DROP TABLE IF EXISTS order_product;
+DROP TABLE IF EXISTS product_order;
 DROP TABLE IF EXISTS orders;
 DROP TABLE IF EXISTS session;
 DROP TABLE IF EXISTS product_category;
@@ -63,7 +63,7 @@ CREATE TABLE orders (
     FOREIGN KEY (session) REFERENCES session(id)
 );
 
-CREATE TABLE order_product (
+CREATE TABLE product_order (
     order_id uuid,
     product_id uuid,
     quantity integer,
@@ -394,42 +394,42 @@ INSERT INTO orders (session) VALUES (
 
 -- -- **** Order product ****
 -- Order 1
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
     (SELECT id FROM product WHERE name = 'Bruschetta'),
     2
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
     (SELECT id FROM product WHERE name = 'Garlic Bread'),
     1
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
     (SELECT id FROM product WHERE name = 'Steak'),
     2
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
     (SELECT id FROM product WHERE name = 'Pizza'),
     1
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
     (SELECT id FROM product WHERE name = 'Coca Cola'),
     3
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
@@ -438,14 +438,14 @@ INSERT INTO order_product (order_id, product_id, quantity) VALUES (
 );
 
 -- Order 2
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id DESC LIMIT 1),
     (SELECT id FROM product WHERE name = 'Risotto'),
     1
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id DESC LIMIT 1),
@@ -454,14 +454,14 @@ INSERT INTO order_product (order_id, product_id, quantity) VALUES (
 );
 
 -- Order 3
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id ASC LIMIT 1),
     (SELECT id FROM product WHERE name = 'Cannoli'),
     1
 );
-INSERT INTO order_product (order_id, product_id, quantity) VALUES (
+INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id ASC LIMIT 1),

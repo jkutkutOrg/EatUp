@@ -21,7 +21,7 @@ pub(super) async fn sessions(
 pub(super) async fn create_session(
     db: &State<Client>,
     table_id: String
-) -> Result<Json<db::SessionUuid>, db::SessionError> {
+) -> Result<Json<db::SessionUuid>, db::InvalidAPI> {
     match db::create_session(db, table_id).await {
         Err(e) => Err(e),
         Ok(new_session) => Ok(Json(new_session))

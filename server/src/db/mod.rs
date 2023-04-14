@@ -29,8 +29,28 @@ pub struct Product {
     description: String,
     img_id: String,
     price: f32,
-    allergies: Vec<Allergy>,
+    allergies: Vec<Allergy>, // ? TODO allergies or allergens?
     categories: Vec<ProductCategory>
+}
+
+#[derive(Debug, Serialize)]
+pub struct SessionUuid {
+    simple_id: String,
+    id: Uuid,
+    qr_img: String
+}
+
+#[derive(Responder)]
+#[response(status = 409, content_type = "json")]
+pub struct InvalidAPI {
+    message: String
+}
+
+#[derive(Debug, Serialize)]
+pub struct Session {
+    id: Uuid,
+    table_id: String,
+    in_progress: bool
 }
 
 // TODO refactor get_* with generics
@@ -140,13 +160,6 @@ async fn get_product_categories(
 
 // ---------------------------------------------
 
-#[derive(Debug, Serialize)]
-pub struct Session {
-    id: Uuid,
-    table_id: String,
-    in_progress: bool
-}
-
 pub async fn get_sessions(
     db: &State<Client>,
     filters: SessionQuery
@@ -183,23 +196,10 @@ pub async fn get_sessions(
     Ok(sessions)
 }
 
-#[derive(Debug, Serialize)]
-pub struct SessionUuid {
-    simple_id: String,
-    id: Uuid,
-    qr_img: String
-}
-
-#[derive(Responder)]
-#[response(status = 409, content_type = "json")]
-pub struct SessionError {
-    message: String
-}
-
 pub async fn create_session(
     db: &State<Client>,
     table_id: String
-) -> Result<SessionUuid, SessionError> {
+) -> Result<SessionUuid, InvalidAPI> {
     let query: String = "SELECT * FROM create_session($1)".to_string();
     let stmt = db.prepare(&query).await.unwrap();
     match db.query_one(&stmt, &[&table_id]).await {
@@ -219,7 +219,7 @@ pub async fn create_session(
             })
         },
         Err(_) => {
-            Err(SessionError {
+            Err(InvalidAPI {
                 message: format!("There is already a session in progress for table {table_id}")
             })
         }
@@ -237,4 +237,71 @@ pub async fn end_session(
     let file = format!("/db/public/qr/{}.png", session_id.to_string());
     std::fs::remove_file(file).unwrap();
     Ok(())
+}
+
+// ---------------------------------------------
+
+#[derive(Serialize)]
+pub struct Order {
+    id: Uuid,
+    products: Vec<ProductOrder>
+}
+
+#[derive(Serialize)]
+struct ProductOrder {
+    id: Uuid,
+    quantity: i32,
+    product: Product
+}
+
+pub async fn get_orders(
+    db: &State<Client>,
+    session_id: UuidWrapper
+) -> Result<Vec<Order>, Status> {
+    let session_id: Uuid = session_id.unwrap();
+    let query = "SELECT * FROM orders WHERE session = $1".to_string();
+    let stmt = db.prepare(&query).await.unwrap();
+    let mut orders: Vec<Order> = Vec::new();
+    for row in db.query(&stmt, &[&session_id]).await.unwrap() {
+        let order = Order {
+            id: row.get(0),
+            products: get_product_order(db, row.get(0)).await
+        };
+        orders.push(order);
+    }
+    Ok(orders)
+}
+
+async fn get_product_order(
+    db: &State<Client>,
+    order_id: Uuid
+) -> Vec<ProductOrder> {
+    let query = "
+        SELECT po.*, p.*
+        FROM product_order po, product p
+        WHERE
+            po.product_id = p.id and
+            po.order_id = $1
+    ".to_string();
+
+    let mut products: Vec<ProductOrder> = Vec::new();
+    let stmt = db.prepare(&query).await.unwrap();
+    for row in db.query(&stmt, &[&order_id]).await.unwrap() {
+        let uuid: Uuid = row.get(3);
+        let product = Product {
+            id: uuid,
+            name: row.get(4),
+            description: row.get(5),
+            img_id: row.get(6),
+            price: row.get(7),
+            allergies: get_allergies(db, uuid).await,
+            categories: get_product_categories(db, uuid).await
+        };
+        products.push(ProductOrder {
+            id: row.get(0),
+            quantity: row.get(2),
+            product
+        });
+    }
+    products
 }
