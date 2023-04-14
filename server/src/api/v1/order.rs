@@ -16,9 +16,15 @@ pub(super) async fn orders(
     }
 }
 
-// #[post("/orders/<session_id>")]
-// pub(super) fn create_order(session_id: u32) -> Result<String, Status> {
-#[post("/orders/<_session_id>")]
-pub(super) fn create_order(_session_id: u32) -> Result<String, Status> {
-    return Err(Status::NotImplemented);
+#[post("/orders/<session_id>", data = "<order>")]
+pub(super) async fn create_order(
+    db: &State<Client>,
+    session_id: UuidWrapper,
+    order: Json<db::OrderQuery>
+) -> Result<Json<&'static str>, Status> {
+    let order = order.into_inner();
+    match db::create_order(db, session_id, order).await {
+        Err(e) => Err(e),
+        Ok(_) => Ok(Json("Order created"))
+    }
 }

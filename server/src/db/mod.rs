@@ -2,27 +2,27 @@ use rocket::{State};
 use tokio_postgres::{Client};
 use uuid::Uuid;
 use rocket::http::{Status};
-use serde::Serialize;
+use serde::{Serialize, Deserialize};
 use rocket::Responder;
 
 use crate::api::{ProductQuery, SessionQuery};
 use crate::qr;
 use crate::tools::UuidWrapper;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 struct Allergy {
     id: Uuid,
     name: String,
     img_id: String
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 struct ProductCategory {
     id: Uuid,
     name: String
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Product {
     id: Uuid,
     name: String,
@@ -33,7 +33,7 @@ pub struct Product {
     categories: Vec<ProductCategory>
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Serialize)]
 pub struct SessionUuid {
     simple_id: String,
     id: Uuid,
@@ -46,7 +46,7 @@ pub struct InvalidAPI {
     message: String
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Serialize)]
 pub struct Session {
     id: Uuid,
     table_id: String,
@@ -304,4 +304,28 @@ async fn get_product_order(
         });
     }
     products
+}
+
+
+#[derive(Deserialize)]
+pub struct OrderQuery {
+    products: Vec<ProductOrderQuery>
+}
+
+#[derive(Deserialize, Debug)]
+struct ProductOrderQuery {
+    quantity: i32,
+    product: Product
+}
+
+pub async fn create_order(
+    db: &State<Client>,
+    session_id: UuidWrapper,
+    order: OrderQuery
+) -> Result<(), Status> {
+    println!("New order:");
+    for product in order.products {
+        println!("{:?}\n", product);
+    }
+    Err(Status::NotImplemented)
 }
