@@ -1,4 +1,4 @@
-use rocket::{Build, Rocket, launch, routes, catchers, get};
+use rocket::{Config, Build, Rocket, launch, routes, catchers, get};
 use std::env;
 use rocket::tokio;
 use tokio_postgres::NoTls;
@@ -13,8 +13,18 @@ mod qr;
 use tools::route_error;
 
 #[get("/")]
-pub fn ping() -> Json<&'static str> {
+fn ping() -> Json<&'static str> {
     Json("Eatup up and running!")
+}
+
+#[cfg(debug_assertions)]
+fn config() -> Config {
+    Config::debug_default()
+}
+
+#[cfg(not(debug_assertions))]
+fn config() -> rocket::Config {
+    Config::release_default()
 }
 
 #[launch]
@@ -47,9 +57,9 @@ async fn rocket() -> Rocket<Build> {
         }
     });
 
-    let config = rocket::Config {
+    let config = Config {
         address: Ipv4Addr::new(0, 0, 0, 0).into(),
-        ..rocket::Config::debug_default()
+        ..config()
     };
     rocket::custom(&config)
         .manage(client)
