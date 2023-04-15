@@ -6,6 +6,7 @@ ifeq ($(OS),Darwin)
 	CURRENT_PATH = ${PWD}
 endif
 
+VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
 PORT = 8000
 
 BASIC_ATTRS = -p ${PORT}:8000 \
@@ -31,12 +32,17 @@ init_docker:
 
 build_release:
 	${DOCKER_EXEC} build --release
-	docker build -t jkutkut/eatup:v0.2.0 .
+	docker build -t jkutkut/eatup:$(VERSION) .
+
+push_release:
+	docker tag jkutkut/eatup:$(VERSION) jkutkut/eatup:latest
+	docker push jkutkut/eatup:$(VERSION)
+	docker push jkutkut/eatup:latest
 
 # ******** Public tools ********
 
 run_release:
-	docker run -it --rm ${BASIC_ATTRS} --name eatup jkutkut/eatup:latest
+	docker run -it --rm ${BASIC_ATTRS} --name eatup jkutkut/eatup:$(VERSION)
 
 stop:
 	docker stop eatup

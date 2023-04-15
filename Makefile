@@ -10,6 +10,7 @@ stop:
 	@make -C db stop
 
 uninstall:
+	@make -C db stop
 	@make -C db uninstall
 
 reset_db:
