@@ -2,55 +2,176 @@ use rocket::{State};
 use tokio_postgres::{Client};
 use uuid::Uuid;
 use rocket::http::{Status};
-use serde::{Serialize, Deserialize};
-use rocket::Responder;
 
-use crate::api::{ProductQuery, SessionQuery};
+use crate::api::{ProductQuery, SessionQuery, OrderQuery, ProductOrderQuery};
 use crate::qr;
+use crate::route_tools::InvalidAPI;
 use crate::tools::UuidWrapper;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct Allergy {
-    id: Uuid,
-    name: String,
-    img_id: String
-}
+pub use model::*;
 
-#[derive(Debug, Serialize, Deserialize)]
-struct ProductCategory {
-    id: Uuid,
-    name: String
-}
+pub mod model {
+    use uuid::Uuid;
+    use serde::{Serialize, Deserialize};
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct Product {
-    id: Uuid,
-    name: String,
-    description: String,
-    img_id: String,
-    price: f32,
-    allergies: Vec<Allergy>, // ? TODO allergies or allergens?
-    categories: Vec<ProductCategory>
-}
+    // ******* Product *******
 
-#[derive(Serialize)]
-pub struct SessionUuid {
-    simple_id: String,
-    id: Uuid,
-    qr_img: String
-}
+    #[derive(Serialize, Deserialize)]
+    pub struct Product {
+        pub id: Uuid,
+        name: String,
+        description: String,
+        img_id: String,
+        price: f32,
+        allergies: Vec<Allergy>, // ? TODO allergies or allergens?
+        categories: Vec<ProductCategory>
+    }
 
-#[derive(Responder)]
-#[response(status = 409, content_type = "json")]
-pub struct InvalidAPI {
-    message: String
-}
+    impl Product {
+        pub fn new(
+            id: Uuid,
+            name: String,
+            description: String,
+            img_id: String,
+            price: f32,
+            allergies: Vec<Allergy>,
+            categories: Vec<ProductCategory>
+        ) -> Self {
+            Self {
+                id,
+                name,
+                description,
+                img_id,
+                price,
+                allergies,
+                categories
+            }
+        }
+    }
 
-#[derive(Serialize)]
-pub struct Session {
-    id: Uuid,
-    table_id: String,
-    in_progress: bool
+    #[derive(Serialize, Deserialize)]
+    pub struct Allergy {
+        id: Uuid,
+        name: String,
+        img_id: String
+    }
+
+    impl Allergy {
+        pub fn new(
+            id: Uuid,
+            name: String,
+            img_id: String
+        ) -> Self {
+            Self {
+                id,
+                name,
+                img_id
+            }
+        }
+    }
+
+    #[derive(Serialize, Deserialize)]
+    pub struct ProductCategory {
+        id: Uuid,
+        name: String
+    }
+
+    impl ProductCategory {
+        pub fn new(
+            id: Uuid,
+            name: String
+        ) -> Self {
+            Self {
+                id,
+                name
+            }
+        }
+    }
+
+    // ******* Session *******
+
+    #[derive(Serialize)]
+    pub struct Session {
+        id: Uuid,
+        table_id: String,
+        in_progress: bool
+    }
+
+    impl Session {
+        pub fn new(
+            id: Uuid,
+            table_id: String,
+            in_progress: bool
+        ) -> Self {
+            Self {
+                id,
+                table_id,
+                in_progress
+            }
+        }
+    }
+
+    #[derive(Serialize)]
+    pub struct SessionUuid {
+        simple_id: String,
+        id: Uuid,
+        qr_img: String
+    }
+
+    impl SessionUuid {
+        pub fn new(
+            simple_id: String,
+            id: Uuid,
+            qr_img: String
+        ) -> Self {
+            Self {
+                simple_id,
+                id,
+                qr_img
+            }
+        }
+    }
+
+    // ******* Order *******
+
+    #[derive(Serialize)]
+    pub struct Order {
+        id: Uuid,
+        products: Vec<ProductOrder>
+    }
+
+    impl Order {
+        pub fn new(
+            id: Uuid,
+            products: Vec<ProductOrder>
+        ) -> Self {
+            Self {
+                id,
+                products
+            }
+        }
+    }
+
+    #[derive(Serialize)]
+    pub struct ProductOrder {
+        id: Uuid,
+        quantity: i32,
+        product: Product
+    }
+
+    impl ProductOrder {
+        pub fn new(
+            id: Uuid,
+            quantity: i32,
+            product: Product
+        ) -> Self {
+            Self {
+                id,
+                quantity,
+                product
+            }
+        }
+    }
 }
 
 // TODO refactor get_* with generics
@@ -101,16 +222,15 @@ pub async fn get_products(
     let mut products: Vec<Product> = Vec::new();
     let stmt = db.prepare(&query).await.unwrap();
     for row in db.query(&stmt, &params).await.unwrap() {
-        let product = Product {
-            id: row.get(0),
-            name: row.get(1),
-            description: row.get(2),
-            img_id: row.get(3),
-            price: row.get(4),
-            allergies: get_allergies(db, row.get(0)).await,
-            categories: get_product_categories(db, row.get(0)).await
-        };
-        products.push(product);
+        products.push(Product::new(
+            row.get(0), // id
+            row.get(1), // name
+            row.get(2), // description
+            row.get(3), // img_id
+            row.get(4), // price
+            get_allergies(db, row.get(0)).await, // allergies
+            get_product_categories(db, row.get(0)).await // categories
+        ));
     }
     Ok(products)
 }
@@ -127,12 +247,11 @@ async fn get_allergies(
     let mut allergies: Vec<Allergy> = Vec::new();
     let stmt = db.prepare(&query).await.unwrap();
     for row in db.query(&stmt, &[&product_id]).await.unwrap() {
-        let allergy = Allergy {
-            id: row.get(0),
-            name: row.get(1),
-            img_id: row.get(2)
-        };
-        allergies.push(allergy);
+        allergies.push(Allergy::new(
+            row.get(0), // id
+            row.get(1), // name
+            row.get(2) // img_id
+        ));
     }
     allergies
 }
@@ -149,11 +268,10 @@ async fn get_product_categories(
     let mut categories: Vec<ProductCategory> = Vec::new();
     let stmt = db.prepare(&query).await.unwrap();
     for row in db.query(&stmt, &[&product_id]).await.unwrap() {
-        let category = ProductCategory {
-            id: row.get(0),
-            name: row.get(1)
-        };
-        categories.push(category);
+        categories.push(ProductCategory::new(
+            row.get(0), // id
+            row.get(1) // name
+        ));
     }
     categories
 }
@@ -186,12 +304,11 @@ pub async fn get_sessions(
     let mut sessions: Vec<Session> = Vec::new();
     let stmt = db.prepare(&query).await.unwrap();
     for row in db.query(&stmt, &params).await.unwrap() {
-        let session = Session {
-            id: row.get(0),
-            table_id: row.get(1),
-            in_progress: row.get(2)
-        };
-        sessions.push(session);
+        sessions.push(Session::new(
+            row.get(0), // id
+            row.get(1), // table_id
+            row.get(2) // in_progress
+        ));
     }
     Ok(sessions)
 }
@@ -212,17 +329,15 @@ pub async fn create_session(
             let qr_real_path = format!("/db/public{}", &qr_path);
 
             qr::generate_with_debug(&id_str, &qr_real_path);
-            Ok(SessionUuid {
+            Ok(SessionUuid::new(
                 simple_id,
                 id,
-                qr_img: qr_path
-            })
+                qr_path // qr_img
+            ))
         },
-        Err(_) => {
-            Err(InvalidAPI {
-                message: format!("There is already a session in progress for table {table_id}")
-            })
-        }
+        Err(_) => Err(InvalidAPI::new(
+            format!("There is already a session in progress for table {table_id}")
+        ))
     }
 }
 
@@ -241,19 +356,6 @@ pub async fn end_session(
 
 // ---------------------------------------------
 
-#[derive(Serialize)]
-pub struct Order {
-    id: Uuid,
-    products: Vec<ProductOrder>
-}
-
-#[derive(Serialize)]
-struct ProductOrder {
-    id: Uuid,
-    quantity: i32,
-    product: Product
-}
-
 pub async fn get_orders(
     db: &State<Client>,
     session_id: UuidWrapper
@@ -263,11 +365,10 @@ pub async fn get_orders(
     let stmt = db.prepare(&query).await.unwrap();
     let mut orders: Vec<Order> = Vec::new();
     for row in db.query(&stmt, &[&session_id]).await.unwrap() {
-        let order = Order {
-            id: row.get(0),
-            products: get_product_order(db, row.get(0)).await
-        };
-        orders.push(order);
+        orders.push(Order::new(
+            row.get(0), // id
+            get_product_order(db, row.get(0)).await // products
+        ));
     }
     Ok(orders)
 }
@@ -288,34 +389,22 @@ async fn get_product_order(
     let stmt = db.prepare(&query).await.unwrap();
     for row in db.query(&stmt, &[&order_id]).await.unwrap() {
         let uuid: Uuid = row.get(3);
-        let product = Product {
-            id: uuid,
-            name: row.get(4),
-            description: row.get(5),
-            img_id: row.get(6),
-            price: row.get(7),
-            allergies: get_allergies(db, uuid).await,
-            categories: get_product_categories(db, uuid).await
-        };
-        products.push(ProductOrder {
-            id: row.get(0),
-            quantity: row.get(2),
+        let product = Product::new(
+            uuid, // id
+            row.get(4), // name
+            row.get(5), // description
+            row.get(6), // img_id
+            row.get(7), // price
+            get_allergies(db, uuid).await, // allergies
+            get_product_categories(db, uuid).await // categories
+        );
+        products.push(ProductOrder::new(
+            row.get(0), // id
+            row.get(2), // quantity
             product
-        });
+        ));
     }
     products
-}
-
-
-#[derive(Deserialize)]
-pub struct OrderQuery {
-    products: Vec<ProductOrderQuery>
-}
-
-#[derive(Deserialize, Debug)]
-struct ProductOrderQuery {
-    quantity: i32,
-    product: Product
 }
 
 pub async fn create_order(
@@ -339,11 +428,7 @@ pub async fn create_order(
             }
             Ok(())
         },
-        Err(_) => {
-            Err(InvalidAPI {
-                message: format!("Invalid session id")
-            })
-        }
+        Err(_) => Err(InvalidAPI::new(format!("Invalid session id")))
     }
 }
 
@@ -364,10 +449,6 @@ async fn create_product_order(
     ];
     match db.execute(&stmt, &params).await {
         Ok(_) => Ok(()),
-        Err(_) => {
-            Err(InvalidAPI {
-                message: format!("Invalid product id")
-            })
-        }
+        Err(_) => Err(InvalidAPI::new(format!("Invalid product id")))
     }
 }

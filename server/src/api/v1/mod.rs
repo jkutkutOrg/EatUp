@@ -1,21 +1,44 @@
-use rocket::routes;
-use rocket::FromForm;
-use rocket::serde::Deserialize;
-// use crate::tools::UuidWrapper;
+use tokio_postgres::{Client};
+use rocket::{routes, State, get, post, patch};
+use rocket::http::Status;
+use rocket::serde::json::Json;
 
-#[derive(Debug, Deserialize, FromForm)]
-pub struct ProductQuery {
-    #[field(name = "category")]
-    pub categories: Vec<String>,
-    #[field(name = "allergy")]
-    pub allergies: Vec<String>,
-}
+use crate::db;
+use crate::tools::UuidWrapper;
+use crate::route_tools::InvalidAPI;
 
-#[derive(Debug, Deserialize, FromForm)]
-pub struct SessionQuery {
-    #[field(name = "table_id")]
-    pub table_ids: Vec<String>,
-    pub in_progress: Option<bool>,
+pub use model::*;
+
+mod model {
+    use rocket::FromForm;
+    use rocket::serde::Deserialize;
+    use crate::db::model::Product;
+
+    #[derive(Deserialize, FromForm)]
+    pub struct ProductQuery {
+        #[field(name = "category")]
+        pub categories: Vec<String>,
+        #[field(name = "allergy")]
+        pub allergies: Vec<String>,
+    }
+
+    #[derive(Deserialize, FromForm)]
+    pub struct SessionQuery {
+        #[field(name = "table_id")]
+        pub table_ids: Vec<String>,
+        pub in_progress: Option<bool>,
+    }
+
+    #[derive(Deserialize)]
+    pub struct OrderQuery {
+        pub products: Vec<ProductOrderQuery>
+    }
+
+    #[derive(Deserialize)]
+    pub struct ProductOrderQuery {
+        pub quantity: i32,
+        pub product: Product
+    }
 }
 
 mod product;

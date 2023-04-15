@@ -1,10 +1,4 @@
-use rocket::{State, get, post, patch};
-use rocket::http::{Status};
-use tokio_postgres::{Client};
-use rocket::serde::json::Json;
-use crate::tools::UuidWrapper;
-use super::SessionQuery;
-use crate::db;
+use super::*;
 
 #[get("/sessions?<filters..>")]
 pub(super) async fn sessions(
@@ -21,7 +15,7 @@ pub(super) async fn sessions(
 pub(super) async fn create_session(
     db: &State<Client>,
     table_id: String
-) -> Result<Json<db::SessionUuid>, db::InvalidAPI> {
+) -> Result<Json<db::SessionUuid>, InvalidAPI> {
     match db::create_session(db, table_id).await {
         Err(e) => Err(e),
         Ok(new_session) => Ok(Json(new_session))

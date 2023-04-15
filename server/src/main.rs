@@ -10,7 +10,7 @@ mod tools;
 mod qr;
 
 mod route_tools {
-    use rocket::{get, catch};
+    use rocket::{get, catch, Responder};
     use rocket::serde::json::Json;
 
     #[get("/")]
@@ -31,6 +31,18 @@ mod route_tools {
     #[catch(500)]
     pub fn internal_server_error() -> Json<&'static str> {
         Json("Well, this is embarrassing. Something went wrong on our side. Turns out, rust can fail too.")
+    }
+
+    #[derive(Responder)]
+    #[response(status = 409, content_type = "json")]
+    pub struct InvalidAPI {
+        message: String
+    }
+
+    impl InvalidAPI {
+        pub fn new(message: String) -> InvalidAPI {
+            InvalidAPI { message }
+        }
     }
 }
 

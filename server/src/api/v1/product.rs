@@ -1,9 +1,4 @@
-use rocket::{State, get};
-use rocket::http::{Status};
-use tokio_postgres::{Client};
-use super::ProductQuery;
-use crate::db;
-use rocket::serde::json::Json;
+use super::*;
 
 #[get("/products?<filters..>")]
 pub(super) async fn products(
