@@ -322,10 +322,52 @@ pub async fn create_order(
     db: &State<Client>,
     session_id: UuidWrapper,
     order: OrderQuery
-) -> Result<(), Status> {
-    println!("New order:");
-    for product in order.products {
-        println!("{:?}\n", product);
+) -> Result<(), InvalidAPI> {
+    let query: String = "
+        INSERT INTO orders (session)
+        VALUES ($1) RETURNING id
+    ".to_string();
+    let stmt = db.prepare(&query).await.unwrap();
+    match db.query_one(&stmt, &[&session_id.unwrap()]).await {
+        Ok(row) => {
+            let order_id: Uuid = row.get(0);
+            for product in &order.products {
+                match create_product_order(db, order_id, product).await {
+                    Err(e) => return Err(e),
+                    _ => ()
+                }
+            }
+            Ok(())
+        },
+        Err(_) => {
+            Err(InvalidAPI {
+                message: format!("Invalid session id")
+            })
+        }
     }
-    Err(Status::NotImplemented)
+}
+
+async fn create_product_order(
+    db: &State<Client>,
+    order_id: Uuid,
+    product: &ProductOrderQuery
+) -> Result<(), InvalidAPI> {
+    let query: String = "
+        INSERT INTO product_order (order_id, product_id, quantity)
+        VALUES ($1, $2, $3)
+    ".to_string();
+    let stmt = db.prepare(&query).await.unwrap();
+    let params: [&(dyn tokio_postgres::types::ToSql + Sync); 3] = [
+        &order_id,
+        &product.product.id,
+        &product.quantity
+    ];
+    match db.execute(&stmt, &params).await {
+        Ok(_) => Ok(()),
+        Err(_) => {
+            Err(InvalidAPI {
+                message: format!("Invalid product id")
+            })
+        }
+    }
 }

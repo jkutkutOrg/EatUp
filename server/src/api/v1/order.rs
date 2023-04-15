@@ -21,7 +21,7 @@ pub(super) async fn create_order(
     db: &State<Client>,
     session_id: UuidWrapper,
     order: Json<db::OrderQuery>
-) -> Result<Json<&'static str>, Status> {
+) -> Result<Json<&'static str>, db::InvalidAPI> {
     let order = order.into_inner();
     match db::create_order(db, session_id, order).await {
         Err(e) => Err(e),
