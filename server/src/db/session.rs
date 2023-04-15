@@ -75,3 +75,15 @@ pub async fn end_session(
     std::fs::remove_file(file).unwrap();
     Ok(())
 }
+
+pub async fn is_active_session(
+    db: &State<Client>,
+    session_id: Uuid
+) -> bool {
+    let query = "SELECT * FROM session WHERE id = $1 AND in_progress = true";
+    let stmt = db.prepare(query).await.unwrap();
+    match db.query_one(&stmt, &[&session_id]).await {
+        Ok(_) => true,
+        Err(_) => false
+    }
+}

@@ -56,17 +56,27 @@ pub async fn create_order(
     session_id: UuidWrapper,
     order: OrderQuery
 ) -> Result<(), InvalidAPI> {
+    let session_id: Uuid = session_id.unwrap();
+    if order.products.len() == 0 {
+        return Err(InvalidAPI::new(format!("No products in order")));
+    }
+    if !is_active_session(db, session_id).await {
+        return Err(InvalidAPI::new(format!("Invalid session id")));
+    }
     let query: String = "
         INSERT INTO orders (session)
         VALUES ($1) RETURNING id
     ".to_string();
     let stmt = db.prepare(&query).await.unwrap();
-    match db.query_one(&stmt, &[&session_id.unwrap()]).await {
+    match db.query_one(&stmt, &[&session_id]).await {
         Ok(row) => {
             let order_id: Uuid = row.get(0);
             for product in &order.products {
                 match create_product_order(db, order_id, product).await {
-                    Err(e) => return Err(e),
+                    Err(e) => {
+                        cancel_order(db, order_id).await;
+                        return Err(e);
+                    },
                     _ => ()
                 }
             }
@@ -95,4 +105,13 @@ async fn create_product_order(
         Ok(_) => Ok(()),
         Err(_) => Err(InvalidAPI::new(format!("Invalid product id")))
     }
+}
+
+async fn cancel_order(
+    db: &State<Client>,
+    order_id: Uuid
+) {
+    let query: String = "DELETE FROM orders WHERE id = $1".to_string();
+    let stmt = db.prepare(&query).await.unwrap();
+    db.execute(&stmt, &[&order_id]).await.unwrap();
 }
