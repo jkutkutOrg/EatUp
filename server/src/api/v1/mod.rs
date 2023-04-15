@@ -4,8 +4,7 @@ use rocket::http::Status;
 use rocket::serde::json::Json;
 
 use crate::db;
-use crate::tools::UuidWrapper;
-use crate::route_tools::InvalidAPI;
+use crate::tools::{UuidWrapper, route_error::InvalidAPI};
 
 mod model;
 mod product;

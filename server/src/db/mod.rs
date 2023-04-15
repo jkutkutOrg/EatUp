@@ -4,8 +4,7 @@ use uuid::Uuid;
 use rocket::http::{Status};
 
 use crate::qr;
-use crate::route_tools::InvalidAPI;
-use crate::tools::UuidWrapper;
+use crate::tools::{UuidWrapper, route_error::InvalidAPI};
 use crate::api::*;
 
 mod model;
