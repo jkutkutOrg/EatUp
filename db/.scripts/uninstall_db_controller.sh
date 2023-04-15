@@ -6,13 +6,6 @@ source .secrets ||
 	exit 1
 }
 
-echo "Removing DB..." &&
-docker stop $DB_CONTAINER_NAME > /dev/null &&
-docker rm $DB_CONTAINER_NAME > /dev/null &&
-echo "Done!"
-
-rm -f .env
-
 echo "Removing DB Web Controller..." &&
 docker stop $WEB_CONTROLLER_CONTAINER_NAME > /dev/null &&
 docker rm $WEB_CONTROLLER_CONTAINER_NAME  > /dev/null &&

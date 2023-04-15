@@ -9,15 +9,6 @@ else # Linux
     ip=$(ip -4 addr | grep -oP '(?<=inet\s)\d+(\.\d+){3}' | head -n 1)
 fi
 
-
-echo "Starting DB";
-docker start $DB_CONTAINER_NAME ||
-echo "Failed to start DB";
-
-db_ip=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' $DB_CONTAINER_NAME)
-cp .secrets .env
-echo "DB_IP='$db_ip'" >> .env
-
 echo
 echo "Starting DB Web Controller";
 docker start $WEB_CONTROLLER_CONTAINER_NAME &&
