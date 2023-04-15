@@ -30,6 +30,15 @@ fn config() -> rocket::Config {
 #[launch]
 async fn rocket() -> Rocket<Build> {
     dotenv::from_path("/db/.env").ok();
+
+    match env::var("DB_IP") {
+        Ok(_) => (),
+        Err(_) => {
+            eprintln!("Error: DB is not configured or it's not running");
+            std::process::exit(1);
+        }
+    }
+
     let db_properties = format!(
         "host={} port={} dbname={} user={} password={}",
         env::var("DB_IP").unwrap(),
