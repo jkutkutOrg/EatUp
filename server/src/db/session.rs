@@ -35,6 +35,31 @@ pub async fn get_sessions(
     Ok(sessions)
 }
 
+pub async fn get_session_id(
+    db: &State<Client>,
+    simple_id: String
+) -> Result<SessionUuid, InvalidAPI> {
+    let query = "SELECT * FROM map_session_uuid WHERE simple_id = $1";
+    let stmt = db.prepare(query).await.unwrap();
+    match db.query_one(&stmt, &[&simple_id]).await {
+        Err(_) => Err(InvalidAPI::new(
+            format!("No session with id {simple_id}.")
+        )),
+        Ok(row) => {
+            let simple_id: String = row.get(0);
+            let id: Uuid = row.get(1);
+            let id_str = id.to_string();
+
+            let qr_path = format!("/qr/{}.png", &id_str);
+            Ok(SessionUuid::new(
+                simple_id,
+                id,
+                qr_path // qr_img
+            ))
+        }
+    }
+}
+
 pub async fn create_session(
     db: &State<Client>,
     table_id: String

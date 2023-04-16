@@ -17,6 +17,7 @@ pub fn get_all_routes() -> Vec<rocket::Route> {
     routes![
         product::products,
         session::sessions,
+        session::session_id,
         session::create_session,
         session::end_session,
         order::orders,

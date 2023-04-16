@@ -11,6 +11,17 @@ pub(super) async fn sessions(
     }
 }
 
+#[get("/session_id/<simple_id>")]
+pub(super) async fn session_id(
+    db: &State<Client>,
+    simple_id: String
+) -> Result<Json<db::SessionUuid>, InvalidAPI> {
+    match db::get_session_id(db, simple_id).await {
+        Err(e) => Err(e),
+        Ok(product) => Ok(Json(product))
+    }
+}
+
 #[post("/session/<table_id>")]
 pub(super) async fn create_session(
     db: &State<Client>,
