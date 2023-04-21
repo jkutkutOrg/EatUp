@@ -11,15 +11,15 @@
 
 PORT = 5173
 
-DOCKER_CMD = docker run --rm -it -p ${PORT}:5173
+DOCKER_CMD = docker run --rm -it
 DOCKER_APP_V = -v ${PWD}/eatup_setup:/app -w /app
 DOCKER_IMG = node:current-alpine3.16
 
 run:
-	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=npm ${DOCKER_IMG} run dev
+	$(DOCKER_CMD) -p ${PORT}:5173 ${DOCKER_APP_V} --entrypoint=npm ${DOCKER_IMG} run dev
 
-help:
-	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=npm ${DOCKER_IMG} help
+terminal:
+	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=/bin/sh ${DOCKER_IMG}
 
 # ---------------------------------------------------------------------
 
