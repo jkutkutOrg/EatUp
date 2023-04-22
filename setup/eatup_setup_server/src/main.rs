@@ -4,6 +4,8 @@ use tokio_stream::wrappers::UnboundedReceiverStream;
 use futures::{FutureExt, StreamExt};
 use tokio::sync::mpsc::{UnboundedSender, unbounded_channel};
 
+use std::process::Command;
+
 // use serde_json::json;
 
 async fn incoming_msg(
@@ -11,7 +13,16 @@ async fn incoming_msg(
     msg: Message
 ) {
     println!("msg: {:?}", msg);
-    socket.send(Ok(Message::text("ok"))).unwrap();
+    
+    let mut cmd = Command::new("ls");
+    cmd.arg("-al");
+
+    let output = cmd.output().expect("failed to execute cmd");
+    let msg = output.stdout;
+    let msg = String::from_utf8(msg).unwrap();
+    let msg = Message::text(msg);
+
+    socket.send(Ok(msg)).unwrap();
 }
 
 async fn ws_handler(ws: warp::ws::Ws) -> Result<impl Reply, Rejection> {
