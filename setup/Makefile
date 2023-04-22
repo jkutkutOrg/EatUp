@@ -1,3 +1,19 @@
+OS	=	$(shell uname -s)
+ifeq ($(OS),Linux)
+	CURRENT_PATH = $(shell pwd)
+endif
+ifeq ($(OS),Darwin)
+	CURRENT_PATH = ${PWD}
+endif
+
+FRONT_NAME = eatup_setup_front
+PORT_FRONT = 5173
+
+BACK_NAME = eatup_setup_server
+PORT_BACK = 9000
+
+# ---------------------------------------------------------------------
+
 # Create app directory:
 # Enter a docker container:
 #   docker run --rm -it -v $(pwd):/app --entrypoint="/bin/sh" -w="/app" node:current-alpine3.16
@@ -9,22 +25,38 @@
 # Select variant: TypeScript
 # Done! Follow the steps and that's it!
 
-PORT = 5173
-
 DOCKER_CMD = docker run --rm -it
-DOCKER_APP_V = -v ${PWD}/eatup_setup:/app -w /app
-DOCKER_IMG = node:current-alpine3.16
+DOCKER_APP_V = -v ${PWD}/${FRONT_NAME}:/app -w /app
+DOCKER_IMG_FRONT = node:current-alpine3.16
 
-run:
-	$(DOCKER_CMD) -p ${PORT}:5173 ${DOCKER_APP_V} --entrypoint=npm ${DOCKER_IMG} run dev
+run_front:
+	$(DOCKER_CMD) -p ${PORT_FRONT}:5173 ${DOCKER_APP_V} --entrypoint=npm ${DOCKER_IMG_FRONT} run dev
 
-terminal:
-	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=/bin/sh ${DOCKER_IMG}
+terminal_front:
+	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=/bin/sh ${DOCKER_IMG_FRONT}
 
 # ---------------------------------------------------------------------
 
-create_vscode:
-	docker env create -o 
+DOCKER_IMG_SERVER = jkutkut/docker4rust
 
-vscode:
-	docker env start -o 
+BASIC_ATTRS = -p ${PORT_BACK}:8000
+
+ATTRS = ${BASIC_ATTRS} \
+	-v ${CURRENT_PATH}/${BACK_NAME}:/app -w /app
+
+DOCKER_EXEC = docker run -it --rm \
+	${ATTRS} \
+	--entrypoint "/root/.cargo/bin/cargo" \
+	-v eatup_cargo_registy:/root/.cargo/registry \
+	${DOCKER_IMG_SERVER}
+
+run_server:
+	${DOCKER_EXEC} run
+
+build_server:
+	${DOCKER_EXEC} build
+
+terminal_server:
+	docker run -it --rm ${ATTRS} -v eatup_cargo_registy:/root/.cargo/registry ${DOCKER_IMG_SERVER}
+
+# ---------------------------------------------------------------------
