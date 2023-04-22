@@ -38,8 +38,9 @@ terminal_front:
 # ---------------------------------------------------------------------
 
 DOCKER_IMG_SERVER = jkutkut/docker4rust
+CARGO_REGISTRY = eatup_cargo_registy
 
-BASIC_ATTRS = -p ${PORT_BACK}:8000
+BASIC_ATTRS = -p ${PORT_BACK}:9000
 
 ATTRS = ${BASIC_ATTRS} \
 	-v ${CURRENT_PATH}/${BACK_NAME}:/app -w /app
@@ -47,7 +48,7 @@ ATTRS = ${BASIC_ATTRS} \
 DOCKER_EXEC = docker run -it --rm \
 	${ATTRS} \
 	--entrypoint "/root/.cargo/bin/cargo" \
-	-v eatup_cargo_registy:/root/.cargo/registry \
+	-v ${CARGO_REGISTRY}:/root/.cargo/registry \
 	${DOCKER_IMG_SERVER}
 
 run_server:
@@ -57,6 +58,9 @@ build_server:
 	${DOCKER_EXEC} build
 
 terminal_server:
-	docker run -it --rm ${ATTRS} -v eatup_cargo_registy:/root/.cargo/registry ${DOCKER_IMG_SERVER}
+	docker run -it --rm ${ATTRS} -v ${CARGO_REGISTRY}:/root/.cargo/registry ${DOCKER_IMG_SERVER}
+
+uwsc:
+	uwsc ws://127.0.0.1:${PORT_BACK}/ws
 
 # ---------------------------------------------------------------------
