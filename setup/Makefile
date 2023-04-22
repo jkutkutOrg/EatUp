@@ -49,10 +49,14 @@ DOCKER_EXEC = docker run -it --rm \
 	${ATTRS} \
 	--entrypoint "/root/.cargo/bin/cargo" \
 	-v ${CARGO_REGISTRY}:/root/.cargo/registry \
+	--name ${BACK_NAME} \
 	${DOCKER_IMG_SERVER}
 
 run_server:
 	${DOCKER_EXEC} run
+
+stop_server:
+	docker stop ${BACK_NAME}
 
 build_server:
 	${DOCKER_EXEC} build
