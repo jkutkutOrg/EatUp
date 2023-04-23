@@ -44,13 +44,13 @@ CARGO_REGISTRY = eatup_cargo_registy
 BASIC_ATTRS = -p ${PORT_BACK}:9000
 
 ATTRS = ${BASIC_ATTRS} \
-	-v ${CURRENT_PATH}/${BACK_NAME}:/app -w /app
+	-v ${CURRENT_PATH}/${BACK_NAME}:/app -w /app \
+	-v ${CARGO_REGISTRY}:/root/.cargo/registry \
+	-v /var/run/docker.sock:/var/run/docker.sock:rw
 
 DOCKER_EXEC = docker run -it --rm \
 	${ATTRS} \
 	--entrypoint "/root/.cargo/bin/cargo" \
-	-v ${CARGO_REGISTRY}:/root/.cargo/registry \
-	-v /var/run/docker.sock:/var/run/docker.sock:rw \
 	--name ${BACK_NAME} \
 	${DOCKER_IMG_SERVER}
 
@@ -64,7 +64,7 @@ build_server:
 	${DOCKER_EXEC} build
 
 terminal_server:
-	docker run -it --rm ${ATTRS} -v ${CARGO_REGISTRY}:/root/.cargo/registry ${DOCKER_IMG_SERVER}
+	docker run -it --rm ${ATTRS} ${DOCKER_IMG_SERVER}
 
 uwsc:
 	uwsc ws://127.0.0.1:${PORT_BACK}/ws

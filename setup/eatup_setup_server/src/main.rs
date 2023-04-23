@@ -6,23 +6,32 @@ use tokio::sync::mpsc::{UnboundedSender, unbounded_channel};
 
 use std::process::Command;
 
-// use serde_json::json;
+mod cmd;
 
 async fn incoming_msg(
     socket: &UnboundedSender::<Result<Message, Error>>,
     msg: Message
 ) {
     println!("msg: {:?}", msg);
+    let msg: String = match msg.to_str() {
+        Ok(msg) => msg.to_string(),
+        Err(e) => {
+            println!("Not able to get msg string at incoming_msg: {:?}", e);
+            return;
+        }
+    };
     
-    let mut cmd = Command::new("ls");
-    cmd.arg("-al");
-
-    let output = cmd.output().expect("failed to execute cmd");
-    let msg = output.stdout;
-    let msg = String::from_utf8(msg).unwrap();
-    let msg = Message::text(msg);
-
-    socket.send(Ok(msg)).unwrap();
+    let micro = cmd::get_microservice(msg).await;
+    match micro {
+        Ok(micro) => {
+            println!("micro: {:?}", micro);
+            socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
+        },
+        Err(e) => {
+            println!("error: {:?}", e);
+            socket.send(Ok(Message::text(format!("error: {:?}", e)))).unwrap();
+        }
+    }
 }
 
 async fn ws_handler(ws: warp::ws::Ws) -> Result<impl Reply, Rejection> {
