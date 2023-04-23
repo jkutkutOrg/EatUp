@@ -92,14 +92,14 @@ impl<'a> MicroserviceInfoCollection<'a> {
         }
     }
 
-    fn get_by_name(&self, name: &str) -> Option<MicroserviceInfo> {
-        for info in &self.collection {
-            if info.name == name {
-                return Some(info.clone());
-            }
-        }
-        None
-    }
+    // fn get_by_name(&self, name: &str) -> Option<MicroserviceInfo> {
+    //     for info in &self.collection {
+    //         if info.name == name {
+    //             return Some(info.clone());
+    //         }
+    //     }
+    //     None
+    // }
 
     fn all(&self) -> Vec<MicroserviceInfo> {
         self.collection.clone()
