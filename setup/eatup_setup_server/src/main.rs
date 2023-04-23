@@ -21,19 +21,25 @@ async fn incoming_msg(
         }
     };
 
-    let micros_vec = msg.split(",").map(|s| s.to_string()).collect();
-    let micros = cmd::get_microservices(micros_vec);
+    // let micros_vec = msg.split(",").map(|s| s.to_string()).collect();
+    // let micros = cmd::get_microservices(micros_vec);
+    // for micro in micros {
+    //     match micro {
+    //         Ok(micro) => {
+    //             println!("micro: {:?}", micro);
+    //             socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
+    //         },
+    //         Err(e) => {
+    //             println!("error: {:?}", e);
+    //             socket.send(Ok(Message::text(format!("error: {:?}", e)))).unwrap();
+    //         }
+    //     }
+    // }
+
+    let micros = cmd::get_all_microservices();
     for micro in micros {
-        match micro {
-            Ok(micro) => {
-                println!("micro: {:?}", micro);
-                socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
-            },
-            Err(e) => {
-                println!("error: {:?}", e);
-                socket.send(Ok(Message::text(format!("error: {:?}", e)))).unwrap();
-            }
-        }
+        println!("micro: {:?}", micro);
+        socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
     }
 }
 
