@@ -27,6 +27,16 @@ impl From<&str> for MicroserviceState {
     }
 }
 
+impl MicroserviceState {
+    fn from_microservice_id(id: &str) -> Self {
+        let mut cmd = Command::new("docker");
+        cmd.args(&["inspect", "-f", "{{.State.Status}}", &id]);
+        let output = cmd.output().expect("failed to inspect container");
+        let state = String::from_utf8(output.stdout).unwrap();
+        MicroserviceState::from(state.trim())
+    }
+}
+
 #[derive(Debug)]
 pub struct Microservice {
     name: String,
@@ -35,12 +45,22 @@ pub struct Microservice {
 }
 
 impl Microservice {
-    pub fn from_info(info: MicroserviceInfo, state: MicroserviceState) -> Self {
+    fn from_info_state(info: &MicroserviceInfo, state: MicroserviceState) -> Self {
         Microservice {
             name: info.name.to_string(),
             state: state,
             requires: info.requires.iter().map(|s| s.to_string()).collect()
         }
+    }
+
+    fn from_info(info: MicroserviceInfo) -> Self {
+        Microservice::from_info_state(
+            &info,
+            match get_microservice_id(info.name) {
+                None => MicroserviceState::NotFound,
+                Some(id) => MicroserviceState::from_microservice_id(&id)
+            }
+        )
     }
 }
 
@@ -50,17 +70,23 @@ pub struct MicroserviceInfo<'a> {
     requires: Vec<&'a str>
 }
 
-fn find_microservice(name: &String) -> Result<MicroserviceInfo, String> {
-    match name.as_str() {
-        "eatup_db" => Ok(MicroserviceInfo {
-            name: "eatup_db",
-            requires: vec![]
-        }),
-        "eatup_server" => Ok(MicroserviceInfo {
-            name: "eatup_server",
-            requires: vec!["eatup_db"]
-        }),
-        _ => Err("Microservice not found".to_string()),
+impl MicroserviceInfo<'_> {
+    fn from_name(name: &str) -> Option<Self> {
+        match name {
+            "eatup_db" => Some(
+                MicroserviceInfo {
+                    name: "eatup_db",
+                    requires: vec![]
+                }
+            ),
+            "eatup_server" => Some(
+                MicroserviceInfo {
+                    name: "eatup_server",
+                    requires: vec!["eatup_db"]
+                }
+            ),
+            _ => None
+        }
     }
 }
 
@@ -75,21 +101,19 @@ fn get_microservice_id(name: &str) -> Option<String> {
     }
 }
 
-fn get_microservice_state(id: String) -> MicroserviceState {
-    let mut cmd = Command::new("docker");
-    cmd.args(&["inspect", "-f", "{{.State.Status}}", &id]);
-    let output = cmd.output().expect("failed to inspect container");
-    let state = String::from_utf8(output.stdout).unwrap();
-    MicroserviceState::from(state.trim())
+// -----------------------------------------------
+
+pub fn get_microservice(name: String) -> Result<Microservice, String> {
+    match MicroserviceInfo::from_name(&name) {
+        Some(micro) => Ok(Microservice::from_info(micro)),
+        None => Err(format!("Microservice {} not found", name))
+    }
 }
 
-pub async fn get_microservice(name: String) -> Result<Microservice, String> {
-    let micro = match find_microservice(&name) {
-        Ok(micro) => micro,
-        Err(e) => return Err(e)
-    };
-    Ok(match get_microservice_id(&name) {
-        None => Microservice::from_info(micro, MicroserviceState::NotFound),
-        Some(id) => Microservice::from_info(micro, get_microservice_state(id))
-    })
+pub fn get_microservices(names: Vec<String>) -> Vec<Result<Microservice, String>> {
+    let mut microservices = vec![];
+    for name in names {
+        microservices.push(get_microservice(name));
+    }
+    microservices
 }

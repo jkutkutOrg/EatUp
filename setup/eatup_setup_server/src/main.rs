@@ -20,16 +20,19 @@ async fn incoming_msg(
             return;
         }
     };
-    
-    let micro = cmd::get_microservice(msg).await;
-    match micro {
-        Ok(micro) => {
-            println!("micro: {:?}", micro);
-            socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
-        },
-        Err(e) => {
-            println!("error: {:?}", e);
-            socket.send(Ok(Message::text(format!("error: {:?}", e)))).unwrap();
+
+    let micros_vec = msg.split(",").map(|s| s.to_string()).collect();
+    let micros = cmd::get_microservices(micros_vec);
+    for micro in micros {
+        match micro {
+            Ok(micro) => {
+                println!("micro: {:?}", micro);
+                socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
+            },
+            Err(e) => {
+                println!("error: {:?}", e);
+                socket.send(Ok(Message::text(format!("error: {:?}", e)))).unwrap();
+            }
         }
     }
 }
