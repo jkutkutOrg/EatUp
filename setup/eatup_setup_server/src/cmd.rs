@@ -124,20 +124,20 @@ lazy_static! {
 
 // -----------------------------------------------
 
-pub fn get_microservice(name: String) -> Result<Microservice, String> {
-    match MICROSERVICES_INFO.get_by_name(&name) {
-        Some(micro) => Ok(Microservice::from_info(micro)),
-        None => Err(format!("Microservice {} not found", name))
-    }
-}
+// pub fn get_microservice(name: String) -> Result<Microservice, String> {
+//     match MICROSERVICES_INFO.get_by_name(&name) {
+//         Some(micro) => Ok(Microservice::from_info(micro)),
+//         None => Err(format!("Microservice {} not found", name))
+//     }
+// }
 
-pub fn get_microservices(names: Vec<String>) -> Vec<Result<Microservice, String>> {
-    let mut microservices = vec![];
-    for name in names {
-        microservices.push(get_microservice(name));
-    }
-    microservices
-}
+// pub fn get_microservices(names: Vec<String>) -> Vec<Result<Microservice, String>> {
+//     let mut microservices = vec![];
+//     for name in names {
+//         microservices.push(get_microservice(name));
+//     }
+//     microservices
+// }
 
 pub fn get_all_microservices() -> Vec<Microservice> {
     let mut microservices = vec![];

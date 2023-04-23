@@ -8,38 +8,29 @@ use std::process::Command;
 
 mod cmd;
 
-async fn incoming_msg(
-    socket: &UnboundedSender::<Result<Message, Error>>,
-    msg: Message
+async fn get_all_microservices(
+    socket: &UnboundedSender::<Result<Message, Error>>
 ) {
-    println!("msg: {:?}", msg);
-    let msg: String = match msg.to_str() {
-        Ok(msg) => msg.to_string(),
-        Err(e) => {
-            println!("Not able to get msg string at incoming_msg: {:?}", e);
-            return;
-        }
-    };
-
-    // let micros_vec = msg.split(",").map(|s| s.to_string()).collect();
-    // let micros = cmd::get_microservices(micros_vec);
-    // for micro in micros {
-    //     match micro {
-    //         Ok(micro) => {
-    //             println!("micro: {:?}", micro);
-    //             socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
-    //         },
-    //         Err(e) => {
-    //             println!("error: {:?}", e);
-    //             socket.send(Ok(Message::text(format!("error: {:?}", e)))).unwrap();
-    //         }
-    //     }
-    // }
-
     let micros = cmd::get_all_microservices();
     for micro in micros {
         println!("micro: {:?}", micro);
         socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
+    }
+}
+
+async fn incoming_msg(
+    socket: &UnboundedSender::<Result<Message, Error>>,
+    msg: Message
+) {
+    let msg = msg.to_str().unwrap();
+    println!("msg: {}", msg);
+
+    match msg.as_str() {
+        "/microservices" => get_all_microservices(socket).await,
+        _ => {
+            println!("Unknown command");
+            socket.send(Ok(Message::text("Unknown command"))).unwrap();
+        }
     }
 }
 
