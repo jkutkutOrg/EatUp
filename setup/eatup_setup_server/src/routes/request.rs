@@ -1,5 +1,6 @@
 // use super::*;
 
+#[derive(Debug)]
 pub struct Request {
     pub endpoint: Vec<String>,
     pub params: Vec<String>
@@ -25,9 +26,6 @@ impl Request {
         };
         let endpoint = Self::process_parameter("/", endpoint);
         let params = Self::process_parameter("&", params);
-        if endpoint.len() == 0 {
-            return Err("Invalid request".to_string());
-        }
         // TODO validation
         println!("New request:");
         println!("  - endpoint: {:?}", endpoint);

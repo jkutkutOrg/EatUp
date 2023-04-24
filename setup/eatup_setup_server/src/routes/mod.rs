@@ -16,7 +16,8 @@ pub fn get_router() -> Router {
     // r
     Router::new(
         vec![
-            // ("/test/3".to_string(), test_endpoint2), // TODO test
+            ("/".to_string(), ping), // TODO test
+            ("/test/3".to_string(), test_endpoint2), // TODO test
             ("/test".to_string(), test_endpoint1),
             ("/test/2".to_string(), test_endpoint2),
             ("/microservices".to_string(), get_all_microservices)
@@ -25,6 +26,13 @@ pub fn get_router() -> Router {
 }
 
 // ----------------- Routes -----------------
+
+fn ping(
+    socket: &Socket,
+    _req: Request
+) {
+    socket.send(Ok(Message::text("pong"))).unwrap();
+}
 
 fn test_endpoint1(
     socket: &Socket,
