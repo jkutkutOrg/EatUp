@@ -7,6 +7,7 @@ use tokio::sync::mpsc::{UnboundedSender, unbounded_channel};
 type Socket = UnboundedSender::<Result<Message, Error>>;
 
 mod cmd;
+use routes::{Router, Request};
 
 mod routes {
     use warp::ws::{Message};
@@ -16,131 +17,48 @@ mod routes {
     use crate::Socket;
     use crate::cmd;
 
-    // type Route = &'static str;
-    // pub struct Router<'r> {
-    //     route: Route,
-    //     endpoints: HashMap<Route, RouterEndpoint<'r>>
-    // }
-    // struct Endpoint<'e>
-    // {
-    //     func: &'e dyn Fn(&Socket, Request) -> dyn Future<Output = ()>
-    // }
-    // impl Endpoint<'_> {
-    //     fn new(
-    //         // ft: dyn Fn(&Socket, Request) -> dyn Future<Output = ()>
-    //         ft: &dyn Fn(&Socket, Request) -> dyn Future<Output = ()>
-    //     ) -> Self {
-    //         Self {func: ft}
-    //     }
-    // }
-    // enum RouterEndpoint<'re> {
-    //     Endpoint(Endpoint<'re>),
-    //     Router(Router<'re>)
-    // }
-
-    // impl Router<'_> {
-    //     // fn new() -> Self {
-    //     //     Self::new_switch("/")
-    //     // }
-
-    //     // fn new_switch(route: Route) -> Self {
-    //     //     Self {
-    //     //         route,
-    //     //         endpoints: HashMap::new()
-    //     //     }
-    //     // }
-
-    //     // TODO a way to add routes
-
-    //     // pub fn add_endpoint<Fut>(
-    //     //     &mut self,
-    //     //     endpoint: &'static str,
-    //     //     func: impl FnOnce(&Socket, Request) -> Fut
-    //     // ) -> &mut Self 
-    //     // where
-    //     //     Fut: Future<Output = ()> + 'static
-    //     // {
-    //     //     let endpoint = endpoint.split("/").collect::<Vec<&str>>();
-    //     //     println!("endpoint: {:?}", endpoint);
-    //     //     self
-    //     // }
-
-    //     pub fn add_endpoint<Fut>(
-    //         &mut self,
-    //         endpoint: &'static str,
-    //         func: Endpoint
-    //     ) -> &mut Self
-    //     {
-    //         let endpoint = endpoint.split("/").collect::<Vec<&str>>();
-    //         println!("endpoint: {:?}", endpoint);
-    //         self
-    //     }
-    // }
-
-    // pub fn get_router() -> Router<'static> {
-    //     // Router::new()
-    //     //     .add_endpoint("/microservices", test_endpoint)
-    //     let mut r = Router {
-    //         route: "/",
-    //         endpoints: HashMap::new()
-    //     };
-    //     r.add_endpoint("/microservices", Endpoint::new(test_endpoint));
-    //     r
-    // }
-
-    // ---------------------------------------------------
-
-    // pub struct Method<C, F>
-    // where
-    //     C: Fn(&Socket, Request) -> F,
-    //     F: std::future::Future,
-    // {
-    //     ft: C,
-    // }
-
-    // impl<C, F> Method<C, F>
-    // where
-    //     C: Fn(&Socket, Request) -> F,
-    //     F: std::future::Future,
-    // {
-    //     pub fn new(
-    //         ft: C,
-    //     ) -> Self {
-    //         Self { ft }
-    //     }
-
-    //     pub async fn exec(
-    //         self,
-    //         socket: &Socket,
-    //         req: Request
-    //     ) {
-    //         (self.ft)(socket, req).await;
-    //     }
-    // }
-
-    pub struct Method<C>
-    where
-        C: Fn(&Socket, Request)
-    {
-        ft: C,
+    #[derive(Clone)]
+    enum RouterEndpoint {
+        Endpoint(
+            fn (&Socket, Request)
+        ),
+        Router(Router)
     }
 
-    impl<C> Method<C>
-    where
-        C: Fn(&Socket, Request)
-    {
-        pub fn new(
-            ft: C,
-        ) -> Self {
-            Self { ft }
+    #[derive(Clone)]
+    pub struct Router {
+        endpoints: HashMap<String, RouterEndpoint>
+    }
+
+    impl Router {
+        pub fn new() -> Self {
+            Self {
+                endpoints: HashMap::new()
+            }
         }
 
-        pub fn exec(
-            self,
+        pub fn add_endpoint(
+            &mut self,
+            endpoint: &str,
+            func: fn (&Socket, Request)
+        ) -> &mut Self {
+            self.endpoints.insert(
+                endpoint.to_string(),
+                RouterEndpoint::Endpoint(func)
+            );
+            // TODO route to subrouter
+            self
+        }
+
+        pub fn handle_request(
+            &self,
             socket: &Socket,
             req: Request
         ) {
-            (self.ft)(socket, req);
+            match self.endpoints.get("/test").unwrap() {
+                RouterEndpoint::Endpoint(ft) => ft(socket, req), // TODO
+                RouterEndpoint::Router(r) => panic!("Router not implemented")
+            }
         }
     }
 
@@ -165,8 +83,11 @@ mod routes {
         }
     }
 
-    pub async fn get_router() -> String {
-        "".to_string()
+    pub fn get_router() -> Router {
+        let mut r = Router::new();
+        r.add_endpoint("/test", test_endpoint)
+            .add_endpoint("/microservices", get_all_microservices);
+        r
     }
 
     // ----------------- Routes -----------------
@@ -182,8 +103,9 @@ mod routes {
         socket.send(Ok(Message::text(output))).unwrap();
     }
 
-    pub async fn get_all_microservices(
-        socket: &Socket
+    pub fn get_all_microservices(
+        socket: &Socket,
+        req: Request
     ) {
         let micros = cmd::get_all_microservices();
         for micro in micros {
@@ -193,30 +115,12 @@ mod routes {
     }
 }
 
-use routes::*; // TODO remove
-async fn incoming_msg(
-    socket: &Socket,
-    msg: Message
-) {
-    let msg = msg.to_str().unwrap();
-    println!("msg: {}", msg);
-
-    let m = Method::new(test_endpoint);
-    let req = Request::new(msg).unwrap();
-    m.exec(socket, req);
-
-    match msg {
-        "/microservices" => routes::get_all_microservices(socket).await,
-        _ => {
-            println!("Unknown command");
-            socket.send(Ok(Message::text("Unknown command"))).unwrap();
-        }
-    }
-}
-
-async fn ws_handler(ws: warp::ws::Ws) -> Result<impl Reply, Rejection> {
+async fn ws_handler(
+    ws: warp::ws::Ws
+) -> Result<impl Reply, Rejection> {
     Ok(ws.on_upgrade(move |socket| async {
         println!("Socket connection\n");
+        let router: Router = routes::get_router();
         let (client_ws_sender, mut client_ws_rcv) = socket.split();
         let (client_sender, client_rcv) = unbounded_channel();
         let client_rcv = UnboundedReceiverStream::new(client_rcv);
@@ -228,7 +132,10 @@ async fn ws_handler(ws: warp::ws::Ws) -> Result<impl Reply, Rejection> {
         while let Some(result) = client_ws_rcv.next().await {
             match result {
                 Ok(msg) => {
-                    incoming_msg(&client_sender, msg).await; // TODO
+                    router.handle_request(
+                        &client_sender,
+                        Request::new(&msg.to_str().unwrap()).unwrap()
+                    );
                 },
                 Err(e) => {
                     eprintln!("error receiving ws message: {}", e);
@@ -243,7 +150,6 @@ async fn ws_handler(ws: warp::ws::Ws) -> Result<impl Reply, Rejection> {
 #[tokio::main]
 async fn main() {
     let port = 9000;
-    let mut r = routes::get_router().await;
     let routes = warp::path("ws")
         .and(warp::ws())
         .and_then(ws_handler)
