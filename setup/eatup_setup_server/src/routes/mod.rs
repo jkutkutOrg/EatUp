@@ -1,5 +1,4 @@
 use warp::ws::{Message};
-use warp::Future;
 use std::collections::HashMap;
 
 use crate::{Socket};
@@ -21,7 +20,7 @@ pub fn get_router() -> Router {
 
 fn test_endpoint(
     socket: &Socket,
-    req: Request
+    _req: Request
 ) {
     let mut cmd = std::process::Command::new("ls");
     cmd.arg("-l");
@@ -32,11 +31,10 @@ fn test_endpoint(
 
 fn get_all_microservices(
     socket: &Socket,
-    req: Request
+    _req: Request
 ) {
     let micros = crate::cmd::get_all_microservices();
     for micro in micros {
-        println!("micro: {:?}", micro);
         socket.send(Ok(Message::text(format!("micro: {:?}", micro)))).unwrap();
     }
 }

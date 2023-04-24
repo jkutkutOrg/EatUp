@@ -30,7 +30,7 @@ async fn ws_handler(
                 Ok(msg) => {
                     router.handle_request(
                         &client_sender,
-                        Request::new(&msg.to_str().unwrap()).unwrap()
+                        Request::new(&msg.to_str().unwrap())
                     );
                 },
                 Err(e) => {

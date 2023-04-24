@@ -1,8 +1,8 @@
-use super::*;
+// use super::*;
 
 pub struct Request {
-    endpoint: Vec<String>,
-    params: Vec<String>
+    pub endpoint: Vec<String>,
+    pub params: Vec<String>
 }
 
 impl Request {
@@ -11,8 +11,8 @@ impl Request {
         param: &str
     ) -> Vec<String> {
         param.split(separator)
+            .map(|s| s.trim().to_string())
             .filter(|s| s.len() > 0)
-            .map(|s| s.to_string())
             .collect::<Vec<String>>()
     }
 
@@ -25,6 +25,9 @@ impl Request {
         };
         let endpoint = Self::process_parameter("/", endpoint);
         let params = Self::process_parameter("&", params);
+        if endpoint.len() == 0 {
+            return Err("Invalid request".to_string());
+        }
         // TODO validation
         println!("New request:");
         println!("  - endpoint: {:?}", endpoint);
