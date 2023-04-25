@@ -72,12 +72,11 @@ impl Router {
         let req = match req {
             Err(e) => {
                 println!("Invalid request: {}", &e);
-                socket.send(Ok(Message::text(e))).unwrap();
+                send_err(socket, &e);
                 return;
             },
             Ok(req) => req
         };
-        // self.print(0, "/".to_string());
         self.handle_request_recursive(socket, req, 0);
     }
 
@@ -91,17 +90,14 @@ impl Router {
             Ordering::Equal => {
                 match &self.endpoint {
                     Some(endpoint) => endpoint(socket, req),
-                    None => socket.send(Ok(Message::text("This endpoint does not exists"))).unwrap()
+                    None => send_err(socket, "This endpoint does not exists")
                 }
             },
-            Ordering::Greater => {
-                socket.send(Ok(Message::text("This endpoint does not exists"))).unwrap();
-                panic!("handle_request: depth is greater than endpoint length at endpoint: {}", req.endpoint.join("/"));
-            },
+            Ordering::Greater => {},
             Ordering::Less => {
                 match self.routes.get(&req.endpoint[depth]) {
                     Some(router) => router.handle_request_recursive(socket, req, depth + 1),
-                    None => socket.send(Ok(Message::text("This endpoint does not exists"))).unwrap()
+                    None => send_err(socket, "This endpoint does not exists")
                 }
             }
         }

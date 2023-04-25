@@ -1,9 +1,6 @@
-use warp::ws::{Message};
 use std::collections::HashMap;
-use serde_json::json;
 
-use crate::{Socket};
-
+use crate::ws::{Socket, send_json, send_err};
 mod router;
 mod request;
 
@@ -25,7 +22,7 @@ fn ping(
     socket: &Socket,
     _req: Request
 ) {
-    socket.send(Ok(Message::text("pong"))).unwrap();
+    send_json(socket, &"pong");
 }
 
 fn get_all_microservices(
@@ -34,8 +31,6 @@ fn get_all_microservices(
 ) {
     let micros = crate::cmd::get_all_microservices();
     for micro in micros {
-        socket.send(Ok(Message::text(
-            json!(micro).to_string()
-        ))).unwrap();
+        send_json(socket, &micro);
     }
 }
