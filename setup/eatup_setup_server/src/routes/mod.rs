@@ -10,17 +10,13 @@ pub use router::Router;
 pub use request::Request;
 
 pub fn get_router() -> Router {
-    // let mut r = Router::new();
-    // r.add_endpoint("/test", test_endpoint)
-    //     .add_endpoint("/microservices", get_all_microservices);
-    // r
     Router::new(
         vec![
-            ("/".to_string(), ping), // TODO test
-            ("/test/3".to_string(), test_endpoint2), // TODO test
-            ("/test".to_string(), test_endpoint1),
-            ("/test/2".to_string(), test_endpoint2),
-            ("/microservices".to_string(), get_all_microservices)
+            ("/", ping), // TODO test
+            ("/test/3", ping), // TODO test
+            ("/test", test_endpoint1),
+            ("/test/2", test_endpoint2),
+            ("/microservices", get_all_microservices)
         ]
     )
 }

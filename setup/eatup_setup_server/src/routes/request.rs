@@ -27,9 +27,9 @@ impl Request {
         let endpoint = Self::process_parameter("/", endpoint);
         let params = Self::process_parameter("&", params);
         // TODO validation
-        println!("New request:");
-        println!("  - endpoint: {:?}", endpoint);
-        println!("  - params: {:?}", params);
+        // println!("New request:");
+        // println!("  - endpoint: {:?}", endpoint);
+        // println!("  - params: {:?}", params);
         Ok(Self {endpoint, params})
     }
 }
