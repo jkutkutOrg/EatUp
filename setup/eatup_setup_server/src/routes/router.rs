@@ -12,7 +12,7 @@ impl Router {
         mut endpoints: Vec<(String, fn (&Socket, Request))>
     ) -> Self {
         endpoints.sort_by(|(a, _), (b, _)| a.cmp(b));
-        endpoints.reverse();
+        // endpoints.reverse();
         let endpoints = endpoints.into_iter()
             .map(|(endpoint, func)| {
                 let req = Request::new(&endpoint).unwrap();
@@ -32,30 +32,72 @@ impl Router {
         socket: &Socket,
         req: Result<Request, String>
     ) {
-        // TODO
-        todo!("handle request");
+        let req = match req {
+            Err(e) => {
+                println!("Invalid request: {}", &e);
+                socket.send(Ok(Message::text(e))).unwrap();
+                return;
+            },
+            Ok(req) => req
+        };
+        println!("Handling request: {:?}", &req);
+        self.print(0, "/".to_string());
+        self.handle_request_recursive(socket, req, 0);
     }
 
-    fn fill_recursive(
-        endpoints: Vec<(Request, fn (&Socket, Request))>,
+    fn handle_request_recursive(
+        &self,
+        socket: &Socket,
+        req: Request,
         depth: usize
-    ) -> Self {
-        let mut router = Self {
-            endpoint: None,
-            routes: HashMap::new()
-        };
-        for (r, ft) in endpoints {
-            match depth.cmp(&r.endpoint.len()) {
-                Ordering::Equal => {
-                    router.endpoint = Some(ft);
-                },
-                Ordering::Less => {
-                    // TODO
-                    todo!("Recursive fill");
-                },
-                Ordering::Greater => panic!("Depth is greater than endpoint length at endpoint: {}", r.endpoint.join("/"))
+    ) {
+        match depth.cmp(&req.endpoint.len()) {
+            Ordering::Equal => {
+                match &self.endpoint {
+                    Some(endpoint) => endpoint(socket, req),
+                    None => socket.send(Ok(Message::text("This endpoint does not exists"))).unwrap()
+                }
+            },
+            Ordering::Greater => {
+                socket.send(Ok(Message::text("This endpoint does not exists"))).unwrap();
+                panic!("handle_request: depth is greater than endpoint length at endpoint: {}", req.endpoint.join("/"));
+            },
+            Ordering::Less => {
+                match self.routes.get(&req.endpoint[depth]) {
+                    Some(router) => router.handle_request_recursive(socket, req, depth + 1),
+                    None => socket.send(Ok(Message::text("This endpoint does not exists"))).unwrap()
+                }
             }
         }
-        router
+    }
+
+    // -------------------------------------------
+
+    fn print(&self, depth: usize, endpoint: String) {
+        let offset = Self::offset(depth);
+        println!("{}****", &offset);
+        println!("{}*Router: {}", &offset, &endpoint);
+        if let Some(end) = &self.endpoint {
+            println!("{}*- endpoint: Some", &offset);
+        }
+        else {
+            println!("{}*- endpoint: None", &offset);
+        }
+        for (route, router) in &self.routes {
+            println!("{}*- routes: {}", &offset, route);
+            router.print(depth + 1, format!("{}->{}", &endpoint, &route));
+        }
+        if self.routes.len() == 0 {
+            println!("{}*- routes: None", &offset);
+        }
+        println!("{}****", &offset);
+    }
+
+    fn offset(depth: usize) -> String {
+        let mut offset = String::new();
+        for _ in 0..depth {
+            offset.push_str("  ");
+        }
+        offset
     }
 }
