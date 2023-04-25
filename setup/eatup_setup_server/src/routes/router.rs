@@ -9,9 +9,9 @@ pub struct Router {
 
 impl Router {
     pub fn new(
-        mut endpoints: Vec<(&str, fn (&Socket, Request))>
+        endpoints: Vec<(&str, fn (&Socket, Request))>
     ) -> Self {
-        let mut endpoints = endpoints.into_iter()
+        let endpoints = endpoints.into_iter()
             .map(|(endpoint, func)| {
                 let req = Request::new(endpoint).unwrap();
                 (req, func)

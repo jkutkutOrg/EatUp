@@ -1,7 +1,7 @@
-// use serde_json::json;
 use std::process::Command;
+use serde::{Serialize};
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub enum MicroserviceState {
     Created,
     Running,
@@ -37,7 +37,7 @@ impl MicroserviceState {
     }
 }
 
-#[derive(Debug)]
+#[derive(Debug, Serialize)]
 pub struct Microservice {
     name: String,
     state: MicroserviceState,
