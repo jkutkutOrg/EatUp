@@ -1,9 +1,11 @@
-import './App.css'
-
-import ListGroup from './components/ListGroup'
+import Header from './components/header/Header';
+import ServicesHandler from './components/serviceHandler/ServiceHandler';
 
 function App() {
-  return <ListGroup/>
+  return <>
+    <Header/>
+    <ServicesHandler/>
+  </>
 }
 
 export default App;
