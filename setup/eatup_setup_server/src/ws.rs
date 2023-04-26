@@ -14,7 +14,7 @@ pub async fn ws_handler(
     ws: warp::ws::Ws
 ) -> Result<impl Reply, Rejection> {
     Ok(ws.on_upgrade(move |socket| async {
-        println!("Socket connection\n");
+        println!("Socket connection");
         let router: Router = get_router();
         let (client_ws_sender, mut client_ws_rcv) = socket.split();
         let (client_sender, client_rcv) = unbounded_channel();
@@ -27,9 +27,13 @@ pub async fn ws_handler(
         while let Some(result) = client_ws_rcv.next().await {
             match result {
                 Ok(msg) => {
+                    let msg = match msg.to_str() {
+                        Ok(msg) => msg,
+                        Err(_) => break
+                    };
                     router.handle_request(
                         &client_sender,
-                        Request::new(&msg.to_str().unwrap())
+                        Request::new(&msg)
                     );
                 },
                 Err(e) => {
@@ -38,7 +42,7 @@ pub async fn ws_handler(
                 }
             }
         }
-        println!("socket disconnected\n");
+        println!("socket disconnected");
     }))
 }
 

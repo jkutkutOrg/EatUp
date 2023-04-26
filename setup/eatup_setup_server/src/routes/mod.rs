@@ -25,12 +25,10 @@ fn ping(
     send_json(socket, &"pong");
 }
 
+use crate::cmd;
 fn get_all_microservices(
     socket: &Socket,
     _req: Request
 ) {
-    let micros = crate::cmd::get_all_microservices();
-    for micro in micros {
-        send_json(socket, &micro);
-    }
+    send_json(socket, &cmd::get_all_microservices());
 }
