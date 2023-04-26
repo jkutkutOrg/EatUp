@@ -1,5 +1,7 @@
+import Service from "../../model/Service";
+
 interface Props {
-  services: string[];
+  services: Service[];
 }
 
 const Services = ({services}: Props) => {
@@ -10,7 +12,12 @@ const Services = ({services}: Props) => {
           key={index}
           className="list-group-item"
         >
-          {service}
+          <div>
+            <div className="d-flex justify-content-between">
+              <h5 className="mb-1">{service.name}</h5>
+              <small>{service.state}</small>
+            </div>
+          </div>
         </li>
       ))}
     </ul>

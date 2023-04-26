@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
+import Service from './Service';
 
 const useWebsocket = (url: string) => {
     const [socket, setSocket] = useState<WebSocket | null>(null);
-    const [message, setMessage] = useState<string | null>(null);
+    const [message, setMessage] = useState<Service[]>([]);
 
     useEffect(() => {
         const ws = new WebSocket(url);
         
         ws.addEventListener('open', (e) => {
             console.log('Connection established');
+            ws.send("/microservices");
         });
 
         ws.addEventListener('message', (e) => {
             console.log('Message received');
-            setMessage(e.data);
+            setMessage(Service.arrayFromString(e.data));
         });
 
         ws.addEventListener('close', (e) => {

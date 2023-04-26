@@ -42,7 +42,7 @@ push_release:
 # ******** Public tools ********
 
 run_release:
-	docker run -it --rm ${BASIC_ATTRS} --name eatup jkutkut/eatup:$(VERSION)
+	docker run -it --rm ${BASIC_ATTRS} --name eatup_server jkutkut/eatup:$(VERSION)
 
 stop:
-	docker stop eatup
+	docker stop eatup_server

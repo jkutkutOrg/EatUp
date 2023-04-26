@@ -1,4 +1,8 @@
-function Header() {
+interface Props {
+    onRefresh: () => void;
+}
+
+function Header({onRefresh}: Props) {
     return <header>
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             <div className="container-fluid">
@@ -18,6 +22,9 @@ function Header() {
                     {/* TODO active CSS class */}
                     <li className="nav-item">
                         <a className="nav-link" href="#">Services Handler</a>
+                    </li>
+                    <li className="nav-item">
+                        <button className="nav-link btn btn-link" onClick={onRefresh}>Refresh</button>
                     </li>
                 </ul>
             </div>

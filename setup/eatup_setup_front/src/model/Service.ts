@@ -13,12 +13,16 @@ class Service {
         this.requires = requires;
     }
 
-    public static fromJson({name, state, requires}: any): Service {
+    static fromJson({name, state, requires}: any): Service {
         return new Service(name, state, requires);
     }
 
-    public static fromJsonArray(json: any[]): Service[] {
+    static fromJsonArray(json: any[]): Service[] {
         return json.map(Service.fromJson);
+    }
+
+    public static arrayFromString(str: string): Service[] {
+        return Service.fromJsonArray(JSON.parse(str));
     }
 }
 
