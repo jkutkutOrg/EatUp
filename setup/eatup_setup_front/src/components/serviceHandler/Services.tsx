@@ -2,7 +2,7 @@ interface Props {
   services: string[];
 }
 
-function Services({services}: Props) {
+const Services = ({services}: Props) => {
   return (
     <ul className="list-group">
       {services.map((service, index) => (
