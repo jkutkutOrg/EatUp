@@ -12,6 +12,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
@@ -42,7 +43,6 @@ public class QRActivity extends AppCompatActivity {
         sfvQR = findViewById(R.id.sfvQR);
         btnProblemScanner = findViewById(R.id.btnProblemScanner);
 
-        // On click btnProblemScanner, the user will be redirected to the problem scanner activity
         btnProblemScanner.setOnClickListener(v -> {
             Intent intent = new Intent(QRActivity.this, QRManualActivity.class);
             if (intent.resolveActivity(getPackageManager()) != null) {
@@ -90,7 +90,6 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
-
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -98,7 +97,7 @@ public class QRActivity extends AppCompatActivity {
             }
 
             @Override
-            public void receiveDetections(Detector.Detections<Barcode> detections) {
+            public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
                 if (barcodes.size() != 0) {
 
@@ -106,12 +105,18 @@ public class QRActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             // TODO: Pending to implement the logic to send the QR code to the server
-                            tvQR.setText(barcodes.valueAt(0).displayValue);
-                            Log.d("QRActivity", "QR code scanned: " + barcodes.valueAt(0).displayValue);
+                            if (barcodes.valueAt(0).isRecognized) {
+                                Log.d("QRActivity", "QR code recognized with value: " + barcodes.valueAt(0).displayValue);
+                            } else {
+                                Log.d("QRActivity", "QR code not recognized");
+                            }
                         }
                     });
 
+                    Log.d("QRActivity", "QR code detected");
+
                 }
+                Log.d("QRActivity", "QR code not detected");
             }
         });
     }

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F7F7FB">
+    android:background="@color/background_color">
 
     <ImageView
         android:id="@+id/imgLogo"
@@ -22,8 +22,8 @@
         android:layout_marginTop="@dimen/margin_large"
         android:layout_marginEnd="@dimen/margin_medium"
         android:gravity="center"
-        android:text="Enjoy instant access\nto your card"
-        android:textColor="#1C1C1C"
+        android:text="@string/enter_the_qr_code"
+        android:textColor="@color/text_color_black"
         android:textSize="26sp"
         android:fontFamily="@font/sf_pro_rounded_bold" />
 
@@ -42,7 +42,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/ic_frame_barcode" />
-
     </androidx.cardview.widget.CardView>
 
     <LinearLayout
@@ -61,8 +60,8 @@
             android:layout_marginTop="@dimen/margin_large"
             android:layout_marginEnd="@dimen/margin_medium"
             android:background="@drawable/st_button_rounded_color"
-            android:text="Scan to order"
-            android:textColor="@color/white"
+            android:text="@string/btn_scan_qr"
+            android:textColor="@color/text_color_white"
             android:textSize="16sp"
             android:fontFamily="@font/sf_pro_rounded_bold" />
 
@@ -80,10 +79,9 @@
             android:layout_marginEnd="@dimen/margin_medium"
             android:background="@android:color/transparent"
             android:fontFamily="@font/sf_pro_rounded_medium"
-            android:text="Problem scanning? Tap here"
+            android:text="@string/btn_problem_scanner"
             android:textColor="#1C1C1C"
             android:textSize="12sp" />
-
     </LinearLayout>
 
 </RelativeLayout>
