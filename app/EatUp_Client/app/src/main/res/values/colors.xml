@@ -6,11 +6,12 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 
     <!-- General colors, used in multiple screens -->
     <color name="text_color_yellow">#FFC83A</color>
-    <color name="text_color_black">#1C1C1C</color>\
+    <color name="text_color_black">#1C1C1C</color>
     <color name="text_color_gray">#3D3D3D</color>
     <color name="text_color_white">#FFFFFFFF</color>
-    <color name="background_color">F7F7FB</color>
+    <color name="background_color">#F7F7FB</color>
 </resources>
