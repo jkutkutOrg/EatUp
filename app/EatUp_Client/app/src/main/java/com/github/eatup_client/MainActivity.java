@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnGetStarted.setOnClickListener(v -> {
             System.out.println("Get Started");
-            Intent intent = new Intent(MainActivity.this, QRActivity.class);
+            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
 
             if (intent.resolveActivity(getPackageManager()) != null) {
                 startActivity(intent);
