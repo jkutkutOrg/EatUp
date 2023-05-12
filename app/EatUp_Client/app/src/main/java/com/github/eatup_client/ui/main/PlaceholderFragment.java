@@ -14,6 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.github.eatup_client.R;
 import com.github.eatup_client.databinding.FragmentMenuBinding;
+import com.github.eatup_client.fragments.AppetizersFragment;
+import com.github.eatup_client.fragments.StartersFragment;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -25,12 +27,24 @@ public class PlaceholderFragment extends Fragment {
     private PageViewModel pageViewModel;
     private FragmentMenuBinding binding;
 
-    public static PlaceholderFragment newInstance(int index) {
-        PlaceholderFragment fragment = new PlaceholderFragment();
-        Bundle bundle = new Bundle();
-        bundle.putInt(ARG_SECTION_NUMBER, index);
-        fragment.setArguments(bundle);
+    public static Fragment newInstance(int index) {
+        Fragment fragment = new Fragment();
+
+        switch (index) {
+            case 1:
+                fragment = new AppetizersFragment();
+            case 2:
+                fragment = new StartersFragment();
+        }
+
         return fragment;
+
+
+        // PlaceholderFragment fragment = new PlaceholderFragment();
+        // Bundle bundle = new Bundle();
+        // bundle.putInt(ARG_SECTION_NUMBER, index);
+        // fragment.setArguments(bundle);
+        //return fragment;
     }
 
     @Override
