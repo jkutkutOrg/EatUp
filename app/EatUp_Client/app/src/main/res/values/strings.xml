@@ -14,4 +14,9 @@
     <string name="btn_manual_confirm">Confirm code</string>
     <string name="btn_manual_return_to_scan">Return to Scan QR Code</string>
     <string name="enter_the_otp_code">Enter the QR Code</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="tab_text_1">Tab 1</string>
+    <string name="tab_text_2">Tab 2</string>
 </resources>

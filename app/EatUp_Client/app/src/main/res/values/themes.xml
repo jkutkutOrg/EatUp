@@ -22,4 +22,13 @@
         <item name="android:gravity">center</item>
         <item name="android:layout_marginEnd">8dp</item>
     </style>
+
+    <style name="Theme.EatUpClient.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.EatUpClient.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.EatUpClient.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
