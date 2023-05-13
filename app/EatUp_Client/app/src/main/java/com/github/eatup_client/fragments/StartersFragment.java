@@ -3,6 +3,7 @@ package com.github.eatup_client.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,45 +29,26 @@ public class StartersFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ProductAdapter adapter;
-    private List<Product> productList;
+    private LiveData<List<Product>> productListLiveData;
 
     private ProductApiService productApiService;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        System.out.println("StartersFragment.onCreateView");
+        Log.i("Starters", "Create VIEW StartersFragment");
         View view = inflater.inflate(R.layout.fragment_starters, container, false);
 
         recyclerView = view.findViewById(R.id.rv_starters);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        productList = new ArrayList<>();
-        adapter = new ProductAdapter(getActivity());
+        adapter = new ProductAdapter(getContext());
         recyclerView.setAdapter(adapter);
 
-        // Initialize ProductApiService
-        productApiService = new ProductApiService();
-
-        // Get starters products from API
-        productApiService.getProductsByCategory("Starters", new Callback<List<Product>>() {
-            @Override
-            public void onResponse(Call<List<Product>> call, Response<List<Product>> response) {
-                if (response.isSuccessful()) {
-                    productList.clear();
-                    productList.addAll(response.body());
-                    adapter.setProducts(productList);
-                    Log.i("StartersFragment", "Starters products: " + productList.get(0).getName());
-                } else {
-                    // Handle error
-                    Log.e("StartersFragment", "Error getting starters products: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Product>> call, Throwable t) {
-                // Handle failure
-                Log.e("StartersFragment", "Error getting starters products", t);
-            }
+        productApiService = new ProductApiService(getContext());
+        productListLiveData = productApiService.getProductsByCategory("Starters");
+        productListLiveData.observe(getViewLifecycleOwner(), productList -> {
+            adapter.setProducts(productList);
+            Log.i("Starters", "Starters products: " + productList.get(0).getName());
         });
 
         return view;

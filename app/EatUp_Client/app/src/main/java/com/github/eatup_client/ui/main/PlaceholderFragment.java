@@ -6,20 +6,19 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.github.eatup_client.R;
 import com.github.eatup_client.databinding.FragmentMenuBinding;
 import com.github.eatup_client.fragments.AppetizersFragment;
+import com.github.eatup_client.fragments.DessertsFragment;
+import com.github.eatup_client.fragments.DrinksFragment;
+import com.github.eatup_client.fragments.MainCoursesFragment;
 import com.github.eatup_client.fragments.StartersFragment;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -27,25 +26,24 @@ public class PlaceholderFragment extends Fragment {
     private PageViewModel pageViewModel;
     private FragmentMenuBinding binding;
 
-    public static Fragment newInstance(int index) {
-        Fragment fragment = new Fragment();
+    public static Fragment newInstance(int fragmentIndex) {
 
-        switch (index) {
+        switch (fragmentIndex) {
             case 1:
-                fragment = new AppetizersFragment();
+                return new StartersFragment();
             case 2:
-                fragment = new StartersFragment();
+                return new AppetizersFragment();
+            case 3:
+                return new MainCoursesFragment();
+            case 4:
+                return new DessertsFragment();
+            case 5:
+                return new DrinksFragment();
+            default:
+                throw new IllegalArgumentException("Invalid fragment index");
         }
-
-        return fragment;
-
-
-        // PlaceholderFragment fragment = new PlaceholderFragment();
-        // Bundle bundle = new Bundle();
-        // bundle.putInt(ARG_SECTION_NUMBER, index);
-        // fragment.setArguments(bundle);
-        //return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
