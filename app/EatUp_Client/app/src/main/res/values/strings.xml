@@ -17,6 +17,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_menu">MenuActivity</string>
-    <string name="tab_text_1">Tab 1</string>
-    <string name="tab_text_2">Tab 2</string>
+    <string name="tab_category_all">All</string>
+    <string name="tab_category_appetizers">Appetizers</string>
+    <string name="tab_category_starters">Starters</string>
+    <string name="tab_category_main_courses">Main Courses</string>
+    <string name="tab_category_desserts">Desserts</string>
+    <string name="tab_category_drinks">Drinks</string>
+
 </resources>
