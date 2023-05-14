@@ -14,4 +14,5 @@
     <color name="text_color_gray">#3D3D3D</color>
     <color name="text_color_white">#FFFFFFFF</color>
     <color name="background_color">#F7F7FB</color>
+    <color name="text_color_red">#FE554A</color>
 </resources>
