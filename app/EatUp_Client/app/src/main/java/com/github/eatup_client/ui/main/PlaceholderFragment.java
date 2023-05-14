@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.github.eatup_client.R;
 import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.databinding.FragmentMenuBinding;
 import com.github.eatup_client.model.Product;

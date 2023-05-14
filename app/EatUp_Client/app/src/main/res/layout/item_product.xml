@@ -1,54 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp">
-
-    <ImageView
-        android:id="@+id/product_image"
-        android:layout_width="72dp"
-        android:layout_height="72dp"
-        android:src="@drawable/googleg_disabled_color_18" />
+    android:layout_height="100dp"
+    android:background="@drawable/st_button_rounded"
+    android:layout_margin="5dp"
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="16dp"
-        android:orientation="vertical">
+        android:id="@+id/llProductAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/product_name"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4"
+            android:scaleType="centerCrop"
+            android:src="@drawable/cesar_salad_min" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:paddingStart="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre del producto"
+                android:textColor="@color/text_color_black" />
+
+            <TextView
+                android:id="@+id/tvProductDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Descripción del producto"
+                android:textColor="@color/text_color_gray" />
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Precio del producto"
+                android:textColor="@color/text_color_black" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAddProduct"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:textAppearance="?android:textAppearanceMedium"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/product_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Product Description"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/black" />
-
-        <TextView
-            android:id="@+id/product_price"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Product Price"
-            android:textAppearance="?android:textAppearanceSmall"
-            android:textColor="@android:color/black" />
-
+            android:layout_weight="0.2"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_rounded_corners"
+            android:text="Add"
+            android:textColorHint="@color/text_color_yellow"
+            android:textColor="@color/text_color_gray" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_add_to_cart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add to Cart" />
 
 </LinearLayout>

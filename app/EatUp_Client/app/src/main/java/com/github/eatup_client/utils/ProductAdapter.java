@@ -59,11 +59,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            productImage = itemView.findViewById(R.id.product_image);
-            productName = itemView.findViewById(R.id.product_name);
-            productDescription = itemView.findViewById(R.id.product_description);
-            productPrice = itemView.findViewById(R.id.product_price);
-            buyButton = itemView.findViewById(R.id.btn_add_to_cart);
+            productImage = itemView.findViewById(R.id.ivProductImage);
+            productName = itemView.findViewById(R.id.tvProductName);
+            productDescription = itemView.findViewById(R.id.tvProductDescription);
+            productPrice = itemView.findViewById(R.id.tvProductPrice);
+            buyButton = itemView.findViewById(R.id.btnAddProduct);
         }
 
         public void bind(Product product, Context context) {
@@ -73,7 +73,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             // Load product image with a library like Picasso or Glide
             // Picasso.get().load(product.getImageUrl()).into(productImage);
             // Or use a local drawable resource
-            productImage.setImageResource(R.drawable.ic_img_hamburger);
+            productImage.setImageResource(R.drawable.example_salad_img);
+
             buyButton.setOnClickListener(v -> {
                 Log.i("ProductAdapter", "Buy button clicked for product: " + product.getName());
                 // Handle buy button click

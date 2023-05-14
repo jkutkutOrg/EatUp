@@ -4,29 +4,76 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_color"
     tools:context=".MenuActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background_color"
         android:theme="@style/Theme.EatUpClient.AppBarOverlay">
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:minHeight="?actionBarSize"
-            android:padding="@dimen/appbar_padding"
-            android:text="@string/app_name"
-            android:textAppearance="@style/TextAppearance.Widget.AppCompat.Toolbar.Title" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="0dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/back_button"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.10"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                android:src="@drawable/icons8_back"
+                android:onClick="onBackPressed"/>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:paddingStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/restaurant_name"
+                    android:textColor="@color/text_color_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Bottega Ristorante"/>
+
+                <TextView
+                    android:id="@+id/city_name"
+                    android:textColor="@color/text_color_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Italian Resto"/>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/language_flag"
+                android:layout_width="59dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:padding="5dp"
+                android:src="@drawable/icons8_language" />
+
+        </LinearLayout>
+
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:tabTextColor="@color/text_color_black"
+            app:tabSelectedTextColor="@color/text_color_red"
+            app:tabIndicatorColor="@color/text_color_red"
             app:tabGravity="fill"
             app:tabMode="scrollable" />
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
