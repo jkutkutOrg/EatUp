@@ -19,6 +19,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.PATCH;
+import retrofit2.http.POST;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public class ProductApiService {
@@ -28,6 +31,7 @@ public class ProductApiService {
 
     private static ProductApiService sInstance;
     private final ProductService mProductService;
+    private final SessionService mSessionService;
     private Context mContext;
 
     public ProductApiService(Context context) {
@@ -44,6 +48,7 @@ public class ProductApiService {
                 .build();
 
         mProductService = retrofit.create(ProductService.class);
+        mSessionService = retrofit.create(SessionService.class);
     }
 
     public static synchronized ProductApiService getInstance() {
@@ -76,9 +81,92 @@ public class ProductApiService {
         return data;
     }
 
+    // Session API
+    public LiveData<String> getSessionId(String simpleId) {
+        MutableLiveData<String> data = new MutableLiveData<>();
+        Call<String> call = mSessionService.getSessionId(simpleId);
+        Log.i("ProductApiService", "getSessionId: " + call.request().url());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body());
+                    Log.i("ProductApiService", "getSessionId success: " + simpleId);
+                } else {
+                    Log.e("ProductApiService", "getSessionId error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("ProductApiService", "getSessionId failure: " + t.getMessage());
+            }
+        });
+        return data;
+    }
+
+    public LiveData<String> createSession(String tableId) {
+        MutableLiveData<String> data = new MutableLiveData<>();
+        Call<String> call = mSessionService.createSession(tableId);
+        Log.i("ProductApiService", "createSession: " + call.request().url());
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(response.body());
+                    Log.i("ProductApiService", "createSession success: " + tableId);
+                } else {
+                    Log.e("ProductApiService", "createSession error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("ProductApiService", "createSession failure: " + t.getMessage());
+            }
+        });
+        return data;
+    }
+
+    public LiveData<Void> endSession(String sessionId) {
+        MutableLiveData<Void> data = new MutableLiveData<>();
+        Call<Void> call = mSessionService.endSession(sessionId);
+        Log.i("ProductApiService", "endSession: " + call.request().url());
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    data.setValue(null);
+                    Log.i("ProductApiService", "endSession success: " + sessionId);
+                } else {
+                    Log.e("ProductApiService", "endSession error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.e("ProductApiService", "endSession failure: " + t.getMessage());
+            }
+        });
+        return data;
+    }
+
+    // Retrofit interface
     public interface ProductService {
         @Headers({"device: android"})
         @GET(ENDPOINT_PRODUCTS)
         Call<List<Product>> getProductsByCategory(@Query("category") String category);
     }
+
+    public interface SessionService {
+        @GET("session_id/{simple_id}")
+        Call<String> getSessionId(@Path("simple_id") String simpleId);
+
+        @POST("sessions/{table_id}")
+        Call<String> createSession(@Path("table_id") String tableId);
+
+        @PATCH("sessions/{session_id}/end")
+        Call<Void> endSession(@Path("session_id") String sessionId);
+    }
+
 }
