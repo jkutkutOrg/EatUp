@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.github.eatup_client.model.Product;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -107,26 +109,30 @@ public class ProductApiService {
 
     public LiveData<String> createSession(String tableId) {
         MutableLiveData<String> data = new MutableLiveData<>();
-        Call<String> call = mSessionService.createSession(tableId);
-        Log.i("ProductApiService", "createSession: " + call.request().url());
-        call.enqueue(new Callback<String>() {
+        Call<JsonObject> call = mSessionService.createSession(tableId);
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                 if (response.isSuccessful()) {
-                    data.setValue(response.body());
+                    JsonObject jsonObject = response.body();
+                    String jsonString = new Gson().toJson(jsonObject);
+                    data.setValue(jsonString);
                     Log.i("ProductApiService", "createSession success: " + tableId);
                 } else {
-                    Log.e("ProductApiService", "createSession error: " + response.code());
+                    Log.e("ProductApiService", "createSession error: " + response.code() + " " + response.message());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
                 Log.e("ProductApiService", "createSession failure: " + t.getMessage());
+                t.printStackTrace();
             }
         });
+        Log.i("ProductApiService", "createSession 5: " + tableId);
         return data;
     }
+
 
     public LiveData<Void> endSession(String sessionId) {
         MutableLiveData<Void> data = new MutableLiveData<>();
@@ -145,6 +151,7 @@ public class ProductApiService {
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
+
                 Log.e("ProductApiService", "endSession failure: " + t.getMessage());
             }
         });
@@ -159,13 +166,16 @@ public class ProductApiService {
     }
 
     public interface SessionService {
+        @Headers({"device: android"})
         @GET("session_id/{simple_id}")
         Call<String> getSessionId(@Path("simple_id") String simpleId);
 
-        @POST("sessions/{table_id}")
-        Call<String> createSession(@Path("table_id") String tableId);
+        @Headers({"device: android"})
+        @POST("session/{table_id}")
+        Call<JsonObject> createSession(@Path("table_id") String tableId);
 
-        @PATCH("sessions/{session_id}/end")
+        @Headers({"device: android"})
+        @PATCH("session/{session_id}/end")
         Call<Void> endSession(@Path("session_id") String sessionId);
     }
 
