@@ -16,7 +16,7 @@ pub fn internal_server_error() -> Json<&'static str> {
     Json("Well, this is embarrassing. Something went wrong on our side. Turns out, rust can fail too.")
 }
 
-#[derive(Responder)]
+#[derive(Debug, Responder)]
 #[response(status = 409, content_type = "json")]
 pub struct InvalidAPI {
     message: String

@@ -2,9 +2,10 @@ use rocket::{Route, routes};
 use rocket::{get, post, patch};
 use rocket::http::Status;
 use rocket::serde::json::Json;
+use rocket::request::FromParam;
 
+use super::error::InvalidAPI;
 use crate::cmd;
-// use super::error::InvalidAPI;
 
 mod microservices;
 
@@ -39,13 +40,29 @@ async fn create_script(
 }
 
 
-#[post("/microservices/start/<_name>")]
-async fn start_microservice(_name: String) -> Result<Status, Status> {
-    Err(Status::NotImplemented) // TODO
+#[derive(Debug)]
+enum MicroserviceAction {
+    Start,
+    Stop,
 }
 
-#[post("/microservices/stop/<_name>")]
-async fn stop_microservice(_name: String) -> Result<Status, Status> {
+impl FromParam<'_> for MicroserviceAction {
+    type Error = InvalidAPI;
+
+    fn from_param(param: &'_ str) -> Result<Self, Self::Error> {
+        match param {
+            "start" => Ok(MicroserviceAction::Start),
+            "stop" => Ok(MicroserviceAction::Stop),
+            _ => Err(InvalidAPI::new("Invalid microservice action".to_string()))
+        }
+    }
+}
+
+#[post("/microservices/<_action>/<_name>")]
+async fn microservice_action(
+    _action: MicroserviceAction,
+    _name: String,
+) -> Result<Status, Status> {
     Err(Status::NotImplemented) // TODO
 }
 
@@ -57,7 +74,6 @@ pub fn get_all_routes() -> Vec<Route> {
         uninstall,
         create_script,
         microservices::get_all_microservices,
-        start_microservice,
-        stop_microservice,
+        microservice_action,
     ]
 }
