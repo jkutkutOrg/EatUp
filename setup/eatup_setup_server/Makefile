@@ -9,7 +9,7 @@ endif
 
 # ****** Variables ******
 CONTAINER_NAME = eatup_setup_server
-PORT = 8000
+PORT = 80
 IMAGE_NAME = jkutkut/${CONTAINER_NAME}
 IMAGE_NAME_DEV = ${IMAGE_NAME}:dev
 VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
@@ -32,7 +32,7 @@ create_dev_image:
 	docker build -t ${IMAGE_NAME_DEV} --target dev .
 
 run:
-	${DOCKER_EXEC} run
+	${DOCKER_EXEC} run ${PORT}
 
 build:
 	${DOCKER_EXEC} build

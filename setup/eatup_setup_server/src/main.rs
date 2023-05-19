@@ -1,5 +1,4 @@
 use rocket::{Config, Build, Rocket, launch, routes, catchers, get};
-// use std::env; // TODO
 use std::net::Ipv4Addr;
 use rocket::serde::json::Json;
 
@@ -24,19 +23,27 @@ fn config() -> rocket::Config {
 
 #[launch]
 async fn rocket() -> Rocket<Build> {
-    // dotenv::from_path(".env").ok();
-    // env::var("DB_IP").unwrap();
-    
+    let args: Vec<String> = std::env::args().collect();
+    let port = match args.len() {
+        2 => match args[1].parse::<u16>() {
+            Ok(port) => port,
+            Err(_) => {
+                eprintln!("Invalid port number");
+                std::process::exit(1);
+            }
+        }
+        _ => 80
+    };
+
     let config = Config {
         address: Ipv4Addr::new(0, 0, 0, 0).into(),
+        port,
         ..config()
     };
     rocket::custom(&config)
-        //.manage() // TODO
         .mount("/", routes![ping])
         .mount("/api/v1", api::get_v1_routes())
         .register("/api", catchers![api::error::not_implemented])
-        //.mount("/", rocket::fs::FileServer::from("/public")) // TODO
         .register("/", catchers![
             api::error::internal_server_error,
             api::error::not_found

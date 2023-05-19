@@ -1,5 +1,5 @@
 use rocket::{Route, routes};
-use rocket::{State, get, post, patch};
+use rocket::{get, post, patch};
 use rocket::http::Status;
 use rocket::serde::json::Json;
 
@@ -39,18 +39,23 @@ async fn create_script(
 }
 
 
-#[post("/microservices/start/<name>")]
-async fn start_microservice(name: String) -> Result<Status, Status> {
+#[post("/microservices/start/<_name>")]
+async fn start_microservice(_name: String) -> Result<Status, Status> {
     Err(Status::NotImplemented) // TODO
 }
 
-#[post("/microservices/stop/<name>")]
-async fn stop_microservice(name: String) -> Result<Status, Status> {
+#[post("/microservices/stop/<_name>")]
+async fn stop_microservice(_name: String) -> Result<Status, Status> {
     Err(Status::NotImplemented) // TODO
 }
 
 pub fn get_all_routes() -> Vec<Route> {
     routes![
+        get_status,
+        create,
+        install,
+        uninstall,
+        create_script,
         microservices::get_all_microservices,
         start_microservice,
         stop_microservice,
