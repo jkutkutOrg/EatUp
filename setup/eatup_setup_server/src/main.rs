@@ -6,6 +6,11 @@ mod api;
 mod model;
 mod cmd;
 
+pub const MICROSERVICES: [&'static str; 2] = [
+    "eatup_db",
+    "eatup_server"
+];
+
 #[get("/")]
 fn ping() -> Json<&'static str> {
     Json("eatup_setup_server up and running!")
