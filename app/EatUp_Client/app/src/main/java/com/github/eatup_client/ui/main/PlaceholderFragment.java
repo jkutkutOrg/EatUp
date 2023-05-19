@@ -92,7 +92,7 @@ public class PlaceholderFragment extends Fragment {
 
         if (cachedProductsJson != null) {
             long lastUpdateTime = prefs.getLong(category + "_last_update_time", 0);
-            if (System.currentTimeMillis() - lastUpdateTime < TimeUnit.MINUTES.toMillis(30)) {
+            if (System.currentTimeMillis() - lastUpdateTime < TimeUnit.MINUTES.toMillis(15)) {
                 // Use cached data if it is less than 30 minutes old
                 cachedProducts = gson.fromJson(cachedProductsJson, LIST_TYPE_TOKEN.getType());
                 adapter.setProducts(cachedProducts);
@@ -102,6 +102,7 @@ public class PlaceholderFragment extends Fragment {
 
         if (cachedProducts == null) {
             Log.d(TAG, "Loaded products from API");
+            Log.d(TAG, "category: " + category + ", cachedProductsJson: " + cachedProductsJson);
             productListLiveData = productApiService.getProductsByCategory(category);
             productListLiveData.observe(getViewLifecycleOwner(), productList -> {
                 adapter.setProducts(productList);

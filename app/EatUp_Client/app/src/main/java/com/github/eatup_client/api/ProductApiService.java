@@ -28,7 +28,8 @@ import retrofit2.http.Query;
 
 public class ProductApiService {
 
-    private static final String BASE_URL = "https://eat-up.tech/api/v1/";
+    //private static final String BASE_URL = "https://eat-up.tech/api/v1/";
+    private static final String BASE_URL = "http://159.69.216.101/api/v1/";
     private static final String ENDPOINT_PRODUCTS = "products";
 
     private static ProductApiService sInstance;
