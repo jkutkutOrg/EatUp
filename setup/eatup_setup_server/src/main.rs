@@ -11,6 +11,8 @@ pub const MICROSERVICES: [&'static str; 2] = [
     "eatup_server"
 ];
 
+pub const ENV: &'static str = "/installation/.env";
+
 #[get("/")]
 fn ping() -> Json<&'static str> {
     Json("eatup_setup_server up and running!")

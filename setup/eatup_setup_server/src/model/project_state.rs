@@ -1,6 +1,6 @@
 use super::Serialize;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, PartialEq)]
 pub enum ProjectState {
     #[serde(rename = "not_created")]
     NotCreated,

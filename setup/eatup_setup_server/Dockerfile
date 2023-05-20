@@ -18,5 +18,7 @@ RUN apk add --update docker openrc && \
 FROM alpine:3.16 as release
 
 WORKDIR /app
+# TODO copy scripts and needed resources form local
+# "/code/db/load_db.sql", "/installation/load_db.sql"
 COPY target/release/eatup_setup_server .
 ENTRYPOINT ["./eatup_setup_server"]
