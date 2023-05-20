@@ -1,12 +1,13 @@
-use crate::model::Microservice;
+use std::path::Path;
+
+use crate::model::*;
 use crate::MICROSERVICES;
-use crate::model::MicroserviceAction;
 use crate::api::error::InvalidAPI;
 
 pub fn get_all_microservices() -> Vec<Microservice> {
     let mut microservices = vec![];
     for m in MICROSERVICES.iter() {
-        microservices.push(Microservice::new_by_name(m.to_string()));
+        microservices.push(Microservice::by_name(m.to_string()));
     }
     microservices
 }
@@ -21,8 +22,20 @@ pub fn microservice_action(
         )),
         _ => ()
     }
-    match Microservice::new_by_name(name.to_string()).do_action(action) {
+    match Microservice::by_name(name.to_string()).do_action(action) {
         Some(e) => Some(InvalidAPI::new(e)),
         None => None
     }
+}
+
+pub fn get_status() -> ProjectState {
+    let public_dir_exists = Path::new("/installation/public").exists();
+    if !public_dir_exists {
+        return ProjectState::NotCreated;
+    }
+    let db_container = Microservice::by_name("eatup_db".to_string());
+    if db_container.get_state() == MicroserviceState::NotFound {
+        return ProjectState::Created;
+    }
+    ProjectState::Installed
 }

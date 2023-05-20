@@ -1,6 +1,6 @@
 use super::*;
 
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Clone, PartialEq)]
 pub enum MicroserviceState {
     Created,
     Running,

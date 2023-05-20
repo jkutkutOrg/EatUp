@@ -20,7 +20,9 @@ BASIC_ATTRS = -p ${PORT}:${PORT} --name ${CONTAINER_NAME}
 ATTRS = ${BASIC_ATTRS} \
 	-v ${CURRENT_PATH}:/app -w /app \
 	-v rust_cargo_registy:/root/.cargo/registry \
-	-v /var/run/docker.sock:/var/run/docker.sock:rw
+	-v /var/run/docker.sock:/var/run/docker.sock:rw \
+	-v ${CURRENT_PATH}/../../../eatup_installation:/installation \
+	-v ${CURRENT_PATH}/../../:/code
 
 DOCKER_EXEC = docker run -it --rm \
 	${ATTRS} \

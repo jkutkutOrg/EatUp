@@ -20,7 +20,7 @@ impl Microservice {
         }
     }
 
-    pub fn new_by_name(name: String) -> Self {
+    pub fn by_name(name: String) -> Self {
         let id = Microservice::get_microservice_id(&name);
         Microservice::new(
             id.clone(),
@@ -72,5 +72,10 @@ impl Microservice {
             true => None,
             false => Some(format!("Failed to {} {}", action_string, self.name))
         }
+    }
+
+    // getters
+    pub fn get_state(&self) -> MicroserviceState {
+        self.state.clone()
     }
 }
