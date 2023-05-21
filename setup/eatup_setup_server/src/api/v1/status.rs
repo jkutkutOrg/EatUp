@@ -53,6 +53,24 @@ pub async fn install(
 }
 
 #[post("/uninstall")]
-pub async fn uninstall() -> Result<Status, Status> {
-    Err(Status::NotImplemented) // TODO
+pub async fn uninstall() -> Status {
+    let status = cmd::get_status();
+    if status == ProjectState::NotCreated {
+        return Status::Ok;
+    }
+    if status == ProjectState::Installed {
+        let s = cmd::microservice_action(MicroserviceAction::Remove, "eatup_db".to_string());
+        if let Some(e) = s {
+            println!("Failed to remove db container: {}", e.message());
+            return Status::InternalServerError;
+        }
+        // remove env file: done later
+    }
+    match cmd::remove_dir_contents("/installation") {
+        Ok(_) => Status::Ok,
+        Err(e) => {
+            println!("Failed to remove installation directory: {}", e);
+            Status::InternalServerError
+        }
+    }
 }

@@ -2,10 +2,11 @@ use rocket::request::FromParam;
 
 use crate::api::error::InvalidAPI;
 
-#[derive(Debug)]
+#[derive(Debug, PartialEq)]
 pub enum MicroserviceAction {
     Start,
     Stop,
+    Remove,
 }
 
 impl FromParam<'_> for MicroserviceAction {
@@ -24,7 +25,8 @@ impl MicroserviceAction {
     pub fn to_string(&self) -> String {
         match self {
             MicroserviceAction::Start => "start".to_string(),
-            MicroserviceAction::Stop => "stop".to_string()
+            MicroserviceAction::Stop => "stop".to_string(),
+            MicroserviceAction::Remove => "rm".to_string(),
         }
     }
 }

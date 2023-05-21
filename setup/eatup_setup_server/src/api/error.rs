@@ -26,4 +26,9 @@ impl InvalidAPI {
     pub fn new(message: String) -> InvalidAPI {
         InvalidAPI { message }
     }
+
+    // getters
+    pub fn message(&self) -> &str {
+        &self.message
+    }
 }

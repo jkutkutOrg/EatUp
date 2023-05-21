@@ -58,11 +58,22 @@ impl Microservice {
                 MicroserviceState::Paused => true,
                 MicroserviceState::Exited => true,
                 _ => false
+            },
+            MicroserviceAction::Remove => match self.state {
+                MicroserviceState::Running => true,
+                MicroserviceState::Created => true,
+                MicroserviceState::Exited => true,
+                _ => false
             }
         };
         let action_string = action.to_string();
         if !valid_action {
             return Some(format!("Invalid action {} for {}", action_string, self.name));
+        }
+        if action == MicroserviceAction::Remove && self.state == MicroserviceState::Running {
+            if let Some(e) = self.do_action(MicroserviceAction::Stop) {
+                return Some(e);
+            }
         }
         let mut cmd = Command::new("docker");
         cmd.args(&[&action_string, &self.name]);
