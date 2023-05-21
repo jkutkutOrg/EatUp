@@ -7,29 +7,32 @@
     android:background="@drawable/st_background_welcome"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imgLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="100dp"
-        android:padding="20dp"
-        android:layout_marginEnd="200dp"
-        android:src="@drawable/logo_temp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvWelcomeTitle"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:text="@string/welcome_title"
-        android:fontFamily="@font/sf_pro_rounded_heavy"
-        android:textColor="@color/text_color_white"
-        android:textSize="42sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgLogo" />
+        android:padding="10dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvWelcomeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.6"
+            android:text="@string/welcome_title"
+            android:fontFamily="@font/sf_pro_rounded_heavy"
+            android:textColor="@color/text_color_white"
+            android:textSize="42sp" />
+
+        <ImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_weight="0.4"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_app_logo_sample" />
+
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imgBoy"
