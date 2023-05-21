@@ -10,15 +10,7 @@ use crate::model::*;
 mod microservices_action;
 mod microservices;
 mod status;
-
-// TODO refactor into modules
-
-#[patch("/create/script")]
-async fn create_script(
-    // TODO
-) -> Result<Status, Status> {
-    Err(Status::NotImplemented) // TODO
-}
+mod create_script;
 
 pub fn get_all_routes() -> Vec<Route> {
     routes![
@@ -26,7 +18,7 @@ pub fn get_all_routes() -> Vec<Route> {
         status::create,
         status::install,
         status::uninstall,
-        create_script,
+        create_script::create_script,
         microservices::get_all_microservices,
         microservices_action::microservice_action
     ]
