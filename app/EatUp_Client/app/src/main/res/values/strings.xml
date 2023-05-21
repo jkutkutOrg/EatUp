@@ -1,6 +1,6 @@
 <resources>
     <!-- General strings -->
-    <string name="app_name">EatUp-Casdliasdent</string>
+    <string name="app_name">EatUp</string>
     <!-- Welcome Screen -->
     <string name="welcome_title">Food for\nEvery Mood</string>
     <string name="welcome_button">Get Started</string>
