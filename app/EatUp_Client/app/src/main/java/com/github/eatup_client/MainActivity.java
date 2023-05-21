@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnGetStarted.setOnClickListener(v -> {
             Log.d(TAG, "Get Started clicked");
-            Intent intent = new Intent(MainActivity.this, MenuActivity.class);
+            Intent intent = new Intent(MainActivity.this, QRActivity.class);
             startActivity(intent);
         });
     }

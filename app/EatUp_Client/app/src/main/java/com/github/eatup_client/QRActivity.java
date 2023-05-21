@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -15,13 +16,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.LiveData;
 
+import com.github.eatup_client.api.ProductApiService;
+import com.github.eatup_client.model.Session;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.regex.Pattern;
 
 public class QRActivity extends AppCompatActivity {
 
@@ -30,7 +36,10 @@ public class QRActivity extends AppCompatActivity {
     private Button btnProblemScanner;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
+    private LiveData<List<Session>> sessionListLiveData;
+    private ProductApiService productApiService;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
+    private static final Pattern QR_PATTERN = Pattern.compile("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +58,9 @@ public class QRActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        productApiService = new ProductApiService(this);
+        sessionListLiveData = productApiService.loadSessions();
 
         initCameraAndDetector();
     }
@@ -99,27 +111,41 @@ public class QRActivity extends AppCompatActivity {
             @Override
             public void receiveDetections(@NonNull Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> barcodes = detections.getDetectedItems();
-                if (barcodes.size() != 0) {
-
-                    tvQR.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            // TODO: Pending to implement the logic to send the QR code to the server
-                            if (barcodes.valueAt(0).isRecognized) {
-                                Log.d("QRActivity", "QR code recognized with value: " + barcodes.valueAt(0).displayValue);
-                            } else {
-                                Log.d("QRActivity", "QR code not recognized");
-                            }
-                        }
-                    });
-
-                    Log.d("QRActivity", "QR code detected");
-
+                if (barcodes.size() == 0) {
+                    return;
                 }
-                Log.d("QRActivity", "QR code not detected");
+
+                tvQR.post(() -> {
+                    String qrCode = barcodes.valueAt(0).displayValue;
+                    boolean isValid = isQRValid(qrCode);
+                    if (isValid) {
+                        Intent intent = new Intent(QRActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    } else {
+                        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
+                        tvQR.setText("Invalid QR code\nPlease try again");
+                        Log.d("QRActivity", "Invalid QR code, change text and vibrate");
+                    }
+                });
             }
         });
     }
+
+    private boolean isQRValid(String qrCode) {
+        List<Session> sessionList = sessionListLiveData.getValue();
+        if (sessionList != null) {
+            for (Session session : sessionList) {
+                Log.d("QRActivity", "Session ID: " + session.getId());
+                if (session.getId().equals(qrCode)) {
+                    Log.d("QRActivity", "Session ID matches QR code");
+                    return true;
+                }
+            }
+        }
+        Log.d("QRActivity", "Session ID does not match QR code");
+        return false;
+    }
+
 
     @Override
     protected void onPause() {

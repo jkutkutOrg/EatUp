@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.github.eatup_client.model.Product;
+import com.github.eatup_client.model.Session;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -28,9 +29,10 @@ import retrofit2.http.Query;
 
 public class ProductApiService {
 
-    private static final String BASE_URL = "https://eat-up.tech/api/v1/";
-    //private static final String BASE_URL = "http://159.69.216.101/api/v1/";
+    //private static final String BASE_URL = "https://eat-up.tech/api/v1/";
+    private static final String BASE_URL = "http://159.69.216.101/api/v1/";
     private static final String ENDPOINT_PRODUCTS = "products";
+    private static final String ENDPOINT_SESSIONS = "sessions";
 
     private static ProductApiService sInstance;
     private final ProductService mProductService;
@@ -84,80 +86,31 @@ public class ProductApiService {
         return data;
     }
 
-    // Session API
-    public LiveData<String> getSessionId(String simpleId) {
-        MutableLiveData<String> data = new MutableLiveData<>();
-        Call<String> call = mSessionService.getSessionId(simpleId);
-        Log.i("ProductApiService", "getSessionId: " + call.request().url());
-        call.enqueue(new Callback<String>() {
+    // Load Session (all)
+    public LiveData<List<Session>> loadSessions() {
+        MutableLiveData<List<Session>> data = new MutableLiveData<>();
+        Call<List<Session>> call = mSessionService.getSessions();
+        //Log.i("SessionController", "loadSessions: " + call.request().url());
+        call.enqueue(new Callback<List<Session>>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
                 if (response.isSuccessful()) {
                     data.setValue(response.body());
-                    Log.i("ProductApiService", "getSessionId success: " + simpleId);
+                    Log.i("SessionController", "Success: " + new Gson().toJson(response.body()));
                 } else {
-                    Log.e("ProductApiService", "getSessionId error: " + response.code());
+                    Log.e("SessionController", "Error: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                Log.e("ProductApiService", "getSessionId failure: " + t.getMessage());
+            public void onFailure(Call<List<Session>> call, Throwable t) {
+                Log.e("SessionController", "Failure: " + t.getMessage());
             }
         });
+
         return data;
     }
 
-    public LiveData<String> createSession(String tableId) {
-        MutableLiveData<String> data = new MutableLiveData<>();
-        Call<JsonObject> call = mSessionService.createSession(tableId);
-        call.enqueue(new Callback<JsonObject>() {
-            @Override
-            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                if (response.isSuccessful()) {
-                    JsonObject jsonObject = response.body();
-                    String jsonString = new Gson().toJson(jsonObject);
-                    data.setValue(jsonString);
-                    Log.i("ProductApiService", "createSession success: " + tableId);
-                } else {
-                    Log.e("ProductApiService", "createSession error: " + response.code() + " " + response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<JsonObject> call, Throwable t) {
-                Log.e("ProductApiService", "createSession failure: " + t.getMessage());
-                t.printStackTrace();
-            }
-        });
-        Log.i("ProductApiService", "createSession 5: " + tableId);
-        return data;
-    }
-
-
-    public LiveData<Void> endSession(String sessionId) {
-        MutableLiveData<Void> data = new MutableLiveData<>();
-        Call<Void> call = mSessionService.endSession(sessionId);
-        Log.i("ProductApiService", "endSession: " + call.request().url());
-        call.enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    data.setValue(null);
-                    Log.i("ProductApiService", "endSession success: " + sessionId);
-                } else {
-                    Log.e("ProductApiService", "endSession error: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-
-                Log.e("ProductApiService", "endSession failure: " + t.getMessage());
-            }
-        });
-        return data;
-    }
 
     // Retrofit interface
     public interface ProductService {
@@ -166,18 +119,12 @@ public class ProductApiService {
         Call<List<Product>> getProductsByCategory(@Query("category") String category);
     }
 
+    // Retrofit interface
     public interface SessionService {
         @Headers({"device: android"})
-        @GET("session_id/{simple_id}")
-        Call<String> getSessionId(@Path("simple_id") String simpleId);
-
-        @Headers({"device: android"})
-        @POST("session/{table_id}")
-        Call<JsonObject> createSession(@Path("table_id") String tableId);
-
-        @Headers({"device: android"})
-        @PATCH("session/{session_id}/end")
-        Call<Void> endSession(@Path("session_id") String sessionId);
+        @GET(ENDPOINT_SESSIONS)
+        Call<List<Session>> getSessions();
     }
+
 
 }
