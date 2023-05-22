@@ -63,7 +63,7 @@ pub fn create_db() -> Result<(), String> {
     dotenv::from_filename(ENV).unwrap();
     let mut cmd = Command::new("docker");
     let args = format!("\
-        create --name {} \
+        run -d --name {} \
         -e POSTGRES_PASSWORD={} \
         -e POSTGRES_USER={} \
         -e POSTGRES_DB={} \
@@ -74,10 +74,19 @@ pub fn create_db() -> Result<(), String> {
         env::var("DB_USER").unwrap(),
         env::var("DB_NAME").unwrap()
     );
+    println!("docker {}", &args);
     cmd.args(args.split(" "));
-    match cmd.output() {
-        Ok(_) => Ok(()),
-        Err(e) => Err(format!("Failed to create db container: {}", e))
+    let output = cmd.output().expect("Failed to create db container");
+    match output.status.success() {
+        true => {
+            println!("{}", String::from_utf8_lossy(&output.stdout));
+            Ok(())
+        }
+        false => {
+            let e = format!("Failed to create db container:\n{}", String::from_utf8_lossy(&output.stderr));
+            eprintln!("{}", &e);
+            Err(e)
+        }
     }
 }
 
@@ -142,10 +151,14 @@ fn run_server_options() -> RunServerOptions {
 }
 
 pub fn run_server() -> Result<(), String> {
+    let db = Microservice::by_name("eatup_db".to_string());
+    if db.get_state() != MicroserviceState::Running {
+        return Err("DB container is not running".to_string());
+    }
     dotenv::from_filename(ENV).unwrap();
     let port = env::var("SERVER_PORT").unwrap();
     let options = run_server_options();
-    let args = format!("run -it --rm \
+    let args = format!("run -d \
         -p {}:{} \
         -w /app \
         -v /installation:/db \
@@ -165,11 +178,16 @@ pub fn run_server() -> Result<(), String> {
     let args = args.split(" ");
     let mut cmd = Command::new("docker");
     cmd.args(args);
-    match cmd.output() {
-        Ok(m) => {
-            println!("Server output: {}", String::from_utf8_lossy(&m.stdout));
+    let output = cmd.output().expect("Failed to run server");
+    match output.status.success() {
+        true => {
+            println!("{}", String::from_utf8_lossy(&output.stdout));
             Ok(())
         },
-        Err(e) => Err(format!("Failed to run server: {}", e))
+        false => {
+            let e = format!("Failed to run server:\n{}", String::from_utf8_lossy(&output.stderr));
+            eprintln!("{}", &e);
+            Err(e)
+        }
     }
 }
