@@ -51,6 +51,17 @@ impl Microservice {
             MicroserviceAction::Start => match self.state {
                 MicroserviceState::Created => true,
                 MicroserviceState::Exited => true,
+                MicroserviceState::NotFound => {
+                    if self.name != "eatup_server" {
+                        false
+                    }
+                    else {
+                        match cmd::run_server() {
+                            Ok(_) => return None,
+                            Err(e) => return Some(e)
+                        }
+                    }
+                }
                 _ => false
             },
             MicroserviceAction::Stop => match self.state {

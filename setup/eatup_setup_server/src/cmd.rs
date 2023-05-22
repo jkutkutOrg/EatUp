@@ -124,3 +124,52 @@ pub fn remove_dir_contents<P: AsRef<Path>>(path: P) -> io::Result<()> {
     }
     Ok(())
 }
+
+struct RunServerOptions {
+    volumes: String,
+    entrypoint: String,
+    docker_image: String,
+    args: String
+}
+
+fn run_server_options() -> RunServerOptions {
+    RunServerOptions {
+        volumes: "".to_string(),
+        entrypoint: "/app/eatup_server".to_string(),
+        docker_image: "jkutkut/eatup_server".to_string(),
+        args: "".to_string()
+    }
+}
+
+pub fn run_server() -> Result<(), String> {
+    dotenv::from_filename(ENV).unwrap();
+    let port = env::var("SERVER_PORT").unwrap();
+    let options = run_server_options();
+    let args = format!("run -it --rm \
+        -p {}:{} \
+        -w /app \
+        -v /installation:/db \
+        {}\
+        --entrypoint {} \
+        {} \
+        {} \
+        {}",
+        &port, &port,
+        options.volumes,
+        options.entrypoint,
+        options.docker_image,
+        options.args,
+        &port
+    );
+    println!("docker {}", &args);
+    let args = args.split(" ");
+    let mut cmd = Command::new("docker");
+    cmd.args(args);
+    match cmd.output() {
+        Ok(m) => {
+            println!("Server output: {}", String::from_utf8_lossy(&m.stdout));
+            Ok(())
+        },
+        Err(e) => Err(format!("Failed to run server: {}", e))
+    }
+}
