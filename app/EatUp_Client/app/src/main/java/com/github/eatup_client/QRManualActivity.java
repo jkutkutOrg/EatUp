@@ -3,6 +3,7 @@ package com.github.eatup_client;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.text.Editable;
@@ -18,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class QRManualActivity extends AppCompatActivity {
 
-    private EditText[] edOTPCode = new EditText[6];
+    private EditText[] edAuthWords = new EditText[3];
     private Button btnConfirmOTP;
 
     @Override
@@ -28,80 +29,44 @@ public class QRManualActivity extends AppCompatActivity {
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        edOTPCode[0] = findViewById(R.id.edOTPCode1);
-        edOTPCode[1] = findViewById(R.id.edOTPCode2);
-        edOTPCode[2] = findViewById(R.id.edOTPCode3);
-        edOTPCode[3] = findViewById(R.id.edOTPCode4);
-        edOTPCode[4] = findViewById(R.id.edOTPCode5);
-        edOTPCode[5] = findViewById(R.id.edOTPCode6);
+        edAuthWords[0] = findViewById(R.id.edAuthWord1);
+        edAuthWords[1] = findViewById(R.id.edAuthWord2);
+        edAuthWords[2] = findViewById(R.id.edAuthWord3);
         btnConfirmOTP = findViewById(R.id.btnConfirmOTP);
 
-        for (int i = 0; i < edOTPCode.length; i++) {
-            edOTPCode[i].addTextChangedListener(new OTPTextWatcher(edOTPCode, i));
+        for (int i = 0; i < edAuthWords.length; i++) {
+            edAuthWords[i].addTextChangedListener(new AuthWordTextWatcher(edAuthWords, i));
         }
 
         btnConfirmOTP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String otpCode = "";
-                for (EditText et : edOTPCode) {
-                    otpCode += et.getText().toString();
+                String authWords = "";
+                for (EditText et : edAuthWords) {
+                    authWords += et.getText().toString();
                 }
 
-                if (otpCode.length() != 6) {
-                    Toast.makeText(getApplicationContext(), "Introduzca un código válido", Toast.LENGTH_SHORT).show();
-                    Log.d("QRManualActivity", "ERROR OTP code length: " + otpCode.length());
+                if (authWords.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Ingrese las palabras de autenticación", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if (isOTPValid(otpCode)) {
-                    Toast.makeText(getApplicationContext(), "Código OTP válido", Toast.LENGTH_SHORT).show();
-                    Log.d("QRManualActivity", "OTP code: " + otpCode);
+                if (isAuthWordsValid(authWords)) {
+                    Toast.makeText(getApplicationContext(), "Palabras de autenticación válidas", Toast.LENGTH_SHORT).show();
+                    Log.d("QRManualActivity", "Auth words: " + authWords);
                 } else {
-                    Toast.makeText(getApplicationContext(), "Código OTP inválido", Toast.LENGTH_SHORT).show();
-                    Log.d("QRManualActivity", "ERROR OTP code: " + otpCode);
+                    Toast.makeText(getApplicationContext(), "Palabras de autenticación inválidas", Toast.LENGTH_SHORT).show();
+                    Log.d("QRManualActivity", "ERROR auth words: " + authWords);
                     sendVibration(500);
                 }
             }
         });
-
-        edOTPCode[edOTPCode.length - 1].addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (s.length() == 1 && isAllFieldsCompleted()) {
-                    String otpCode = getOTPCode();
-
-                    if (otpCode.length() != 6) {
-                        showToast("Introduzca un código válido");
-                        Log.d("QRManualActivity", "ERROR OTP code length: " + otpCode.length());
-                        return;
-                    }
-
-                    if (isOTPValid(otpCode)) {
-                        showToast("Código OTP válido");
-                        Log.d("QRManualActivity", "OTP code: " + otpCode);
-                    } else {
-                        showToast("Código OTP inválido");
-                        Log.d("QRManualActivity", "ERROR OTP code: " + otpCode);
-                        sendVibration(500);
-                    }
-                }
-            }
-        });
-
     }
 
-    private boolean isOTPValid(String s) {
-        // TODO: Pending to implement the OTP validation
-        return s.matches("[0-9]+") && s.length() == 6;
+    private boolean isAuthWordsValid(String s) {
+        // TODO: Implementar la lógica de validación de las palabras de autenticación
+        // Aquí puedes verificar si las palabras ingresadas son válidas según tus requisitos
+        return s.length() > 0;
     }
 
     private void sendVibration(int i) {
@@ -113,35 +78,18 @@ public class QRManualActivity extends AppCompatActivity {
         }
     }
 
-    private void showToast(String s) {
-        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
-    }
-
-    private String getOTPCode() {
-        String otpCode = "";
-        for (EditText et : edOTPCode) {
-            otpCode += et.getText().toString();
-        }
-        return otpCode;
-    }
-
-    private boolean isAllFieldsCompleted() {
-        for (EditText et : edOTPCode) {
-            if (et.getText().toString().isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private class OTPTextWatcher implements TextWatcher {
+    private class AuthWordTextWatcher implements TextWatcher {
 
         private EditText[] editTexts;
         private int index;
+        private Handler handler;
+        private boolean isTyping;
 
-        public OTPTextWatcher(EditText[] editTexts, int index) {
+        public AuthWordTextWatcher(EditText[] editTexts, int index) {
             this.editTexts = editTexts;
             this.index = index;
+            this.handler = new Handler();
+            this.isTyping = false;
         }
 
         @Override
@@ -150,14 +98,28 @@ public class QRManualActivity extends AppCompatActivity {
 
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (count > 0 && s.charAt(start) == ' ') {
+                // If space is entered, remove it and move to the next EditText
+                String updatedText = s.toString().replaceAll(" ", "");
+                editTexts[index].setText(updatedText);
+
+                if (index < editTexts.length - 1) {
+                    editTexts[index + 1].requestFocus();
+                }
+            }
         }
 
         @Override
         public void afterTextChanged(Editable s) {
-            if (s.length() == 1 && index < editTexts.length - 1) {
-                editTexts[index + 1].requestFocus();
-            } else if (s.length() == 0 && index > 0) {
-                editTexts[index - 1].requestFocus();
+            // Change focus to the next EditText when the user finishes typing
+            if (s.length() > 0 && !isTyping) {
+                isTyping = true;
+                handler.postDelayed(() -> {
+                    isTyping = false;
+                    if (index < editTexts.length - 1) {
+                        editTexts[index + 1].requestFocus();
+                    }
+                }, 1000);
             }
         }
     }

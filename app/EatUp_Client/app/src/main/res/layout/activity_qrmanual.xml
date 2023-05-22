@@ -40,57 +40,28 @@
         android:textSize="14sp"
         android:fontFamily="@font/sf_pro_rounded_bold" />
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/llOTPCodeFields"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/tvWelcomeSubtitle"
+        android:padding="25dp"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tvOTPMessage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/sf_pro_rounded_regular"
-            android:text="@string/enter_the_otp_code"
-            android:textColor="@color/text_color_gray"
-            android:textSize="18sp" />
+        <EditText
+            android:id="@+id/edAuthWord1"
+            style="@style/OTPCodeField" />
 
-        <LinearLayout
-            android:id="@+id/llOTPCodeFields"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvOTPMessage"
-            android:layout_marginHorizontal="@dimen/margin_medium"
-            android:layout_marginTop="@dimen/margin_large"
-            android:orientation="horizontal">
+        <EditText
+            android:id="@+id/edAuthWord2"
+            style="@style/OTPCodeField" />
 
-            <EditText
-                android:id="@+id/edOTPCode1"
-                style="@style/OTPCodeField" />
+        <EditText
+            android:id="@+id/edAuthWord3"
+            style="@style/OTPCodeField" />
 
-            <EditText
-                android:id="@+id/edOTPCode2"
-                style="@style/OTPCodeField" />
-
-            <EditText
-                android:id="@+id/edOTPCode3"
-                style="@style/OTPCodeField" />
-
-            <EditText
-                android:id="@+id/edOTPCode4"
-                style="@style/OTPCodeField" />
-
-            <EditText
-                android:id="@+id/edOTPCode5"
-                style="@style/OTPCodeField" />
-
-            <EditText
-                android:id="@+id/edOTPCode6"
-                style="@style/OTPCodeField" />
-
-        </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/llBottomMenu"
