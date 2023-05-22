@@ -10,7 +10,7 @@ VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
 PORT = 8000
 
 BASIC_ATTRS = -p ${PORT}:8000 \
-	-v ${CURRENT_PATH}/../db:/db
+	-v ${CURRENT_PATH}/../../eatup_installation:/installation
 
 ATTRS = ${BASIC_ATTRS} \
 	-v ${CURRENT_PATH}:/app -w /app
