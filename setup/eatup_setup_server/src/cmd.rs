@@ -47,6 +47,10 @@ pub fn project_create() -> Result<(), String> {
     if status != ProjectState::NotCreated {
         return Err("Project already created".to_string());
     }
+
+    // let mut cmd = Command::new("mkdir");
+    // cmd.args(&["-m", "660", "-p", "/installation/public"]);
+    // if cmd.status().is_err() {
     if std::fs::create_dir_all("/installation/public").is_err() {
         println!("Failed to create public directory");
         return Err("Failed to create public directory".to_string());
@@ -68,7 +72,7 @@ pub fn create_db() -> Result<(), String> {
         -e POSTGRES_USER={} \
         -e POSTGRES_DB={} \
         -v /installation/load_db.sql:/docker-entrypoint-initdb.d/load_db.sql \
-        postgres:latest",
+        jkutkut/eatup:db_latest",
         env::var("DB_CONTAINER_NAME").unwrap(),
         env::var("DB_USER_PASSWD").unwrap(),
         env::var("DB_USER").unwrap(),
@@ -89,7 +93,8 @@ pub fn create_db() -> Result<(), String> {
         }
     }
 }
-
+// use std::os::unix::fs::OpenOptionsExt;
+// use std::io::Write;
 pub fn create_env_file(
     db_usr: String,
     db_usr_passwd: String,
@@ -117,6 +122,15 @@ pub fn create_env_file(
         server_port
     );
     std::fs::write(ENV, content).unwrap();
+    // let mut file = std::fs::OpenOptions::new()
+    //     .create(true)
+    //     .write(true)
+    //     .truncate(true)
+    //     .mode(0o666)
+    //     .open(ENV)
+    //     .expect("Failed to create .env file");
+    // file.write_all(content.as_bytes())
+    //     .expect("Failed to write to .env file");
 }
 
 pub fn remove_dir_contents<P: AsRef<Path>>(path: P) -> io::Result<()> {
@@ -134,22 +148,6 @@ pub fn remove_dir_contents<P: AsRef<Path>>(path: P) -> io::Result<()> {
     Ok(())
 }
 
-struct RunServerOptions {
-    volumes: String,
-    entrypoint: String,
-    docker_image: String,
-    args: String
-}
-
-fn run_server_options() -> RunServerOptions {
-    RunServerOptions {
-        volumes: "".to_string(),
-        entrypoint: "/app/eatup_server".to_string(),
-        docker_image: "jkutkut/eatup_server".to_string(),
-        args: "".to_string()
-    }
-}
-
 pub fn run_server() -> Result<(), String> {
     let db = Microservice::by_name("eatup_db".to_string());
     if db.get_state() != MicroserviceState::Running {
@@ -157,22 +155,16 @@ pub fn run_server() -> Result<(), String> {
     }
     dotenv::from_filename(ENV).unwrap();
     let port = env::var("SERVER_PORT").unwrap();
-    let options = run_server_options();
-    let args = format!("run -d \
+    let args = format!("run -d --rm --name {} \
         -p {}:{} \
-        -w /app \
-        -v /installation:/db \
-        {}\
-        --entrypoint {} \
-        {} \
-        {} \
-        {}",
+        -v /installation:/installation:rw \
+        jkutkut/eatup:server_latest \
+        {} {} {}",
+        "eatup_server",
         &port, &port,
-        options.volumes,
-        options.entrypoint,
-        options.docker_image,
-        options.args,
-        &port
+        &port,
+        "172.17.0.3", // TODO automate this
+        "5432"
     );
     println!("docker {}", &args);
     let args = args.split(" ");
