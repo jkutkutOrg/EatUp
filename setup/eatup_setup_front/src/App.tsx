@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import Header from './components/header/Header';
-import ServicesHandler from './components/serviceHandler/ServiceHandler';
+import Start from './pages/Start';
+import Installation from './pages/Installation';
+import ServicesHandler from './pages/ServicesHandler';
 // import useWebsocket from './model/useWebsocket'; // TODO remove
 
 enum Status {
@@ -9,11 +10,12 @@ enum Status {
   Installed = "installed",
 };
 
+// TODO create logic to generalize the API communication
+
 const App = () => {
   const [status, setStatus] = useState<string>("Not connected");
-  const [microservices, setMicroservices] = useState<any[]>([]);
 
-  const refresh = () => {
+  const updateStatus = () => {
     fetch(
       "http://localhost:9000/api/v1/status",
       {method: "GET"}
@@ -21,167 +23,54 @@ const App = () => {
       if (response.status === 200) {
         return response.json();
       }
+      // TODO handle error
     }).then((data) => {
       if (data != status)
         setStatus(data);
     });
   };
 
-  const updateMicroservices = () => {
-    if (status !== Status.Installed)
-      return;
-    fetch(
-      "http://localhost:9000/api/v1/microservices",
-      {method: "GET"}
-    ).then(async (response) => {
-      if (response.status === 200) {
-        setMicroservices(await response.json());
-        updateMicroservices();
-      }
-      else {
-        let l = async (response: Response) => {
-          console.error(
-            "Error getting microservices\n",
-            await response.json()
-          );
-        };
-        l(response);
-      }
-    });
-  };
-
   useEffect(() => {
-    refresh();
+    updateStatus();
   }, []);
 
-  if (status === Status.NotCreated) {
-    return <>
-      <h1>{status}</h1>
-      <button onClick={() => {
-        fetch(
-          "http://localhost:9000/api/v1/create",
-          {method: "POST"}
-        ).then((response) => {
-          if (response.status === 200)
-            refresh();
-          else {
-            let l = async (response: Response) => {
-              console.error(
-                "Error installing setup\n",
-                await response.text()
-              );
-            };
-            l(response);
-          }
-        });
-      }}>Create</button>
-    </>;
-  }
-  else if (status === Status.Created) {
-    return <>
-      <h1>{status}</h1>
-      <button onClick={() => {
-        fetch(
-          "http://localhost:9000/api/v1/install",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "Access-Control-Request-Method": "POST",
-              "Access-Control-Request-Headers": "origin, x-requested-with",
-              "Origin": "http://localhost:5173"
-            },
-            body: JSON.stringify({
-              db_usr: "admin",
-              db_usr_passwd: "admin",
-              server_port: 8000
-            })
-          }
-        ).then((response) => {
-          if (response.status === 200) {
-            refresh();
-          }
-          else {
-            let l = async (response: Response) => {
-              console.error(
-                "Error installing setup\n",
-                await response.text()
-              );
-            };
-            l(response);
-          }
-        });
-      }}>Install</button>
-    </>;
-  }
-
-  const do_action = (action: string, name: string) => {
-    console.log("Doing action", action, "on", name);
+  const statusAction = (action: string, body: any | null = null) => {
+    let init: any = {method: "POST"};
+    if (body !== null) {
+      init.headers = {
+        "Content-Type": "application/json"
+      };
+      init.body = JSON.stringify(body);
+    }
     fetch(
-      `http://localhost:9000/api/v1/microservices/${action}/${name}`,
-      {method: "POST"}
-    ).then((response) => {
+      `http://localhost:9000/api/v1/${action}`,
+      init
+    ).then(async (response) => {
       if (response.status === 200) {
-        updateMicroservices();
+        updateStatus();
       }
       else {
-        let l = async (response: Response) => {
-          console.error(
-            "Error starting microservice\n",
-            await response.text()
-          );
-        };
-        l(response);
+        console.error(
+          "Error starting microservice\n",
+          await response.text()
+        );
       }
     });
   }
 
-  const start = (name: string) => do_action("start", name);
-  const stop = (name: string) => do_action("stop", name);
+  if (status === Status.NotCreated) {
+    return <Start ftCreate={() => statusAction("create")} />; // TODO enum actions
+  }
+  else if (status === Status.Created) {
+    return <Installation ftInstall={(db_usr: string, db_usr_passwd: string, server_port: number) => {
+      statusAction("install", {db_usr, db_usr_passwd, server_port});
+    }} />;
+  }
 
-  return <>
-    {/* <Header
-      onRefresh={refresh}
-    />
-    <ServicesHandler
-      services={socket.message}
-    /> */}
-    <h1>{status}</h1>
-    <button onClick={() => {
-      fetch(
-        "http://localhost:9000/api/v1/uninstall",
-        {method: "POST"}
-      ).then((response) => {
-        if (response.status === 200) {
-          refresh();
-        }
-        else {
-          let l = async (response: Response) => {
-            console.error(
-              "Error uninstalling setup\n",
-              await response.text()
-            );
-          };
-          l(response);
-        }
-      });
-    }}>Uninstall</button>
-    <br />
-    {microservices.map((service) => {
-      return <>
-        <br />
-        <h2>{service.name}</h2>
-        <ul>
-          <li>State: {service.state}</li>
-          <li>IP: {service.ip}</li>
-          <li>Port: {service.port}</li>
-        </ul>
-        <br />
-        <button onClick={() => start(service.name)}>Start</button>
-        <button onClick={() => stop(service.name)}>Stop</button>
-      </>;
-    })}
-  </>
+  
+  return <ServicesHandler
+    ftUninstall={() => statusAction("uninstall")}
+  />;
 }
 
 export default App;
