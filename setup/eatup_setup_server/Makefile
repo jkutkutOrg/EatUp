@@ -10,8 +10,8 @@ endif
 # ****** Variables ******
 CONTAINER_NAME = eatup_setup_server
 PORT = 42
-IMAGE_NAME = jkutkut/${CONTAINER_NAME}
-IMAGE_NAME_DEV = ${IMAGE_NAME}:dev
+IMAGE_NAME = jkutkut/eatup:setup_server
+IMAGE_NAME_DEV = ${IMAGE_NAME}_dev
 VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
 
 # ****** Docker config ******
@@ -49,17 +49,17 @@ connect_docker:
 
 build_release:
 	${DOCKER_EXEC} build --release
-	docker build -t ${IMAGE_NAME}:$(VERSION) --target release .
+	docker build -t ${IMAGE_NAME}_$(VERSION) --target release .
 
 push_release:
-	docker tag ${IMAGE_NAME}:$(VERSION) ${IMAGE_NAME}:latest
-	docker push ${IMAGE_NAME}:$(VERSION)
-	docker push ${IMAGE_NAME}:latest
+	docker tag ${IMAGE_NAME}_$(VERSION) ${IMAGE_NAME}_latest
+	docker push ${IMAGE_NAME}_$(VERSION)
+	docker push ${IMAGE_NAME}_latest
 
 # ****** Public tools ******
 
 run_release:
-	docker run -it --rm ${BASIC_ATTRS} ${IMAGE_NAME}:$(VERSION)
+	docker run -it --name ${CONTAINER_NAME} --rm ${BASIC_ATTRS} ${IMAGE_NAME}_$(VERSION)
 
 stop:
-	docker stop ${CONTAINER_RELEASE_NAME}
+	docker stop ${CONTAINER_NAME}
