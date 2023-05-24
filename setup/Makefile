@@ -25,7 +25,7 @@ PORT_BACK = 9000
 # Select variant: TypeScript
 # Done! Follow the steps and that's it!
 
-DOCKER_CMD = docker run --rm -it
+DOCKER_CMD = docker run --rm -it --name ${FRONT_NAME}
 DOCKER_APP_V = -v ${PWD}/${FRONT_NAME}:/app -w /app
 DOCKER_IMG_FRONT = node:current-alpine3.16
 
