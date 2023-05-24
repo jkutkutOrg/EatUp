@@ -5,6 +5,8 @@ pub struct Microservice {
     id: Option<String>,
     name: String,
     state: MicroserviceState,
+    ip: Option<String>,
+    port: Option<String>,
 }
 
 impl Microservice {
@@ -12,23 +14,31 @@ impl Microservice {
         id: Option<String>,
         name: String,
         state: MicroserviceState,
+        ip: Option<String>,
+        port: Option<String>
     ) -> Self {
-        Microservice {
-            id,
-            name,
-            state,
-        }
+        Microservice {id, name, state, ip, port}
     }
 
     pub fn by_name(name: String) -> Self {
         let id = Microservice::get_microservice_id(&name);
+        let state = match &id {
+            Some(id) => MicroserviceState::new_by_id(&id),
+            None => MicroserviceState::NotFound
+        };
+        let mut ip: Option<String> = None;
+        let mut port: Option<String> = None;
+        if state == MicroserviceState::Running {
+            let full_ip = Microservice::get_ip_port(id.clone().unwrap());
+            ip = Some(full_ip[0].clone());
+            port = Some(full_ip[1].clone());
+        }
         Microservice::new(
-            id.clone(),
-            name.clone(),
-            match id {
-                Some(id) => MicroserviceState::new_by_id(&id),
-                None => MicroserviceState::NotFound
-            },
+            id,
+            name,
+            state,
+            ip,
+            port
         )
     }
 
@@ -41,6 +51,19 @@ impl Microservice {
             0 => None,
             _ => Some(id)
         }
+    }
+
+    fn get_ip_port(id: String) -> [String; 2] {
+        let mut cmd = Command::new("docker");
+        cmd.args(&["inspect", "-f", "'{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}'", &id]);
+        let output = cmd.output().expect("failed to inspect container");
+        let ip = String::from_utf8(output.stdout).expect("Inspecting ip did not work").trim().to_string();
+        let ip = ip[1..ip.len()-1].to_string(); // 'ip' -> ip
+        let mut cmd = Command::new("docker");
+        cmd.args(&["port", &id]);
+        let output = cmd.output().expect("failed to inspect container");
+        let port = String::from_utf8(output.stdout).expect("Inspecting the port did not work").trim().to_string();
+        [ip, port]
     }
 
     pub fn do_action(
@@ -99,5 +122,9 @@ impl Microservice {
     // getters
     pub fn get_state(&self) -> MicroserviceState {
         self.state.clone()
+    }
+
+    pub fn get_ip(&self) -> Option<String> {
+        self.ip.clone()
     }
 }

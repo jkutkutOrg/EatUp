@@ -154,8 +154,11 @@ const App = () => {
       return <>
         <br />
         <h2>{service.name}</h2>
-        <p>{service.id}</p>
-        <p>{service.state}</p>
+        <ul>
+          <li>Status: {service.status}</li>
+          <li>IP: {service.ip}</li>
+          <li>Port: {service.port}</li>
+        </ul>
         <br />
         <button onClick={() => start(service.name)}>Start</button>
         <button onClick={() => stop(service.name)}>Stop</button>

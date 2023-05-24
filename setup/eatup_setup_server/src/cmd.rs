@@ -48,9 +48,6 @@ pub fn project_create() -> Result<(), String> {
         return Err("Project already created".to_string());
     }
 
-    // let mut cmd = Command::new("mkdir");
-    // cmd.args(&["-m", "660", "-p", "/installation/public"]);
-    // if cmd.status().is_err() {
     if std::fs::create_dir_all("/installation/public").is_err() {
         println!("Failed to create public directory");
         return Err("Failed to create public directory".to_string());
@@ -153,7 +150,7 @@ pub fn run_server() -> Result<(), String> {
         "eatup_server",
         &port, &port,
         &port,
-        "172.17.0.3", // TODO automate this
+        db.get_ip().unwrap(),
         "5432"
     );
     println!("docker {}", &args);
