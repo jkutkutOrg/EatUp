@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
+import MicroService from "../model/MicroService";
+import MicroServicesContainer from "../components/servicesHandler/MicroServicesContainer";
 
 interface Props {
     ftUninstall: () => void;
 }
 
 const ServicesHandler = ({ftUninstall}: Props) => {
-    const [microservices, setMicroservices] = useState<any[]>([]);
+    const [microservices, setMicroservices] = useState<MicroService[]>([]);
 
     const updateMicroservices = () => {
         fetch(
@@ -13,8 +15,7 @@ const ServicesHandler = ({ftUninstall}: Props) => {
           {method: "GET"}
         ).then(async (response) => {
             if (response.status === 200) {
-                setMicroservices(await response.json());
-                updateMicroservices();
+                setMicroservices(MicroService.fromJsonArray(await response.json()));
             }
             else {
                 console.error(
@@ -45,46 +46,18 @@ const ServicesHandler = ({ftUninstall}: Props) => {
         });
     }
     
-      const start = (name: string) => do_action("start", name);
-      const stop = (name: string) => do_action("stop", name);
+    const start = (name: string) => do_action("start", name);
+    const stop = (name: string) => do_action("stop", name);
 
+    console.log("ServicesHandler", microservices);
     return <>
-        <h1>Services</h1>
         <button onClick={ftUninstall}>Uninstall</button>
         <br />
-        {/* <div className="mt-5 px-lg-5 container">
-        <h1 className="mb-3">Services</h1>
-        <Services services={services}/>
-    </div> */}
-        {microservices.map((service) => {
-            return <div key={service.name}>
-                <br />
-                <h2>{service.name}</h2>
-                <ul>
-                    <li>State: {service.state}</li>
-                    <li>IP: {service.ip}</li>
-                    <li>Port: {service.port}</li>
-                </ul>
-                {/* <ul className="list-group">
-      {services.map((service, index) => (
-        <li 
-          key={index}
-          className="list-group-item"
-        >
-          <div>
-            <div className="d-flex justify-content-between">
-              <h5 className="mb-1">{service.name}</h5>
-              <small>{service.state}</small>
-            </div>
-          </div>
-        </li>
-      ))}
-    </ul> */}
-                <button onClick={() => start(service.name)}>Start</button>
-                <button onClick={() => stop(service.name)}>Stop</button>
-                <br />
-            </div>;
-        })}
+        <MicroServicesContainer
+            microservices={microservices}
+            ftStartMicroservice={start}
+            ftStopMicroservice={stop}
+        />
     </>;
 }
 
