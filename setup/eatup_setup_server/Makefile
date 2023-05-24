@@ -9,7 +9,7 @@ endif
 
 # ****** Variables ******
 CONTAINER_NAME = eatup_setup_server
-PORT = 42
+PORT = 9000
 IMAGE_NAME = jkutkut/eatup:setup_server
 IMAGE_NAME_DEV = ${IMAGE_NAME}_dev
 VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"

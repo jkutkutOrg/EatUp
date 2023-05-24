@@ -71,7 +71,7 @@ pub fn create_db() -> Result<(), String> {
         -e POSTGRES_PASSWORD={} \
         -e POSTGRES_USER={} \
         -e POSTGRES_DB={} \
-        -v /installation/load_db.sql:/docker-entrypoint-initdb.d/load_db.sql \
+        -v eatup_installation:/docker-entrypoint-initdb.d/ \
         jkutkut/eatup:db_latest",
         env::var("DB_CONTAINER_NAME").unwrap(),
         env::var("DB_USER_PASSWD").unwrap(),
@@ -93,8 +93,7 @@ pub fn create_db() -> Result<(), String> {
         }
     }
 }
-// use std::os::unix::fs::OpenOptionsExt;
-// use std::io::Write;
+
 pub fn create_env_file(
     db_usr: String,
     db_usr_passwd: String,
@@ -122,15 +121,6 @@ pub fn create_env_file(
         server_port
     );
     std::fs::write(ENV, content).unwrap();
-    // let mut file = std::fs::OpenOptions::new()
-    //     .create(true)
-    //     .write(true)
-    //     .truncate(true)
-    //     .mode(0o666)
-    //     .open(ENV)
-    //     .expect("Failed to create .env file");
-    // file.write_all(content.as_bytes())
-    //     .expect("Failed to write to .env file");
 }
 
 pub fn remove_dir_contents<P: AsRef<Path>>(path: P) -> io::Result<()> {
@@ -157,7 +147,7 @@ pub fn run_server() -> Result<(), String> {
     let port = env::var("SERVER_PORT").unwrap();
     let args = format!("run -d --rm --name {} \
         -p {}:{} \
-        -v /installation:/installation:rw \
+        -v eatup_installation:/installation:rw \
         jkutkut/eatup:server_latest \
         {} {} {}",
         "eatup_server",

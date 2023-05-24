@@ -5,6 +5,7 @@ use rocket::serde::json::Json;
 mod api;
 mod model;
 mod cmd;
+mod cors;
 
 pub const MICROSERVICES: [&'static str; 2] = [
     "eatup_db",
@@ -47,8 +48,10 @@ async fn rocket() -> Rocket<Build> {
         port,
         ..config()
     };
+
     rocket::custom(&config)
-        .mount("/", routes![ping])
+        .attach(cors::CORS)
+        .mount("/", routes![ping, cors::options])
         .mount("/api/v1", api::get_v1_routes())
         .register("/api", catchers![api::error::not_implemented])
         .register("/", catchers![
