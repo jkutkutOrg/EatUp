@@ -11,6 +11,7 @@ enum Status {
 
 const App = () => {
   const [status, setStatus] = useState<string>("Not connected");
+  const [microservices, setMicroservices] = useState<any[]>([]);
 
   const refresh = () => {
     fetch(
@@ -20,10 +21,32 @@ const App = () => {
       if (response.status === 200) {
         return response.json();
       }
-      // setStatus("Error"); // TODO
     }).then((data) => {
       if (data != status)
         setStatus(data);
+    });
+  };
+
+  const updateMicroservices = () => {
+    if (status !== Status.Installed)
+      return;
+    fetch(
+      "http://localhost:9000/api/v1/microservices",
+      {method: "GET"}
+    ).then(async (response) => {
+      if (response.status === 200) {
+        setMicroservices(await response.json());
+        updateMicroservices();
+      }
+      else {
+        let l = async (response: Response) => {
+          console.error(
+            "Error getting microservices\n",
+            await response.json()
+          );
+        };
+        l(response);
+      }
     });
   };
 
@@ -45,7 +68,7 @@ const App = () => {
             let l = async (response: Response) => {
               console.error(
                 "Error installing setup\n",
-                await response.json()
+                await response.text()
               );
             };
             l(response);
@@ -92,32 +115,6 @@ const App = () => {
     </>;
   }
 
-  let [microservices, setMicroservices] = useState<any[]>([]);
-
-  const updateMicroservices = () => {
-    fetch(
-      "http://localhost:9000/api/v1/microservices",
-      {method: "GET"}
-    ).then(async (response) => {
-      if (response.status === 200) {
-        setMicroservices(await response.json());
-      }
-      else {
-        let l = async (response: Response) => {
-          console.error(
-            "Error getting microservices\n",
-            await response.json()
-          );
-        };
-        l(response);
-      }
-    });
-  };
-
-  useEffect(() => {
-    updateMicroservices();
-  }, []);
-
   const do_action = (action: string, name: string) => {
     console.log("Doing action", action, "on", name);
     fetch(
@@ -131,7 +128,7 @@ const App = () => {
         let l = async (response: Response) => {
           console.error(
             "Error starting microservice\n",
-            await response.json()
+            await response.text()
           );
         };
         l(response);
@@ -150,12 +147,32 @@ const App = () => {
       services={socket.message}
     /> */}
     <h1>{status}</h1>
+    <button onClick={() => {
+      fetch(
+        "http://localhost:9000/api/v1/uninstall",
+        {method: "POST"}
+      ).then((response) => {
+        if (response.status === 200) {
+          refresh();
+        }
+        else {
+          let l = async (response: Response) => {
+            console.error(
+              "Error uninstalling setup\n",
+              await response.text()
+            );
+          };
+          l(response);
+        }
+      });
+    }}>Uninstall</button>
+    <br />
     {microservices.map((service) => {
       return <>
         <br />
         <h2>{service.name}</h2>
         <ul>
-          <li>Status: {service.status}</li>
+          <li>State: {service.state}</li>
           <li>IP: {service.ip}</li>
           <li>Port: {service.port}</li>
         </ul>
