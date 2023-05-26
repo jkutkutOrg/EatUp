@@ -1,34 +1,19 @@
+import appLogo from '../../assets/img/eatup_logo.png';
+import ghLogo from '../../assets/img/github.png';
+
 interface Props {
     onRefresh: () => void;
 }
 
 function Header({onRefresh}: Props) {
     return <header>
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div className="container-fluid">
-            <button
-                className="navbar-toggler"
-                type="button"
-                data-mdb-toggle="collapse"
-                data-mdb-target="#headerNavbar"
-                aria-controls="headerNavbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-            >
-                <i className="fas fa-bars"></i>
-            </button>
-            <div className="collapse navbar-collapse" id="headerNavbar">
-                <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-                    {/* TODO active CSS class */}
-                    <li className="nav-item">
-                        <a className="nav-link" href="#">Services Handler</a>
-                    </li>
-                    <li className="nav-item">
-                        <button className="nav-link btn btn-link" onClick={onRefresh}>Refresh</button>
-                    </li>
-                </ul>
+        <nav className="navbar bg-dark d-flex" data-bs-theme="dark">
+            <div className='p-2' onClick={onRefresh} style={{cursor: "pointer"}}>
+                <img src={appLogo} alt="GitHub" width="42" height="42"/>
             </div>
-            </div>
+            <a href="https://github.com/jkutkutorg/EatUp" target='_blank' className='ml-auto p-2' style={{cursor: "pointer"}}>
+                <img src={ghLogo} alt="GitHub" width="30" height="30"/>
+            </a>
         </nav>
     </header>
 }

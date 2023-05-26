@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Start from './pages/Start';
 import Installation from './pages/Installation';
 import ServicesHandler from './pages/ServicesHandler';
+import Header from './components/header/Header';
 
 enum Status {
   Connecting = "connecting",
@@ -68,40 +69,39 @@ const App = () => {
     });
   };
 
+  let body;
   switch (status) {
     case Status.Connecting:
-      return <div className="d-flex justify-content-center align-items-center" style={{height: "100vh"}}>
-      <div className="spinner-border" role="status">
-        <span className="sr-only">Loading...</span>
-      </div>
-    </div>
+      body = <div className="d-flex justify-content-center align-items-center" style={{height: "100vh"}}>
+        <div className="spinner-border" role="status">
+          <span className="sr-only">Loading...</span>
+        </div>
+      </div>;
+      break;
     case Status.NotConnected:
-      return <div>Not connected. Is the backend running?</div>;
+      body = <div>Not connected. Is the backend running?</div>;
+      break;
     case Status.NotCreated:
-      return <Start ftCreate={() => statusAction("create")} />;
+      body = <Start ftCreate={() => statusAction("create")} />;
+      break;
     case Status.Created:
-      return <Installation ftInstall={(db_usr: string, db_usr_passwd: string, server_port: number) => {
+      body = <Installation ftInstall={(db_usr: string, db_usr_passwd: string, server_port: number) => {
         statusAction("install", {db_usr, db_usr_passwd, server_port});
       }} />;
+      break;
     case Status.Installed:
-      return <ServicesHandler
+      body = <ServicesHandler
         ftUninstall={() => statusAction("uninstall")}
       />;
+      break;
     default:
-      return <div>Unknown status</div>;
+      body = <div>Unknown status</div>;
   }
 
-  // if (status === Status.NotCreated) {
-  //   return <Start ftCreate={() => statusAction("create")} />; // TODO enum actions
-  // }
-  // else if (status === Status.Created) {
-  //   return <Installation ftInstall={(db_usr: string, db_usr_passwd: string, server_port: number) => {
-  //     statusAction("install", {db_usr, db_usr_passwd, server_port});
-  //   }} />;
-  // }
-  // return <ServicesHandler
-  //   ftUninstall={() => statusAction("uninstall")}
-  // />;
+  return <>
+    <Header onRefresh={updateStatus} />
+    {body}
+  </>
 }
 
 export default App;

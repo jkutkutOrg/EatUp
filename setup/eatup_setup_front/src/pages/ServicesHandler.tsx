@@ -51,13 +51,16 @@ const ServicesHandler = ({ftUninstall}: Props) => {
 
     console.log("ServicesHandler", microservices);
     return <>
-        <button onClick={ftUninstall}>Uninstall</button>
-        <br />
         <MicroServicesContainer
             microservices={microservices}
             ftStartMicroservice={start}
             ftStopMicroservice={stop}
         />
+        <div className="mt-5 px-lg-5 container">
+            <div className="d-flex justify-content-center">
+                <button className="btn btn-danger" onClick={ftUninstall}>Uninstall</button>
+            </div>
+        </div>
     </>;
 }
 
