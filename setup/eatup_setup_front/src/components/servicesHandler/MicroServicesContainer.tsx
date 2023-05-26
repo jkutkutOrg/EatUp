@@ -8,14 +8,19 @@ interface Props {
 }
 
 const MicroServicesContainer = ({microservices, ftStartMicroservice, ftStopMicroservice}: Props) => {
-    let btnGenerator = (service: MicroService, action: string) => {
-        let ft = (service.state == "Running") ? ftStopMicroservice : ftStartMicroservice;
-        let literal = (service.state == "Running") ? "Stop" : "Start";
-        return <button onClick={() => ft(service.name)}>{literal}</button>;
-    };
     return <div className="mt-5 px-lg-5 container">
-        <h1 className="mb-3">Services!</h1>
-        <ul className="list-group">
+        <table className="table table-hover table-dark">
+        <thead>
+            <tr>
+            <th scope="col">Microservice</th>
+            <th scope="col">Container id</th>
+            <th scope="col">Status</th>
+            <th scope="col">IP</th>
+            <th scope="col text-center">Port</th>
+            <th scope="col text-center"></th>
+            </tr>
+        </thead>
+        <tbody>
             {microservices.map((service, index) => (
                 <MicroServiceComponent
                     key={index}
@@ -24,14 +29,8 @@ const MicroServicesContainer = ({microservices, ftStartMicroservice, ftStopMicro
                     ftStopMicroservice={ftStopMicroservice}
                 />
             ))}
-        </ul>
-        {/* {microservices.map((service) => 
-            <MicroServiceComponent
-                service={service}
-                ftStartMicroservice={ftStartMicroservice}
-                ftStopMicroservice={ftStopMicroservice}
-            />
-        )} */}
+        </tbody>
+        </table>
     </div>;
 }
 
