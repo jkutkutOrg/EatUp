@@ -14,6 +14,11 @@ td {
 
 body {
     /* --bs-dark: header color */
-    /* --bg-color: #292d31;
-    background-color: var(--bg-color); */
+    --bg-color: #292d31;
+    --color: #adb5db;
+
+    height: 100vh;
+
+    color: var(--color);
+    background-color: var(--bg-color);
 }
