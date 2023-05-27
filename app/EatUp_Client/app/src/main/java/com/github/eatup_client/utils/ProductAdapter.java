@@ -13,17 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.eatup_client.R;
+import com.github.eatup_client.api.ProductApiService;
+import com.github.eatup_client.model.Order;
+import com.github.eatup_client.model.OrderItem;
 import com.github.eatup_client.model.Product;
+import com.github.eatup_client.model.SessionId;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
     private Context context;
+    private static ProductApiService productApiService;
+    private static SessionId sessionId;
 
     public ProductAdapter(Context context) {
         this.context = context;
+        productApiService = new ProductApiService(context);
     }
 
     @NonNull
@@ -77,8 +85,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
             buyButton.setOnClickListener(v -> {
                 Log.i("ProductAdapter", "Buy button clicked for product: " + product.getName());
-                // Handle buy button click
+
+                // Create an OrderItem with the selected product and quantity
+                OrderItem orderItem = new OrderItem(3, product); // Use the desired quantity
+
+                // Create a list to hold the OrderItems
+                List<OrderItem> orderItems = new ArrayList<>();
+                orderItems.add(orderItem);
+
+                // Create an Order object with the list of OrderItems
+                Order order = new Order(orderItems);
+
+                // Check if sessionId is available
+                if (sessionId != null) {
+                    // Set the sessionId in the order
+                    order.setSessionId(sessionId.getId());
+                    Log.i("ProductAdapter", "sessionId: " + sessionId.getId());
+                } else {
+                    Log.e("ProductAdapter", "sessionId is null in ProductAdapter");
+                    return;
+                }
+
+                // Call the API to submit the order
+                productApiService.submitOrder(order);
             });
+
         }
     }
 }

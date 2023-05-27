@@ -1,6 +1,7 @@
 package com.github.eatup_client;
 
 import android.os.Bundle;
+import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,27 +17,24 @@ public class MenuActivity extends AppCompatActivity {
 
     private ActivityMenuBinding binding;
     private FragmentManager fragmentManager;
-    private ProductApiService mApiService;
+    private ProductApiService productApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setWindowFlags();
+        // Set window flags for fullscreen
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         binding = ActivityMenuBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         fragmentManager = getSupportFragmentManager();
         setupViewPagerAndTabs();
 
-        mApiService = new ProductApiService(getApplicationContext());
-    }
-
-    private void setWindowFlags() {
-        getWindow().setFlags(
-                WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN
-        );
+        productApiService = new ProductApiService(getApplicationContext());
     }
 
     private void setupViewPagerAndTabs() {
