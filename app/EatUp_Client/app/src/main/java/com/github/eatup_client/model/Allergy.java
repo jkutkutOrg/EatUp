@@ -9,23 +9,20 @@ public class Allergy {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getImg_id() {
         return img_id;
     }
 
-    public void setImg_id(String img_id) {
-        this.img_id = img_id;
+    @Override
+    public String toString() {
+        return "Allergy{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", img_id='" + img_id + '\'' +
+                '}';
     }
 }
