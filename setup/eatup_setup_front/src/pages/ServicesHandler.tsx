@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import MicroService from "../model/MicroService";
 import MicroServicesContainer from "../components/servicesHandler/MicroServicesContainer";
+import FtUninstall from "../model/FtApiActions/FtUninstall";
 
 interface Props {
-    ftUninstall: () => void;
+    ftUninstall: FtUninstall;
 }
 
 const ServicesHandler = ({ftUninstall}: Props) => {

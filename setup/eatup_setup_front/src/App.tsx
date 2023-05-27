@@ -3,6 +3,10 @@ import Start from './pages/Start';
 import Installation from './pages/Installation';
 import ServicesHandler from './pages/ServicesHandler';
 import Header from './components/header/Header';
+import FtInstall from './model/FtApiActions/FtInstall';
+import FtUninstall from './model/FtApiActions/FtUninstall';
+import FtCreate from './model/FtApiActions/FtCreate';
+import SetupApi from './services/SetupApi';
 
 enum Status {
   Connecting = "connecting",
@@ -16,6 +20,19 @@ enum Status {
 
 const App = () => {
   const [status, setStatus] = useState<string>(Status.Connecting);
+
+  const updateStatus = () => {
+    SetupApi.getStatus(
+      async (rStatus: string) => {
+          console.log("Status:", rStatus);
+          if (rStatus !== status)
+            setStatus(rStatus);
+      },
+      async (e: string) => {
+          setStatus(Status.NotConnected);
+      }
+    );
+  };
 
   useEffect(() => {
     window.addEventListener("focus", updateStatus);
@@ -52,22 +69,13 @@ const App = () => {
     });
   };
 
-  const updateStatus = () => {
-    fetch(
-      "http://localhost:9000/api/v1/status",
-      {method: "GET"}
-    ).then((response) => {
-      if (response.status === 200) {
-        return response.json();
-      }
-      // TODO handle error
-    }).then((data) => {
-      if (data != status)
-        setStatus(data);
-    }).catch((error) => {
-      setStatus(Status.NotConnected);
-    });
+  const ftCreate: FtCreate = () => statusAction("create");
+
+  const ftInstall: FtInstall = (db_usr: string, db_usr_passwd: string, server_port: number) => {
+    statusAction("install", {db_usr, db_usr_passwd, server_port});
   };
+
+  const ftUninstall: FtUninstall = () => statusAction("uninstall");
 
   let body;
   switch (status) {
@@ -82,26 +90,22 @@ const App = () => {
       body = <div>Not connected. Is the backend running?</div>;
       break;
     case Status.NotCreated:
-      body = <Start ftCreate={() => statusAction("create")} />;
+      body = <Start ftCreate={ftCreate}/>;
       break;
     case Status.Created:
-      body = <Installation ftInstall={(db_usr: string, db_usr_passwd: string, server_port: number) => {
-        statusAction("install", {db_usr, db_usr_passwd, server_port});
-      }} />;
+      body = <Installation ftInstall={ftInstall}/>;
       break;
     case Status.Installed:
-      body = <ServicesHandler
-        ftUninstall={() => statusAction("uninstall")}
-      />;
+      body = <ServicesHandler ftUninstall={ftUninstall}/>;
       break;
     default:
       body = <div>Unknown status</div>;
   }
 
   return <>
-    <Header onRefresh={updateStatus} />
+    <Header onRefresh={updateStatus}/>
     {body}
-  </>
+  </>;
 }
 
 export default App;

@@ -1,5 +1,5 @@
-interface InstallationCallback {
+interface FtInstall {
     (dbUsr: string, dbUsrPasswd: string, serverPort: number): void;
 }
 
-export default InstallationCallback;
+export default FtInstall;

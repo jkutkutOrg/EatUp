@@ -1,7 +1,7 @@
-import InstallationCallback from "../../model/Callbacks";
+import FtInstal from "../../model/FtApiActions";
 import Ids from "./Ids";
 
-const ftSubmit = (ftInstall: InstallationCallback) => {
+const ftSubmit = (ftInstall: FtInstal) => {
     // ? Idea: https://getbootstrap.com/docs/5.0/forms/validation/
     const dbUsrContainer = document.getElementById(Ids.dbUsr) as HTMLInputElement;
     const dbPasswdContainer = document.getElementById(Ids.dbPasswd) as HTMLInputElement;

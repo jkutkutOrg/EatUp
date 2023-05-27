@@ -1,5 +1,7 @@
+import FtCreate from "../model/FtApiActions/FtCreate";
+
 interface Props {
-    ftCreate: () => void;
+    ftCreate: FtCreate;
 }
 
 const Start = ({ftCreate}: Props) => {

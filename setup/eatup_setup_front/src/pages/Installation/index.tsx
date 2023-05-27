@@ -1,12 +1,12 @@
 import NumberInput from "../../components/input/NumberInput";
 import PasswordInput from "../../components/input/Password";
 import TextInput from "../../components/input/TextInput";
-import InstallationCallback from "../../model/Callbacks";
+import FtInstall from "../../model/FtApiActions/FtInstall";
 import Ids from "./Ids";
 import ftSubmit from "./ftSubmit";
 
 interface Props {
-    ftInstall: InstallationCallback;
+    ftInstall: FtInstall;
 }
 
 const Installation = ({ftInstall}: Props) => {
