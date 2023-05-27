@@ -27,7 +27,9 @@ public class QRManualActivity extends AppCompatActivity {
 
     private EditText[] edAuthWords = new EditText[AUTH_WORDS_COUNT];
     private Button btnConfirmOTP;
+    private Button bntReturnToScan;
     private ProductApiService productApiService;
+    private static final String TAG = "QRManualActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,12 +58,19 @@ public class QRManualActivity extends AppCompatActivity {
             }
 
             if (authWords.toString().isEmpty()) {
-                showToast("Ingrese las palabras de autenticación");
+                showToast("Please enter the authentication words");
                 return;
             }
 
             validateAuthWords(authWords.toString());
         });
+
+        bntReturnToScan = findViewById(R.id.bntReturnToScan);
+        bntReturnToScan.setOnClickListener(v -> {
+            Intent intent = new Intent(QRManualActivity.this, QRActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     private void validateAuthWords(String authWords) {
@@ -70,11 +79,11 @@ public class QRManualActivity extends AppCompatActivity {
         validSessionLiveData.observe(this, sessionId -> {
             if (sessionId != null) {
                 navigateToMenuActivity();
-                Log.d("QRManualActivity", "Auth words: " + authWords);
+                Log.d(TAG, "SUCCESS auth words: " + authWords);
             } else {
-                showToast("Palabras de autenticación inválidas");
+                showToast("Invalid authentication words");
                 vibrate();
-                Log.d("QRManualActivity", "ERROR auth words: " + authWords);
+                Log.d(TAG, "FAILED auth words: " + authWords);
             }
         });
     }
