@@ -46,7 +46,7 @@ public class ProductApiService {
     private final SessionIdService mSessionIdService;
     private Context mContext;
 
-    private ProductApiService(Context context) {
+    public ProductApiService(Context context) {
         mContext = context;
         OkHttpClient client = new OkHttpClient.Builder()
                 .cache(new Cache(mContext.getCacheDir(), 10 * 1024 * 1024)) // 10 MB cache
