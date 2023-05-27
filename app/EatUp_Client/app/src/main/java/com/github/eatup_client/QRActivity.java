@@ -12,6 +12,7 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,15 +20,12 @@ import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.LiveData;
 
 import com.github.eatup_client.api.ProductApiService;
-import com.github.eatup_client.model.Session;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.regex.Pattern;
 
 public class QRActivity extends AppCompatActivity {
 
@@ -36,17 +34,16 @@ public class QRActivity extends AppCompatActivity {
     private Button btnProblemScanner;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
-    private LiveData<List<Session>> sessionListLiveData;
     private ProductApiService productApiService;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    private static final Pattern QR_PATTERN = Pattern.compile("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}");
+    private boolean cameraPermissionGranted = false;
+    private static final String TAG = "QRActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         tvQR = findViewById(R.id.tvWelcomeTitle);
         sfvQR = findViewById(R.id.sfvQR);
@@ -60,13 +57,43 @@ public class QRActivity extends AppCompatActivity {
         });
 
         productApiService = new ProductApiService(this);
-        sessionListLiveData = productApiService.loadSessions();
+    }
 
-        initCameraAndDetector();
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (cameraPermissionGranted) {
+            initCameraAndDetector();
+        } else {
+            requestCameraPermission();
+        }
+    }
+
+    private void requestCameraPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            cameraPermissionGranted = true;
+            initCameraAndDetector();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            cameraPermissionGranted = true;
+            Intent intent = new Intent(QRActivity.this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, "Camera permission is required to scan QR codes", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(QRActivity.this, QRManualActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void initCameraAndDetector() {
-        Log.d("QRActivity", "Scanner started");
+        Log.d(TAG, "Initializing camera and detector");
 
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
@@ -80,16 +107,7 @@ public class QRActivity extends AppCompatActivity {
         sfvQR.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                try {
-                    if (ActivityCompat.checkSelfPermission(QRActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                        cameraSource.start(sfvQR.getHolder());
-                    } else {
-                        ActivityCompat.requestPermissions(QRActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                startCamera();
             }
 
             @Override
@@ -98,14 +116,14 @@ public class QRActivity extends AppCompatActivity {
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
-                cameraSource.stop();
+                stopCamera();
             }
         });
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
-                Log.d("QRActivity", "Barcode scanner stopped to prevent memory leaks");
+                Log.d(TAG, "Barcode detector released");
             }
 
             @Override
@@ -117,45 +135,51 @@ public class QRActivity extends AppCompatActivity {
 
                 tvQR.post(() -> {
                     String qrCode = barcodes.valueAt(0).displayValue;
-                    boolean isValid = isQRValid(qrCode);
-                    if (isValid) {
-                        Intent intent = new Intent(QRActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        ((Vibrator) getSystemService(VIBRATOR_SERVICE)).vibrate(100);
-                        tvQR.setText("Invalid QR code\nPlease try again");
-                        Log.d("QRActivity", "Invalid QR code, change text and vibrate");
-                    }
+                    Log.d(TAG, "QR code detected: " + qrCode);
+                    LiveData<Boolean> isValidLiveData = productApiService.isQRValid(qrCode);
+                    Log.d(TAG, "QR code is valid: " + isValidLiveData.getValue());
+                    isValidLiveData.observe(QRActivity.this, isValid -> {
+                        if (isValid != null && isValid) {
+                            Intent intent = new Intent(QRActivity.this, MenuActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+                            if (vibrator != null) {
+                                vibrator.vibrate(100);
+                            }
+                            tvQR.setText("Invalid QR code\nPlease try again");
+                            Log.d(TAG, "Invalid QR code, changing text and vibrating");
+                        }
+                    });
                 });
             }
         });
     }
 
-    private boolean isQRValid(String qrCode) {
-        List<Session> sessionList = sessionListLiveData.getValue();
-        if (sessionList != null) {
-            for (Session session : sessionList) {
-                Log.d("QRActivity", "Session ID: " + session.getId());
-                if (session.getId().equals(qrCode)) {
-                    Log.d("QRActivity", "Session ID matches QR code");
-                    return true;
-                }
+    private void startCamera() {
+        try {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                Log.e(TAG, "Camera permission not granted");
+                return;
             }
+            cameraSource.start(sfvQR.getHolder());
+            Log.d(TAG, "Camera started");
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e(TAG, "Failed to start camera: " + e.getMessage());
         }
-        Log.d("QRActivity", "Session ID does not match QR code");
-        return false;
     }
 
+    private void stopCamera() {
+        if (cameraSource != null) {
+            cameraSource.stop();
+            Log.d(TAG, "Camera stopped");
+        }
+    }
 
     @Override
     protected void onPause() {
         super.onPause();
-        cameraSource.release();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        initCameraAndDetector();
+        stopCamera();
     }
 }

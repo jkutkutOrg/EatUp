@@ -1,6 +1,7 @@
 package com.github.eatup_client;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,10 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
 import com.github.eatup_client.api.ProductApiService;
+import com.github.eatup_client.model.SessionId;
 
 public class QRManualActivity extends AppCompatActivity {
 
-    private EditText[] edAuthWords = new EditText[3];
+    private static final int AUTH_WORDS_COUNT = 3;
+
+    private EditText[] edAuthWords = new EditText[AUTH_WORDS_COUNT];
     private Button btnConfirmOTP;
     private ProductApiService productApiService;
 
@@ -34,17 +38,17 @@ public class QRManualActivity extends AppCompatActivity {
 
         productApiService = new ProductApiService(this);
 
-        // Find all EditText views
-        for (int i = 0; i < edAuthWords.length; i++) {
-            edAuthWords[i] = findViewById(R.id.edAuthWord1 + i);
-            edAuthWords[i].addTextChangedListener(new AuthWordTextWatcher(edAuthWords, i));
+        for (int i = 0; i < AUTH_WORDS_COUNT; i++) {
+            int editTextId = getResources().getIdentifier("edAuthWord" + (i + 1), "id", getPackageName());
+            edAuthWords[i] = findViewById(editTextId);
+            edAuthWords[i].addTextChangedListener(new AuthWordTextWatcher(i));
         }
 
         btnConfirmOTP = findViewById(R.id.btnConfirmOTP);
         btnConfirmOTP.setOnClickListener(v -> {
             StringBuilder authWords = new StringBuilder();
-            int lastIndex = edAuthWords.length - 1;
-            for (int i = 0; i < edAuthWords.length; i++) {
+            int lastIndex = AUTH_WORDS_COUNT - 1;
+            for (int i = 0; i < AUTH_WORDS_COUNT; i++) {
                 authWords.append(edAuthWords[i].getText().toString().trim());
                 if (i != lastIndex) {
                     authWords.append(" ");
@@ -52,47 +56,54 @@ public class QRManualActivity extends AppCompatActivity {
             }
 
             if (authWords.toString().isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Ingrese las palabras de autenticación", Toast.LENGTH_SHORT).show();
+                showToast("Ingrese las palabras de autenticación");
                 return;
             }
 
-            isAuthWordsValid(authWords.toString());
+            validateAuthWords(authWords.toString());
         });
     }
 
-    private void isAuthWordsValid(String authWords) {
-        // Method: getValidSession
-        LiveData<Boolean> validSessionLiveData = productApiService.getValidSession(authWords);
+    private void validateAuthWords(String authWords) {
+        LiveData<SessionId> validSessionLiveData = productApiService.getValidSession(authWords);
 
-        validSessionLiveData.observe(this, isValidSession -> {
-            if (isValidSession) {
-                // The session is valid
-                Toast.makeText(getApplicationContext(), "Palabras de autenticación válidas", Toast.LENGTH_SHORT).show();
+        validSessionLiveData.observe(this, sessionId -> {
+            if (sessionId != null) {
+                navigateToMenuActivity();
                 Log.d("QRManualActivity", "Auth words: " + authWords);
             } else {
-                // The session is invalid
-                Toast.makeText(getApplicationContext(), "Palabras de autenticación inválidas", Toast.LENGTH_SHORT).show();
-                // Vibrate the device to indicate an error
-                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
-                } else {
-                    vibrator.vibrate(500);
-                }
+                showToast("Palabras de autenticación inválidas");
+                vibrate();
                 Log.d("QRManualActivity", "ERROR auth words: " + authWords);
             }
         });
     }
 
+    private void navigateToMenuActivity() {
+        Intent intent = new Intent(QRManualActivity.this, MenuActivity.class);
+        startActivity(intent);
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void vibrate() {
+        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
+        } else {
+            vibrator.vibrate(500);
+        }
+    }
+
     private class AuthWordTextWatcher implements TextWatcher {
 
-        private EditText[] mEditTexts;
         private int mCurrentIndex;
         private Handler mHandler;
         private boolean mIsTyping = false;
 
-        public AuthWordTextWatcher(EditText[] editTexts, int currentIndex) {
-            this.mEditTexts = editTexts;
+        public AuthWordTextWatcher(int currentIndex) {
             this.mCurrentIndex = currentIndex;
             this.mHandler = new Handler();
         }
@@ -105,10 +116,9 @@ public class QRManualActivity extends AppCompatActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             if (count > 0 && s.charAt(start) == ' ') {
-                // If space is entered, remove it and move to the next EditText
-                mEditTexts[mCurrentIndex].setText(s.toString().replaceAll(" ", "").trim());
-                if (mCurrentIndex < mEditTexts.length - 1) {
-                    mEditTexts[++mCurrentIndex].requestFocus();
+                edAuthWords[mCurrentIndex].setText(s.toString().replaceAll(" ", "").trim());
+                if (mCurrentIndex < AUTH_WORDS_COUNT - 1) {
+                    edAuthWords[++mCurrentIndex].requestFocus();
                 }
             }
         }
@@ -116,14 +126,13 @@ public class QRManualActivity extends AppCompatActivity {
         @Override
         public void afterTextChanged(Editable s) {
             if (s.length() == 0) {
-                // Move focus to previous EditText if user deletes text
                 if (mCurrentIndex > 0) {
-                    mEditTexts[--mCurrentIndex].requestFocus();
+                    edAuthWords[--mCurrentIndex].requestFocus();
                 }
             } else if (mIsTyping) {
                 mHandler.postDelayed(() -> {
-                    if (mCurrentIndex < mEditTexts.length - 1) {
-                        mEditTexts[++mCurrentIndex].requestFocus();
+                    if (mCurrentIndex < AUTH_WORDS_COUNT - 1) {
+                        edAuthWords[++mCurrentIndex].requestFocus();
                     }
                 }, 1000);
             }
