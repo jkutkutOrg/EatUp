@@ -17,7 +17,6 @@ import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.model.Order;
 import com.github.eatup_client.model.OrderItem;
 import com.github.eatup_client.model.Product;
-import com.github.eatup_client.model.SessionId;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +25,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private List<Product> productList;
     private Context context;
-    private static ProductApiService productApiService;
-    private static SessionId sessionId;
+    private ProductApiService productApiService;
 
     public ProductAdapter(Context context) {
         this.context = context;
@@ -44,7 +42,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
-        holder.bind(product, context);
+        holder.bind(product);
     }
 
     @Override
@@ -57,13 +55,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         notifyDataSetChanged();
     }
 
-    public static class ProductViewHolder extends RecyclerView.ViewHolder {
+    public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView productImage;
         private TextView productName;
         private TextView productDescription;
         private TextView productPrice;
         private Button buyButton;
+        private Product product;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,22 +71,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productDescription = itemView.findViewById(R.id.tvProductDescription);
             productPrice = itemView.findViewById(R.id.tvProductPrice);
             buyButton = itemView.findViewById(R.id.btnAddProduct);
+            buyButton.setOnClickListener(this);
         }
 
-        public void bind(Product product, Context context) {
+        public void bind(Product product) {
+            this.product = product;
             productName.setText(product.getName());
-            productPrice.setText("$" + String.valueOf(product.getPrice()));
+            productPrice.setText("$" + product.getPrice());
             productDescription.setText(product.getDescription());
-            // Load product image with a library like Picasso or Glide
-            // Picasso.get().load(product.getImageUrl()).into(productImage);
-            // Or use a local drawable resource
             productImage.setImageResource(R.drawable.example_salad_img);
+        }
 
-            buyButton.setOnClickListener(v -> {
+        @Override
+        public void onClick(View v) {
+            if (v.getId() == R.id.btnAddProduct) {
                 Log.i("ProductAdapter", "Buy button clicked for product: " + product.getName());
 
                 // Create an OrderItem with the selected product and quantity
-                OrderItem orderItem = new OrderItem(3, product); // Use the desired quantity
+                OrderItem orderItem = new OrderItem(3, product); // Pending: get the quantity from the UI
 
                 // Create a list to hold the OrderItems
                 List<OrderItem> orderItems = new ArrayList<>();
@@ -96,21 +97,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
                 // Create an Order object with the list of OrderItems
                 Order order = new Order(orderItems);
 
-                // Check if sessionId is available
-                if (sessionId != null) {
-                    // Set the sessionId in the order
-                    order.setSessionId(sessionId.getId());
-                    Log.i("ProductAdapter", "sessionId: " + sessionId.getId());
-                } else {
-                    Log.e("ProductAdapter", "sessionId is null in ProductAdapter");
-                    return;
-                }
-
                 // Call the API to submit the order
                 productApiService.submitOrder(order);
-            });
-
+            }
         }
     }
 }
-
