@@ -22,9 +22,7 @@ impl Fairing for CORS {
     }
 }
 
-// #[rocket::options("/api")]
-// #[rocket::options("/api/v1")]
-#[rocket::options("/api/v1/install")]
+#[rocket::options("/<_..>")]
 pub fn options() -> rocket::http::Status {
     rocket::http::Status::NoContent
 }

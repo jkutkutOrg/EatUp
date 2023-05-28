@@ -1,4 +1,4 @@
-import MicroService from "../../model/MicroService";
+import MicroService from "../../model/Microservices/MicroService";
 import MicroServiceComponent from "./MicroServiceContainer";
 
 interface Props {

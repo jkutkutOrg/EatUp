@@ -7,6 +7,7 @@ import FtInstall from './model/FtApiActions/FtInstall';
 import FtUninstall from './model/FtApiActions/FtUninstall';
 import FtCreate from './model/FtApiActions/FtCreate';
 import SetupApi from './services/SetupApi';
+import ApiEndpoint from './model/ApiEndpoint';
 
 enum Status {
   Connecting = "connecting",
@@ -16,20 +17,21 @@ enum Status {
   Installed = "installed",
 };
 
-// TODO create logic to generalize the API communication
-
 const App = () => {
   const [status, setStatus] = useState<string>(Status.Connecting);
 
   const updateStatus = () => {
     SetupApi.getStatus(
-      async (rStatus: string) => {
-          console.log("Status:", rStatus);
+      (rStatus: string) => {
           if (rStatus !== status)
             setStatus(rStatus);
       },
-      async (e: string) => {
+      (e: string) => {
           setStatus(Status.NotConnected);
+          console.error(
+            "Error getting status\n",
+            e
+          );
       }
     );
   };
@@ -39,43 +41,27 @@ const App = () => {
     updateStatus();
   }, []);
 
-  const statusAction = (action: string, body: any | null = null) => {
-    let init: any = {method: "POST"};
-    if (body !== null) {
-      init.headers = {
-        "Content-Type": "application/json"
-      };
-      init.body = JSON.stringify(body);
-    }
-    fetch(
-      `http://localhost:9000/api/v1/${action}`,
-      init
-    ).then(async (response) => {
-      if (response.status === 200) {
-        updateStatus();
-      }
-      else {
+  const changeAction = (action: ApiEndpoint, body: any | null = null) => {
+    SetupApi.changeStatus(
+      action,
+      body,
+      updateStatus,
+      (e: string) => {
         console.error(
-          "Error starting microservice\n",
-          await response.text()
+          `Error doing action ${action}\n`,
+          e
         );
       }
-    }).catch((error) => {
-      setStatus(Status.NotConnected);
-      console.error(
-        "Error starting microservice\n",
-        error
-      );
-    });
+    );
   };
 
-  const ftCreate: FtCreate = () => statusAction("create");
+  const ftCreate: FtCreate = () => changeAction(ApiEndpoint.Create);
 
   const ftInstall: FtInstall = (db_usr: string, db_usr_passwd: string, server_port: number) => {
-    statusAction("install", {db_usr, db_usr_passwd, server_port});
+    changeAction(ApiEndpoint.Install, {db_usr, db_usr_passwd, server_port});
   };
 
-  const ftUninstall: FtUninstall = () => statusAction("uninstall");
+  const ftUninstall: FtUninstall = () => changeAction(ApiEndpoint.Uninstall);
 
   let body;
   switch (status) {

@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import MicroService from "../model/MicroService";
+import MicroService from "../model/Microservices/MicroService";
 import MicroServicesContainer from "../components/servicesHandler/MicroServicesContainer";
 import FtUninstall from "../model/FtApiActions/FtUninstall";
+import SetupApi from "../services/SetupApi";
+import MicroserviceAction from "../model/Microservices/MicroserviceAction";
 
 interface Props {
     ftUninstall: FtUninstall;
@@ -11,46 +13,37 @@ const ServicesHandler = ({ftUninstall}: Props) => {
     const [microservices, setMicroservices] = useState<MicroService[]>([]);
 
     const updateMicroservices = () => {
-        fetch(
-          "http://localhost:9000/api/v1/microservices",
-          {method: "GET"}
-        ).then(async (response) => {
-            if (response.status === 200) {
-                setMicroservices(MicroService.fromJsonArray(await response.json()));
-            }
-            else {
+        SetupApi.getMicroservices(
+            (microservices: MicroService[]) => {
+                setMicroservices(microservices);
+            },
+            (e: string) => {
                 console.error(
                     "Error getting microservices\n",
-                    await response.json()
+                    e
                 );
             }
-        });
+        );
     };
 
     useEffect(updateMicroservices, []);
 
-    const do_action = (action: string, name: string) => {
-        console.log("Doing action", action, "on", name);
-        fetch(
-          `http://localhost:9000/api/v1/microservices/${action}/${name}`,
-          {method: "POST"}
-        ).then(async (response) => {
-            if (response.status === 200) {
-                updateMicroservices();
-            }
-            else {
+    const doAction = (action: MicroserviceAction, name: string) => {
+        SetupApi.doMicroserviceAction(
+            action, name,
+            updateMicroservices,
+            (e: string) => {
                 console.error(
-                    "Error starting microservice\n",
-                    await response.text()
+                    "Error doing microservice action\n",
+                    e
                 );
             }
-        });
+        );
     }
     
-    const start = (name: string) => do_action("start", name);
-    const stop = (name: string) => do_action("stop", name);
+    const start = (name: string) => doAction(MicroserviceAction.Start, name);
+    const stop = (name: string) => doAction(MicroserviceAction.Stop, name);
 
-    console.log("ServicesHandler", microservices);
     return <>
         <MicroServicesContainer
             microservices={microservices}
