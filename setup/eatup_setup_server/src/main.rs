@@ -6,6 +6,7 @@ mod api;
 mod model;
 mod cmd;
 mod cors;
+mod dotenv;
 
 pub const MICROSERVICES: [&'static str; 2] = [
     "eatup_db",

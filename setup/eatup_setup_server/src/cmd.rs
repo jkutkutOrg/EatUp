@@ -1,10 +1,11 @@
 use std::path::Path;
 use std::process::Command;
-use std::{env, fs, io};
+use std::{fs, io};
 
 use crate::model::*;
 use crate::{MICROSERVICES, ENV};
 use crate::api::error::InvalidAPI;
+use crate::dotenv;
 
 pub fn get_all_microservices() -> Vec<Microservice> {
     let mut microservices = vec![];
@@ -61,7 +62,7 @@ pub fn project_create() -> Result<(), String> {
 }
 
 pub fn create_db() -> Result<(), String> {
-    dotenv::from_filename(ENV).unwrap();
+    let env = dotenv::from_filename(ENV).unwrap();
     let mut cmd = Command::new("docker");
     let args = format!("\
         run -d --name {} \
@@ -70,10 +71,10 @@ pub fn create_db() -> Result<(), String> {
         -e POSTGRES_DB={} \
         -v eatup_installation:/docker-entrypoint-initdb.d/ \
         jkutkut/eatup:db_latest",
-        env::var("DB_CONTAINER_NAME").unwrap(),
-        env::var("DB_USER_PASSWD").unwrap(),
-        env::var("DB_USER").unwrap(),
-        env::var("DB_NAME").unwrap()
+        env.var("DB_CONTAINER_NAME").unwrap(),
+        env.var("DB_USER_PASSWD").unwrap(),
+        env.var("DB_USER").unwrap(),
+        env.var("DB_NAME").unwrap()
     );
     println!("docker {}", &args);
     cmd.args(args.split(" "));
@@ -99,18 +100,18 @@ pub fn create_env_file(
     let content = format!("\
         # EatUp Secrets\n\
         # DB\n\
-        DB_CONTAINER_NAME='eatup_db'\n\
-        DB_NAME='postgres'\n\
-        DB_PORT='5432'\n\
-        DB_USER='{}'\n\
-        DB_USER_PASSWD='{}'\n\
+        DB_CONTAINER_NAME=eatup_db\n\
+        DB_NAME=postgres\n\
+        DB_PORT=5432\n\
+        DB_USER={}\n\
+        DB_USER_PASSWD={}\n\
         # DB Web controller\n\
-        WEB_CONTROLLER_CONTAINER_NAME='db_controller'\n\
-        WEB_CONTROLLER_PORT='1250'\n\
-        WEB_CONTROLLER_EMAIL='{}@admin.com'\n\
-        WEB_CONTROLLER_PASSWD='{}'\n\
+        WEB_CONTROLLER_CONTAINER_NAME=db_controller\n\
+        WEB_CONTROLLER_PORT=1250\n\
+        WEB_CONTROLLER_EMAIL={}@admin.com\n\
+        WEB_CONTROLLER_PASSWD={}\n\
         # Server\n\
-        SERVER_PORT='{}'\n",
+        SERVER_PORT={}\n",
         &db_usr,
         &db_usr_passwd,
         &db_usr,
@@ -140,8 +141,9 @@ pub fn run_server() -> Result<(), String> {
     if db.get_state() != MicroserviceState::Running {
         return Err("DB container is not running".to_string());
     }
-    dotenv::from_filename(ENV).unwrap();
-    let port = env::var("SERVER_PORT").unwrap();
+    let env = dotenv::from_filename(ENV).unwrap();
+    let port = env.var("SERVER_PORT").unwrap();
+    println!("DB port: {}", &port);
     let args = format!("run -d --rm --name {} \
         -p {}:{} \
         -v eatup_installation:/installation:rw \
