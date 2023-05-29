@@ -1,0 +1,544 @@
+{
+    "name": "EatUp Server API",
+    "description": "Here you will find the documentation of the server microservice of the EatUp project",
+    "apis": [
+        {
+            "title": "Product",
+            "description": "All the information about the products available.",
+            "route": "/api/v1",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "/products",
+                    "description": "Fetch the products",
+                    "parameters": null,
+                    "filters": [
+                        {
+                            "name": "category",
+                            "description": "The category to include in the response. It can be used multiple times to fetch all the selected categories",
+                            "example": "XXXXXX"
+                        },
+                        {
+                            "name": "allergy",
+                            "description": "Excludes all the products that contains any of the specified allergies. It can be used multiple times.",
+                            "example": "XXXXXX"
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "description": "Example fetching all the products",
+                            "endpoint": "/api/v1/products",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    id: \"XXXXXX\",",
+                                "    name: \"YYYYYY\",",
+                                "    description: \"ZZZZZZ\",",
+                                "    img_id: \"YYYYYYY.png\",",
+                                "    price: 42.0,",
+                                "    allergies: [",
+                                "      {",
+                                "        id: \"AAAAAAA\",",
+                                "        name: \"BBBBBBB\",",
+                                "        img_id: \"CCCCCCC.png\"",
+                                "      }",
+                                "      ...",
+                                "    ],",
+                                "    categories: [",
+                                "      {",
+                                "        id: \"DDDDDDD\",",
+                                "        name: \"EEEEEEE\"",
+                                "      }",
+                                "      ...",
+                                "    ]",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        },
+                        {
+                            "description": "Get all starters lactose free",
+                            "endpoint": "/api/v1/products?category=EEEEEEE&allergy=BBBBBB",
+                            "data": null,
+                            "response_description": "If XXXXXX is the category for starters and YYYYYY the allergy lactose; this are the products:",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    id: \"XXXXXX\",",
+                                "    name: \"YYYYYY\",",
+                                "    description: \"ZZZZZZ\",",
+                                "    img_id: \"YYYYYYY.png\",",
+                                "    price: 42.0,",
+                                "    allergies: [",
+                                "      {",
+                                "        id: \"AAAAAAA\",",
+                                "        name: \"BBBBBBB\",",
+                                "        img_id: \"CCCCCCC.png\"",
+                                "      }",
+                                "      ...",
+                                "    ],",
+                                "    categories: [",
+                                "      {",
+                                "        id: \"DDDDDDD\",",
+                                "        name: \"EEEEEEE\"",
+                                "      }",
+                                "      ...",
+                                "    ]",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Session",
+            "description": "The moment when the client is actively using the app in a table",
+            "route": "/api/v1",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "/sessions",
+                    "description": "Fetch all the sessions",
+                    "parameters": null,
+                    "filters": [
+                        {
+                            "name": "in_progress",
+                            "description": "Filter only the active or inactive sessions",
+                            "example": "true/false"
+                        },
+                        {
+                            "name": "table_id",
+                            "description": "Filter the sessions done in a specific table",
+                            "example": "XXXXXX"
+                        }
+                    ],
+                    "examples": [
+                        {
+                            "description": "Get all the sessions",
+                            "endpoint": "/api/v1/sessions",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    id: \"XXXXXX\",",
+                                "    table_id: \"YYYYYY\",",
+                                "    in_progress: true/false",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        },
+                        {
+                            "description": "Get all active sessions",
+                            "endpoint": "/api/v1/sessions?in_progress=true",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    id: \"XXXXXX\",",
+                                "    table_id: \"YYYYYY\",",
+                                "    in_progress: true/false",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        },
+                        {
+                            "description": "Get all sessions done in table `YYYYYY`",
+                            "endpoint": "/api/v1/sessions?table_id=YYYYYY",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    id: \"XXXXXX\",",
+                                "    table_id: \"YYYYYY\",",
+                                "    in_progress: true/false",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "route": "/session_id/:simple_id",
+                    "description": "Fetch the session_id with the simple_id",
+                    "parameters": [
+                        {
+                            "name": "simple_id",
+                            "description": "The simple_id of the session",
+                            "example": "XXXXXX YYYYYY ZZZZZZ"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Get the session_id of the session with simple_id `XXXXXX YYYYYY ZZZZZZ`",
+                            "endpoint": "/api/v1/session_id/XXXXXX YYYYYY ZZZZZZ",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "{",
+                                "    \"simple_id\": \"XXXXXX YYYYYY ZZZZZZ\",",
+                                "    \"id\": \"AAAAAAA\",",
+                                "    \"qr_img\": \"/qr/AAAAAAA.png\"",
+                                "}"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/session/:table_id",
+                    "description": "Create a new session",
+                    "parameters": [
+                        {
+                            "name": "table_id",
+                            "description": "The id of the table where the session should be created",
+                            "example": "XXXXXX"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Create a new session in table `BBBBBBB`",
+                            "endpoint": "/api/v1/session/BBBBBBB",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "{",
+                                "    \"simple_id\": \"XXXXXX YYYYYY ZZZZZZ\",",
+                                "    \"id\": \"AAAAAAA\",",
+                                "    \"qr_img\": \"/qr/AAAAAAA.png\"",
+                                "}"
+                            ]
+                        },
+                        {
+                            "description": "Attempt to create a new session in table `BBBBBBB`",
+                            "endpoint": "/api/v1/session/BBBBBBB",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 409,
+                            "response_body": [
+                                "There is already a session in progress for table mesa"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "PATCH",
+                    "route": "/session/:session_id/end",
+                    "description": "End a session",
+                    "parameters": [
+                        {
+                            "name": "session_id",
+                            "description": "The id of the session to end",
+                            "example": "XXXXXX"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Ending a session with session_id `AAAAAAA`",
+                            "endpoint": "/api/v1/session/AAAAAAA/end",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"Session ended\""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Orders",
+            "description": "Logic to manage the orders made by the clients in a session.",
+            "route": "/orders",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "/session/:session_id",
+                    "description": "Fetch all the orders of a session",
+                    "parameters": [
+                        {
+                            "name": "session_id",
+                            "description": "The id of the session",
+                            "example": "XXXXXX"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Get all the orders of the session with id `AAAAAAA`",
+                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    \"id\": \"AAAAAAA\",",
+                                "    \"products\": [",
+                                "      {",
+                                "        \"id\": \"BBBBBBB\",",
+                                "        \"quantity\": 2,",
+                                "        \"product\": {",
+                                "          \"id\": \"CCCCCCC\",",
+                                "          \"name\": \"Bruschetta\",",
+                                "          \"description\": \"Tomato, garlic, basil, olive oil\",",
+                                "          \"img_id\": \"bruchetta.png\",",
+                                "          \"price\": 5.0,",
+                                "          \"allergies\": [",
+                                "            {",
+                                "              \"id\": \"DDDDDDD\",",
+                                "              \"name\": \"Gluten\",",
+                                "              \"img_id\": \"gluten.png\"",
+                                "            },",
+                                "            {",
+                                "              \"id\": \"EEEEEEE\",",
+                                "              \"name\": \"Lactose\",",
+                                "              \"img_id\": \"lactose.png\"",
+                                "            }",
+                                "          ],",
+                                "          \"categories\": [",
+                                "            {",
+                                "              \"id\": \"FFFFFFF\",",
+                                "              \"name\": \"Appetizers\"",
+                                "            }",
+                                "          ]",
+                                "        }",
+                                "      },",
+                                "      ...",
+                                "    ],",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/session/:session_id",
+                    "description": "Create a new order in a session",
+                    "parameters": [
+                        {
+                            "name": "session_id",
+                            "description": "The id of the session",
+                            "example": "XXXXXX"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Create a new order in the session with id `AAAAAAA`",
+                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "data": [
+                                "{",
+                                "  \"products\": [",
+                                "    {",
+                                "      \"quantity\": 3",
+                                "      \"product\": {",
+                                "        \"id\": \"BBBBBBB\"",
+                                "        \"name\": \"Bruschetta\"",
+                                "        \"description\": \"Tomato, garlic, basil, olive oil\"",
+                                "        \"img_id\": \"bruchetta.png\"",
+                                "        \"price\": 5.0",
+                                "        \"allergies\": [",
+                                "          {",
+                                "            \"id\": \"DDDDDDD\"",
+                                "            \"name\": \"Gluten\"",
+                                "            \"img_id\": \"gluten.png\"",
+                                "          },",
+                                "          {",
+                                "            \"id\": \"EEEEEEE\"",
+                                "            \"name\": \"Lactose\"",
+                                "            \"img_id\": \"lactose.png\"",
+                                "          }",
+                                "        ],",
+                                "        \"categories\": [",
+                                "          {",
+                                "            \"id\": \"FFFFFFF\"",
+                                "            \"name\": \"Appetizers\"",
+                                "          }",
+                                "        ]",
+                                "      }",
+                                "    },",
+                                "    ...",
+                                "  ]",
+                                "}"
+                            ],
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"Order created\""
+                            ]
+                        },
+                        {
+                            "description": "Create a new order in invalid session with id `BBBBBBB`",
+                            "endpoint": "/api/v1/orders/session/BBBBBBB",
+                            "data": [
+                                "{",
+                                "  \"products\": [",
+                                "    {",
+                                "      \"quantity\": 3",
+                                "      \"product\": {",
+                                "        \"id\": \"BBBBBBB\"",
+                                "        \"name\": \"Bruschetta\"",
+                                "        \"description\": \"Tomato, garlic, basil, olive oil\"",
+                                "        \"img_id\": \"bruchetta.png\"",
+                                "        \"price\": 5.0",
+                                "        \"allergies\": [",
+                                "          {",
+                                "            \"id\": \"DDDDDDD\"",
+                                "            \"name\": \"Gluten\"",
+                                "            \"img_id\": \"gluten.png\"",
+                                "          },",
+                                "          {",
+                                "            \"id\": \"EEEEEEE\"",
+                                "            \"name\": \"Lactose\"",
+                                "            \"img_id\": \"lactose.png\"",
+                                "          }",
+                                "        ],",
+                                "        \"categories\": [",
+                                "          {",
+                                "            \"id\": \"FFFFFFF\"",
+                                "            \"name\": \"Appetizers\"",
+                                "          }",
+                                "        ]",
+                                "      }",
+                                "    },",
+                                "    ...",
+                                "  ]",
+                                "}"
+                            ],
+                            "response_description": "This is the result",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid session id"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Special requests",
+            "description": "This section contains the documentation for the special requests",
+            "route": "/",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "",
+                    "description": "Ping request to check if the server is up",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Ping the server",
+                            "endpoint": "",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"Eatup up and running!\""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "GET",
+                    "route": ":file_route",
+                    "description": "Allows to fetch all files in the public directory of the installation volume.",
+                    "parameters": [
+                        {
+                            "name": "file_route",
+                            "description": "The route of the file",
+                            "example": "qr/AAAAAAA.png"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Get QR png",
+                            "endpoint": "/qr/AAAAAAA.png",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "**PNG file**"
+                            ]
+                        },
+                        {
+                            "description": "Get qr that does not exist",
+                            "endpoint": "/qr/BBBBBBB.png",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 404,
+                            "response_body": [
+                                "\"QR not found. Are you sure the QR should be valid?\""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "legend": [
+        {
+            "description": "This are the meanings of the symbols used in this document",
+            "legend": [
+                [":session_id", "The id of the session"],
+                [":table_id", "The id of the table"],
+                ["true/false", "A boolean value. It must be `true` or `false`"],
+                ["XXXXXX", "Some value that would be replaced for something else in the real situation."],
+                ["...", "More parameters can be added to the request"]
+            ]
+        },
+        [
+            {
+                "code": 200,
+                "meaning": "200 OK",
+                "description": "The request was successful."
+            },
+            {
+                "code": 404,
+                "meaning": "404 Not Found",
+                "description": "The resource does not exist."
+            },
+            {
+                "code": 409,
+                "meaning": "409 Conflict",
+                "description": "Something is not right with the request."
+            },
+            {
+                "code": 500,
+                "meaning": "500 Internal Server Error",
+                "description": "Something went wrong on the server. Please contact with the administrator."
+            },
+            {
+                "code": 501,
+                "meaning": "501 Not Implemented",
+                "description": "The endpoint is not implemented yet."
+            }
+        ]
+    ]
+}
