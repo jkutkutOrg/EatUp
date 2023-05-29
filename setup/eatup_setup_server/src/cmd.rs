@@ -49,7 +49,7 @@ pub fn project_create() -> Result<(), String> {
         return Err("Project already created".to_string());
     }
 
-    if std::fs::create_dir_all("/installation/public").is_err() {
+    if std::fs::create_dir_all("/installation/public/qr").is_err() {
         println!("Failed to create public directory");
         return Err("Failed to create public directory".to_string());
     }

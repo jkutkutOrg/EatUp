@@ -14,6 +14,7 @@ use tools::route_error;
 
 pub const ENV: &'static str = "/installation/.env";
 pub const PUBLIC_DIR: &'static str = "/installation/public";
+pub const QR_DIR: &'static str = "/installation/public/qr";
 
 #[get("/")]
 fn ping() -> Json<&'static str> {

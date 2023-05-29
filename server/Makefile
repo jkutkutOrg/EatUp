@@ -7,22 +7,22 @@ ifeq ($(OS),Darwin)
 endif
 
 VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
-PORT = 8000
+PORT = 80
 
-BASIC_ATTRS = -p ${PORT}:8000 \
-	-v ${CURRENT_PATH}/../../eatup_installation:/installation
+BASIC_ATTRS = -p ${PORT}:${PORT} \
+	-v eatup_installation:/installation
 
 ATTRS = ${BASIC_ATTRS} \
 	-v ${CURRENT_PATH}:/app -w /app
 
-DOCKER_EXEC = docker run -it --rm \
+DOCKER_EXEC = docker run -it --rm --name eatup_server \
 	${ATTRS} \
 	--entrypoint "/root/.cargo/bin/cargo" \
 	-v eatup_cargo_registy:/root/.cargo/registry \
 	jkutkut/docker4rust
 
 run:
-	${DOCKER_EXEC} run
+	${DOCKER_EXEC} run 80 172.17.0.5 5432
 
 build:
 	${DOCKER_EXEC} build
