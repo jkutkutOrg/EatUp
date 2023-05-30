@@ -199,6 +199,16 @@
                                 "    \"qr_img\": \"/qr/AAAAAAA.png\"",
                                 "}"
                             ]
+                        },
+                        {
+                            "description": "Attempt to get the session_id with an invalid simple_id `XXXXXX YYYYYY ZZZZZZ`",
+                            "endpoint": "/api/v1/session_id/XXXXXX YYYYYY ZZZZZZ",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 409,
+                            "response_body": [
+                                "No session with id XXXXXX YYYYYY ZZZZZZ"
+                            ]
                         }
                     ]
                 },
@@ -244,7 +254,7 @@
                 {
                     "method": "PATCH",
                     "route": "/session/:session_id/end",
-                    "description": "End a session",
+                    "description": "Make sure to end this session.",
                     "parameters": [
                         {
                             "name": "session_id",
@@ -262,6 +272,16 @@
                             "response_code": 200,
                             "response_body": [
                                 "\"Session ended\""
+                            ]
+                        },
+                        {
+                            "description": "Attempt to end a session with invalid session_id `AAAAAAA`",
+                            "endpoint": "/api/v1/session/AAAAAAA/end",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid session id"
                             ]
                         }
                     ]
@@ -331,6 +351,16 @@
                                 "  },",
                                 "  ...",
                                 "]"
+                            ]
+                        },
+                        {
+                            "description": "Attempt to get all the orders with invalid session_id `AAAAAAA`",
+                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid session id"
                             ]
                         }
                     ]

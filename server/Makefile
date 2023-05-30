@@ -32,17 +32,17 @@ init_docker:
 
 build_release:
 	${DOCKER_EXEC} build --release
-	docker build -t jkutkut/eatup:$(VERSION) .
+	docker build -t jkutkut/eatup:server_$(VERSION) .
 
 push_release:
-	docker tag jkutkut/eatup:$(VERSION) jkutkut/eatup:latest
-	docker push jkutkut/eatup:$(VERSION)
-	docker push jkutkut/eatup:latest
+	docker tag jkutkut/eatup:server_$(VERSION) jkutkut/eatup:server_latest
+	docker push jkutkut/eatup:server_$(VERSION)
+	docker push jkutkut/eatup:server_latest
 
 # ******** Public tools ********
 
 run_release:
-	docker run -it --rm ${BASIC_ATTRS} --name eatup_server jkutkut/eatup:$(VERSION)
+	docker run -it --rm ${BASIC_ATTRS} --name eatup_server jkutkut/eatup:server_$(VERSION)
 
 stop:
 	docker stop eatup_server
