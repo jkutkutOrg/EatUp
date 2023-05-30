@@ -22,5 +22,3 @@ WORKDIR /app
 # "/code/db/load_db.sql", "/installation/load_db.sql"
 COPY target/release/eatup_setup_server .
 ENTRYPOINT ["./eatup_setup_server"]
-
-# TODO start script: docker pull all images

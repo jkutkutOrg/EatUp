@@ -1,3 +1,5 @@
+# TODO docker pull all images
+
 images="\
 	jkutkut/eatup:db_latest \
 	jkutkut/eatup:server_latest \
