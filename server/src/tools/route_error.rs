@@ -23,7 +23,11 @@ pub struct InvalidAPI {
 }
 
 impl InvalidAPI {
-    pub fn new(message: String) -> InvalidAPI {
+    pub fn new(message: &str) -> InvalidAPI {
+        InvalidAPI { message: message.to_string() }
+    }
+
+    pub fn new_from_string(message: String) -> InvalidAPI {
         InvalidAPI { message }
     }
 }

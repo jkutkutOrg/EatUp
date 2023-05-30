@@ -16,6 +16,10 @@ pub const ENV: &'static str = "/installation/.env";
 pub const PUBLIC_DIR: &'static str = "/installation/public";
 pub const QR_DIR: &'static str = "/installation/public/qr";
 
+pub const ERROR_INVALID_SESSION_ID: &'static str = "Invalid session id";
+pub const ERROR_NO_PRODUCTS_ORDER: &'static str = "No products in order";
+pub const ERROR_INVALID_PRODUCT_ID: &'static str = "Invalid product id";
+
 #[get("/")]
 fn ping() -> Json<&'static str> {
     Json("Eatup up and running!")

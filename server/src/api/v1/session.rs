@@ -37,7 +37,11 @@ pub(super) async fn create_session(
 pub(super) async fn end_session(
     db: &State<Client>,
     session_id: UuidWrapper
-) -> Result<Json<&'static str>, Status> {
+) -> Result<Json<&'static str>, InvalidAPI> {
+    let session_id = match session_id.get() {
+        Ok(session_id) => session_id,
+        Err(_) => return Err(InvalidAPI::new(ERROR_INVALID_SESSION_ID))
+    };
     match db::end_session(db, session_id).await {
         Err(e) => Err(e),
         Ok(_) => Ok(Json("Session ended"))
