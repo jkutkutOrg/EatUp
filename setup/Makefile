@@ -30,17 +30,20 @@ DOCKER_APP_V = -v ${PWD}/${FRONT_NAME}:/app -w /app
 DOCKER_IMG_FRONT = node:current-alpine3.16
 
 run_front:
-	$(DOCKER_CMD) -p ${PORT_FRONT}:5173 ${DOCKER_APP_V} --entrypoint=npm ${DOCKER_IMG_FRONT} run dev
+	$(DOCKER_CMD) -p ${PORT_FRONT}:${PORT_FRONT} ${DOCKER_APP_V} --entrypoint=npm -e PORT=${PORT_FRONT} ${DOCKER_IMG_FRONT} run dev
 
 terminal_front:
 	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=/bin/sh ${DOCKER_IMG_FRONT}
+
+run_front_release:
+	$(DOCKER_CMD) -p ${PORT_FRONT}:${PORT_FRONT} ${DOCKER_APP_V} --entrypoint=npm -e PORT=${PORT_FRONT} ${DOCKER_IMG_FRONT} run preview
 
 # ---------------------------------------------------------------------
 
 run_server:
 	make -C ${BACK_NAME} run
 
-run_release:
+run_server_release:
 	make -C ${BACK_NAME} run_release
 
 stop_server:

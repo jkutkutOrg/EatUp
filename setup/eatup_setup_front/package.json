@@ -4,9 +4,10 @@
   "version": "0.4.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port $PORT",
     "build": "tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "release": "vite preview --port $PORT"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",

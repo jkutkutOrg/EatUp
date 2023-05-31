@@ -1,5 +1,5 @@
 - [ ] Allow args for setup front
-- [ ] Allow args for setup back
+- [x] Allow args for setup back
 
 - [ ] Create docker logic for setup front
 - [ ] Create docker logic for setup back

@@ -1,4 +1,4 @@
-import FtInstal from "../../model/FtApiActions";
+import FtInstal from "../../model/FtApiActions/FtInstall";
 import Ids from "./Ids";
 
 const ftSubmit = (ftInstall: FtInstal) => {
