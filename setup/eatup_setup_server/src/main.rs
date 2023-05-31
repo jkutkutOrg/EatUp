@@ -8,6 +8,7 @@ mod cmd;
 mod cors;
 mod dotenv;
 
+
 pub const MICROSERVICES: [&'static str; 2] = [
     "eatup_db",
     "eatup_server"
@@ -15,6 +16,20 @@ pub const MICROSERVICES: [&'static str; 2] = [
 
 pub const ENV: &'static str = "/installation/.env";
 
+#[cfg(not(debug_assertions))]
+pub const PUBLIC_DIR: &'static str = "/www";
+
+#[cfg(debug_assertions)]
+fn get_root_route() -> Vec<rocket::Route> {
+    routes![ping]
+}
+
+#[cfg(not(debug_assertions))]
+fn get_root_route() -> rocket::Route {
+    rocket::fs::FileServer::from(PUBLIC_DIR)
+}
+
+#[cfg(debug_assertions)]
 #[get("/")]
 fn ping() -> Json<&'static str> {
     Json("eatup_setup_server up and running!")
@@ -52,9 +67,10 @@ async fn rocket() -> Rocket<Build> {
 
     rocket::custom(&config)
         .attach(cors::CORS)
-        .mount("/", routes![ping, cors::options])
+        .mount("/", routes![cors::options])
         .mount("/api/v1", api::get_v1_routes())
         .register("/api", catchers![api::error::not_implemented])
+        .mount("/", get_root_route())
         .register("/", catchers![
             api::error::internal_server_error,
             api::error::not_found

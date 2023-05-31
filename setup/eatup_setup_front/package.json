@@ -1,13 +1,12 @@
 {
   "name": "eatup_setup_front",
   "private": true,
-  "version": "0.4.1",
+  "version": "0.8.0",
   "type": "module",
   "scripts": {
     "dev": "vite --port $PORT",
     "build": "tsc && vite build",
-    "preview": "vite preview",
-    "release": "vite preview --port $PORT"
+    "preview": "vite preview"
   },
   "dependencies": {
     "bootstrap": "^5.2.3",

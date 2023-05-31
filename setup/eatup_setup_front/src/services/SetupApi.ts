@@ -9,7 +9,7 @@ const toJson = async (response: Response) => await response.json();
 const toText = async (response: Response) => await response.text();
 
 class SetupApi extends API {
-    private static readonly url = "http://localhost:9000/api/v1";
+    private static readonly url = (import.meta.env.DEV ? "http://localhost:9000" : "") + "/api/v1";
 
     private static formatEndpoint(endpoint: ApiEndpoint, options: string[]): string {
         if (options.length === 0)
