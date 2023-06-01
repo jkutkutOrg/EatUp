@@ -46,10 +46,13 @@ pub async fn install(
         body.db_usr_passwd,
         body.server_port
     );
-    match cmd::create_db() {
-        Ok(_) => Ok(Status::Ok),
-        Err(e) => Err(InvalidAPI::new(e))
+    if let Err(e) = cmd::create_db() {
+        return Err(InvalidAPI::new(e));
     }
+    // if let Err(e) = cmd::run_server() { // TODO
+    //     return Err(InvalidAPI::new(e));
+    // }
+    Ok(Status::Ok)
 }
 
 #[post("/uninstall")]

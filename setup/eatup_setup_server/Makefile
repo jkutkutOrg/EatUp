@@ -22,7 +22,7 @@ ATTRS = ${BASIC_ATTRS} \
 	-v rust_cargo_registy:/root/.cargo/registry \
 	-v /var/run/docker.sock:/var/run/docker.sock:rw \
 	-v eatup_installation:/installation \
-	-v ${CURRENT_PATH}/../../:/code
+	-v ${CURRENT_PATH}/../../db:/code
 
 DOCKER_EXEC = docker run -it --rm \
 	${ATTRS} \
