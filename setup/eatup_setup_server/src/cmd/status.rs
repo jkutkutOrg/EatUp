@@ -70,6 +70,7 @@ pub fn create_db() -> Result<(), String> {
         env.var("DB_USER").unwrap(),
         env.var("DB_NAME").unwrap()
     );
+    #[cfg(debug_assertions)]
     println!("docker {}", &args);
     cmd.args(args.split(" "));
     let output = cmd.output().expect("Failed to create db container");

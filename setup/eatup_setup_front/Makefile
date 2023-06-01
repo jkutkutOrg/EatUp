@@ -9,9 +9,6 @@ endif
 FRONT_NAME = eatup_setup_front
 PORT_FRONT = 5173
 
-BACK_NAME = eatup_setup_server
-PORT_BACK = 9000
-
 # ---------------------------------------------------------------------
 
 # Create app directory:
@@ -26,7 +23,7 @@ PORT_BACK = 9000
 # Done! Follow the steps and that's it!
 
 DOCKER_CMD = docker run --rm -it --name ${FRONT_NAME}
-DOCKER_APP_V = -v ${PWD}/${FRONT_NAME}:/app -w /app
+DOCKER_APP_V = -v ${CURRENT_PATH}:/app -w /app
 DOCKER_IMG_FRONT = node:current-alpine3.16
 
 run_front:
@@ -34,19 +31,5 @@ run_front:
 
 terminal_front:
 	$(DOCKER_CMD) ${DOCKER_APP_V} --entrypoint=/bin/sh ${DOCKER_IMG_FRONT}
-
-run_front_release:
-	$(DOCKER_CMD) -p ${PORT_FRONT}:${PORT_FRONT} ${DOCKER_APP_V} --entrypoint=npm -e PORT=${PORT_FRONT} ${DOCKER_IMG_FRONT} run preview
-
-# ---------------------------------------------------------------------
-
-run_server:
-	make -C ${BACK_NAME} run
-
-run_server_release:
-	make -C ${BACK_NAME} run_release
-
-stop_server:
-	make -C ${BACK_NAME} stop
 
 # ---------------------------------------------------------------------

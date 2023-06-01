@@ -31,7 +31,6 @@ pub fn run_server() -> Result<(), String> {
     }
     let env = dotenv::from_filename(ENV).unwrap();
     let port = env.var("SERVER_PORT").unwrap();
-    println!("DB port: {}", &port);
     let args = format!("run -d --rm --name {} \
         -p {}:{} \
         -v eatup_installation:/installation:rw \
@@ -43,6 +42,7 @@ pub fn run_server() -> Result<(), String> {
         db.get_ip().unwrap(),
         "5432"
     );
+    #[cfg(debug_assertions)]
     println!("docker {}", &args);
     let args = args.split(" ");
     let mut cmd = Command::new("docker");

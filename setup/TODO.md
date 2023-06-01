@@ -1,11 +1,9 @@
-- [ ] Allow args for setup front
 - [x] Allow args for setup back
 
-- [ ] Create docker logic for setup front
-- [ ] Create docker logic for setup back
+- [x] Create docker logic for setup front
+- [x] Create docker logic for setup back
 
-- [ ] compile and publish setup front
-- [ ] compile and publish setup back
+- [x] compile and publish setup
 
 - [ ] Remove unnecessary makefiles
 

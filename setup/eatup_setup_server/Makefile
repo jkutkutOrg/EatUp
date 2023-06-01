@@ -10,8 +10,8 @@ endif
 # ****** Variables ******
 CONTAINER_NAME = eatup_setup_server
 PORT = 9000
-IMAGE_NAME = jkutkut/eatup:setup_server
-IMAGE_NAME_DEV = ${IMAGE_NAME}_dev
+IMAGE_NAME = jkutkut/eatup:setup
+IMAGE_NAME_DEV = ${IMAGE_NAME}_server_dev
 VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
 
 # ****** Docker config ******
@@ -49,7 +49,8 @@ connect_docker:
 
 build_release:
 	${DOCKER_EXEC} build --release
-	docker build -t ${IMAGE_NAME}_$(VERSION) --target release .
+	@echo "Run this command from the root directory:"
+	@echo "docker build -f setup/eatup_setup_server/Dockerfile -t ${IMAGE_NAME}_$(VERSION) --target release ."
 
 push_release:
 	docker tag ${IMAGE_NAME}_$(VERSION) ${IMAGE_NAME}_latest

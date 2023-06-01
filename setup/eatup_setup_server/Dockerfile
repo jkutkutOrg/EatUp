@@ -16,18 +16,19 @@ RUN apk add --update docker openrc && \
 # ------------------
 
 FROM alpine:3.16 as release
+# * This should be run from the root of the project
+
+RUN apk add --update docker openrc && \
+    rc-update add docker boot; \
+    rm -rf /var/cache/apk/*
 
 WORKDIR /app
-# TODO copy scripts and needed resources form local
-# "/code/db/load_db.sql", "/installation/load_db.sql"
 
 # Installation files
-COPY ../../db /code # TODO this is not right
+COPY db /code
 
 # Frontend code
-COPY ../eatup_setup_front/dist /www
-COPY target/release/eatup_setup_server .
+COPY setup/eatup_setup_front/dist /www
+
+COPY setup/eatup_setup_server/target/release/eatup_setup_server .
 ENTRYPOINT ["./eatup_setup_server"]
-
-
-# TODO copy dir when installing

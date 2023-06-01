@@ -1,5 +1,9 @@
-use rocket::{Config, Build, Rocket, launch, routes, catchers, get};
+use rocket::{Config, Build, Rocket, launch, routes, catchers};
 use std::net::Ipv4Addr;
+
+#[cfg(debug_assertions)]
+use rocket::get;
+#[cfg(debug_assertions)]
 use rocket::serde::json::Json;
 
 mod api;
@@ -25,8 +29,8 @@ fn get_root_route() -> Vec<rocket::Route> {
 }
 
 #[cfg(not(debug_assertions))]
-fn get_root_route() -> rocket::Route {
-    rocket::fs::FileServer::from(PUBLIC_DIR)
+fn get_root_route() -> Vec<rocket::Route> {
+    rocket::fs::FileServer::from(PUBLIC_DIR).into()
 }
 
 #[cfg(debug_assertions)]
