@@ -38,11 +38,3 @@ push_release:
 	docker tag jkutkut/eatup:server_$(VERSION) jkutkut/eatup:server_latest
 	docker push jkutkut/eatup:server_$(VERSION)
 	docker push jkutkut/eatup:server_latest
-
-# ******** Public tools ********
-
-run_release:
-	docker run -it --rm ${BASIC_ATTRS} --name eatup_server jkutkut/eatup:server_$(VERSION)
-
-stop:
-	docker stop eatup_server

@@ -5,10 +5,12 @@
 
 - [x] compile and publish setup
 
-- [ ] Remove unnecessary makefiles
+- [x] Remove unnecessary makefiles
 
-- [ ] start.sh
+- [x] start.sh
 
 - [ ] manual of use
+  - [ ] Setup
+  - [ ] DB img contribution
 
 - [ ] PR

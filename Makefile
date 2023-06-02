@@ -1,17 +1,5 @@
-install:
-	@make -C db install
-
 run:
-	@make -C db start
-	@make -C server run_release
+	@bash setup/start.sh
 
 stop:
-	@make -C server stop
-	@make -C db stop
-
-uninstall:
-	@make -C db stop
-	@make -C db uninstall
-
-reset_db:
-	@make -C db reset_db
+	make -C setup/eatup_setup_server stop

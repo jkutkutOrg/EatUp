@@ -63,4 +63,4 @@ run_release:
 	docker run -it --name ${CONTAINER_NAME} --rm ${BASIC_ATTRS} ${IMAGE_NAME}_$(VERSION)
 
 stop:
-	docker stop ${CONTAINER_NAME}
+	docker stop eatup_setup
