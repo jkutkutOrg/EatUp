@@ -3,21 +3,27 @@ package com.github.eatup_client;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.viewpager.widget.ViewPager;
 
 import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.databinding.ActivityMenuBinding;
+import com.github.eatup_client.model.OrderItem;
 import com.github.eatup_client.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.List;
 
 public class MenuActivity extends AppCompatActivity {
 
     private ActivityMenuBinding binding;
     private FragmentManager fragmentManager;
     private ProductApiService productApiService;
+    private TextView tvTotalBill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +39,18 @@ public class MenuActivity extends AppCompatActivity {
         fragmentManager = getSupportFragmentManager();
         setupViewPagerAndTabs();
 
-        productApiService = new ProductApiService(getApplicationContext());
+        tvTotalBill = findViewById(R.id.tvTotalBill);
+
+        productApiService = ProductApiService.getInstance(getApplicationContext());
+        productApiService.getOrdersBySessionUUID().observe(this, new Observer<List<OrderItem>>() {
+            @Override
+            public void onChanged(List<OrderItem> orderItems) {
+                double totalBill = productApiService.getCartTotalPrice();
+
+                String totalBillString = String.format("%.2f", totalBill);
+                tvTotalBill.setText(totalBillString);
+            }
+        });
     }
 
     private void setupViewPagerAndTabs() {
