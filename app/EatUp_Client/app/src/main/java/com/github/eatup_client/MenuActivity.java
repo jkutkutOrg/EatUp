@@ -1,8 +1,10 @@
 package com.github.eatup_client;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,6 +26,7 @@ public class MenuActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private ProductApiService productApiService;
     private TextView tvTotalBill;
+    private ImageView ivBackButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +43,12 @@ public class MenuActivity extends AppCompatActivity {
         setupViewPagerAndTabs();
 
         tvTotalBill = findViewById(R.id.tvTotalBill);
+        ivBackButton = findViewById(R.id.ivBackButton);
+
+        ivBackButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MenuActivity.this, QRActivity.class);
+            startActivity(intent);
+        });
 
         productApiService = ProductApiService.getInstance(getApplicationContext());
         productApiService.getOrdersBySessionUUID().observe(this, new Observer<List<OrderItem>>() {
