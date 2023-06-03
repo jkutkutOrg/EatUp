@@ -1,27 +1,51 @@
 package com.github.eatup_client.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OrderItem {
-    private int quantity;
-    private Product product;
+    private String id;
+    private List<OrderProduct> products;
 
-    public OrderItem(int quantity, Product product) {
-        this.quantity = quantity;
-        this.product = product;
+    private static List<OrderItem> orderItems = new ArrayList<>();
+
+    public OrderItem(String id, List<OrderProduct> products) {
+        this.id = id;
+        this.products = products;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public String getId() {
+        return id;
     }
 
-    public Product getProduct() {
-        return product;
+    public List<OrderProduct> getProducts() {
+        return products;
+    }
+
+    public static List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+
+    public static void setOrderItems(List<OrderItem> orderItems) {
+        OrderItem.orderItems = orderItems;
+    }
+
+    public static List<Product> getCartProducts() {
+        List<Product> cartProducts = new ArrayList<>();
+        for (OrderItem orderItem : orderItems) {
+            List<OrderProduct> products = orderItem.getProducts();
+            for (OrderProduct orderProduct : products) {
+                cartProducts.add(orderProduct.getProduct());
+            }
+        }
+        return cartProducts;
     }
 
     @Override
     public String toString() {
         return "OrderItem{" +
-                "quantity=" + quantity +
-                ", product=" + product +
+                "id='" + id + '\'' +
+                ", products=" + products +
                 '}';
     }
 }

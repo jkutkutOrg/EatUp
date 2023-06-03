@@ -3,10 +3,10 @@ package com.github.eatup_client.model;
 import java.util.List;
 
 public class Order {
-    private List<OrderItem> products;
+    private List<OrderProduct> products;
     private String sessionId;
 
-    public Order(List<OrderItem> products) {
+    public Order(List<OrderProduct> products) {
         this.products = products;
     }
 

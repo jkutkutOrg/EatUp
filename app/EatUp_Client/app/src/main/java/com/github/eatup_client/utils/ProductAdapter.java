@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.eatup_client.R;
 import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.model.Order;
-import com.github.eatup_client.model.OrderItem;
+import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
 
 import java.util.ArrayList;
@@ -26,6 +26,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private List<Product> productList;
     private Context context;
     private ProductApiService productApiService;
+    private double totalBill;
 
     public ProductAdapter(Context context) {
         this.context = context;
@@ -61,6 +62,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         private TextView productName;
         private TextView productDescription;
         private TextView productPrice;
+        private TextView cartTotal;
         private Button buyButton;
         private Product product;
 
@@ -71,7 +73,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productDescription = itemView.findViewById(R.id.tvProductDescription);
             productPrice = itemView.findViewById(R.id.tvProductPrice);
             buyButton = itemView.findViewById(R.id.btnAddProduct);
+
             buyButton.setOnClickListener(this);
+
         }
 
         public void bind(Product product) {
@@ -82,24 +86,24 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productImage.setImageResource(R.drawable.example_salad_img);
         }
 
+
         @Override
         public void onClick(View v) {
             if (v.getId() == R.id.btnAddProduct) {
                 Log.i("ProductAdapter", "Buy button clicked for product: " + product.getName());
 
-                // Create an OrderItem with the selected product and quantity
-                OrderItem orderItem = new OrderItem(3, product); // Pending: get the quantity from the UI
+                OrderProduct orderProduct = new OrderProduct("id", 1, product);
+                List<OrderProduct> orderProducts = new ArrayList<>();
+                orderProducts.add(orderProduct);
 
-                // Create a list to hold the OrderItems
-                List<OrderItem> orderItems = new ArrayList<>();
-                orderItems.add(orderItem);
+                Order order = new Order(orderProducts);
 
-                // Create an Order object with the list of OrderItems
-                Order order = new Order(orderItems);
-
-                // Call the API to submit the order
                 productApiService.submitOrder(order);
             }
         }
+
+
     }
+
+
 }
