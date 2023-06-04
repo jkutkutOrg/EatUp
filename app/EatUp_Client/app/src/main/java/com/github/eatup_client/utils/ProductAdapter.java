@@ -1,7 +1,6 @@
 package com.github.eatup_client.utils;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +18,20 @@ import com.github.eatup_client.model.Product;
 import com.github.eatup_client.model.ProductRes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
-    private List<OrderProduct> orderProducts;
-    private Context context;
+    private Map<Product, OrderProduct> orderProductMap;
     private ProductRes productRes;
+    private Context context;
 
     public ProductAdapter(Context context) {
         this.context = context;
-        orderProducts = new ArrayList<>();
+        orderProductMap = new HashMap<>();
         productRes = ProductRes.getInstance();
     }
 
@@ -54,15 +55,15 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     public void setProducts(List<Product> productList) {
         this.productList = productList;
-        orderProducts.clear();
+        orderProductMap.clear();
 
         for (Product product : productList) {
             OrderProduct orderProduct = getOrderProductByProduct(product);
             if (orderProduct != null) {
-                orderProducts.add(orderProduct);
+                orderProductMap.put(product, orderProduct);
             } else {
                 orderProduct = new OrderProduct(0, product);
-                orderProducts.add(orderProduct);
+                orderProductMap.put(product, orderProduct);
             }
         }
 
@@ -70,20 +71,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     private OrderProduct getOrderProductByProduct(Product product) {
-        for (OrderProduct orderProduct : orderProducts) {
-            if (orderProduct.getProduct().equals(product)) {
-                return orderProduct;
-            }
-        }
-        return null;
+        return orderProductMap.get(product);
     }
 
     public List<Product> getOrderProducts() {
-        List<Product> orderProductList = new ArrayList<>();
-        for (OrderProduct orderProduct : orderProducts) {
-            orderProductList.add(orderProduct.getProduct());
-        }
-        return orderProductList;
+        return new ArrayList<>(orderProductMap.keySet());
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -96,9 +88,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         private Button btnDecreaseQuantity;
         private Button btnIncreaseQuantity;
         private Button btnAddProduct;
-        private Product product;
         private LinearLayout llQuantity;
         private LinearLayout llAddProduct;
+
+        private Product product;
+        private OrderProduct orderProduct;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -113,7 +107,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             llQuantity = itemView.findViewById(R.id.llQuantity);
             llAddProduct = itemView.findViewById(R.id.llAddProduct);
 
-
             btnDecreaseQuantity.setOnClickListener(this);
             btnIncreaseQuantity.setOnClickListener(this);
             btnAddProduct.setOnClickListener(this);
@@ -121,104 +114,64 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         public void bind(Product product) {
             this.product = product;
+            orderProduct = getOrderProduct(product);
+
             productName.setText(product.getName());
             productPrice.setText("$" + product.getPrice());
             productDescription.setText(product.getDescription());
             productImage.setImageResource(R.drawable.example_salad_img);
 
             updateQuantityView();
+        }
 
-            OrderProduct orderProduct = getOrderProduct(getAdapterPosition());
-
-            int quantity = orderProduct.getQuantity();
-
-            if (quantity > 0) {
+        private void updateQuantityView() {
+            if (orderProduct != null && orderProduct.getQuantity() > 0) {
                 llQuantity.setVisibility(View.VISIBLE);
+                tvQuantityText.setText(String.valueOf(orderProduct.getQuantity()));
                 llAddProduct.setVisibility(View.GONE);
-                tvQuantityText.setText(String.valueOf(quantity));
-                Log.d("ProductAdapter", "bind: " + quantity);
             } else {
                 llQuantity.setVisibility(View.GONE);
                 llAddProduct.setVisibility(View.VISIBLE);
-                Log.d("ProductAdapter", "bind: " + quantity);
             }
         }
 
-        private void decreaseQuantity() {
-            OrderProduct orderProduct = getOrderProduct(getAdapterPosition());
-            int quantity = orderProduct.getQuantity();
+        private OrderProduct getOrderProduct(Product product) {
+            return orderProductMap.get(product);
+        }
+
+        private void updateOrderProduct(int quantity) {
+            orderProduct.setQuantity(quantity);
+            notifyItemChanged(getAdapterPosition());
+
             if (quantity > 0) {
-                orderProduct.setQuantity(quantity - 1);
-                notifyItemChanged(getAdapterPosition());
+                productRes.addProduct(product);
+            } else {
                 productRes.removeProduct(product);
             }
         }
 
-        private void increaseQuantity() {
-            OrderProduct orderProduct = getOrderProduct(getAdapterPosition());
-            int quantity = orderProduct.getQuantity();
-            orderProduct.setQuantity(quantity + 1);
-            notifyItemChanged(getAdapterPosition());
-            productRes.addProduct(product);
-        }
-
-        private void addProductToCart() {
-            OrderProduct orderProduct = getOrderProduct(getAdapterPosition());
-            int quantity = orderProduct.getQuantity();
-            orderProduct.setQuantity(quantity + 1);
-            notifyItemChanged(getAdapterPosition());
-            productRes.addProduct(product);
-        }
-
-        private void updateQuantityView() {
-            OrderProduct orderProduct = getOrderProduct(getAdapterPosition());
-
-            if (orderProduct != null) {
-                int quantity = orderProduct.getQuantity();
-                if (quantity > 0) {
-                    llQuantity.setVisibility(View.VISIBLE);
-
-                    tvQuantityText.setText(String.valueOf(quantity));
-                } else {
-                    llQuantity.setVisibility(View.GONE);
-                }
-            } else {
-                llQuantity.setVisibility(View.GONE);
-            }
-        }
-
-        private OrderProduct getOrderProduct(int position) {
-            if (position >= 0 && position < orderProducts.size()) {
-                return orderProducts.get(position);
-            }
-            return null;
-        }
-
         @Override
         public void onClick(View v) {
+            int quantity = orderProduct.getQuantity();
+
             switch (v.getId()) {
                 case R.id.btnDecreaseQuantity:
-                    decreaseQuantity();
-                    updateQuantityView();
-                    seeAllOrderProducts(); // TODO: Remove
+                    if (quantity > 0) {
+                        quantity--;
+                        updateOrderProduct(quantity);
+                    }
                     break;
                 case R.id.btnIncreaseQuantity:
-                    increaseQuantity();
-                    updateQuantityView();
-                    seeAllOrderProducts(); // TODO: Remove
+                    quantity++;
+                    updateOrderProduct(quantity);
                     break;
                 case R.id.btnAddProduct:
-                    addProductToCart();
-                    updateQuantityView();
-                    seeAllOrderProducts(); // TODO: Remove
+                    quantity++;
+                    updateOrderProduct(quantity);
                     break;
             }
-        }
 
-        // TODO: Remove
-        private void seeAllOrderProducts() {
-            // productRes.seeAllOrderProducts();
-            Log.d("ProductAdapter", "seeAllOrderProducts: " + productRes.getOrderProducts());
+            updateQuantityView();
         }
     }
 }
