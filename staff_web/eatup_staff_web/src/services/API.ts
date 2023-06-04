@@ -47,7 +47,7 @@ class API {
         }).catch(ftError);
     }
 
-    private static callNoResponse<ERROR>(
+    protected static callNoResponse<ERROR>(
         url: string,
         endpoint: string,
         method: ApiMethod,
@@ -77,7 +77,7 @@ class API {
         }).catch(ftError);
     }
 
-    public static get<OK, ERROR>(
+    protected static get<OK, ERROR>(
         url: string,
         endpoint: string,
         ftOk: FtCallback<OK, any>,
@@ -95,7 +95,7 @@ class API {
         );
     }
 
-    public static post<ERROR>(
+    protected static post<ERROR>(
         url: string,
         endpoint: string,
         body: any | undefined,
@@ -112,6 +112,26 @@ class API {
             ftError || ftErrorCode
         );
     }
+
+    protected static postResponse<OK, ERROR>(
+        url: string,
+        endpoint: string,
+        body: any | undefined,
+        ftOk: FtCallback<OK, any>,
+        ftErrorCode: FtCallback<ERROR, any>,
+        responseOkParser: FtFuture<Response, OK> = unitFtCallback,
+        responseErrorCodeParser: FtFuture<Response, ERROR> = unitFtCallback,
+        ftError: FtCallback<any, any> | null = null
+    ): Promise<Response> {
+        return this.callResponse(
+            url, endpoint,
+            ApiMethod.Post, body,
+            ftOk, ftErrorCode,
+            responseOkParser, responseErrorCodeParser,
+            ftError || ftErrorCode
+        );
+    }
 }
 
 export default API;
+export { ApiMethod };

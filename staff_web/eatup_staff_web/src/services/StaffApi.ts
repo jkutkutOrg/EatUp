@@ -1,7 +1,7 @@
 import ApiEndpoint from "../model/ApiEndpoint";
 import FtCallback from "../model/Futures/FtCallback";
 import FtVoid from "../model/Futures/FtVoid";
-import API from "./API";
+import API, { ApiMethod } from "./API";
 
 function apiURL(): string {
     const urlParams = new URLSearchParams(window.location.search);
@@ -53,12 +53,42 @@ class StaffAPI extends API {
         );
     }
 
+    private static responsePost(
+        endpoint: ApiEndpoint,
+        options: string[],
+        body: any | undefined,
+        then: FtCallback<any, any>,
+        error: FtCallback<string, any>
+    ): Promise<Response> {
+        return this.postResponse(
+            this.url,
+            `${endpoint}/${options.join("/")}`,
+            body,
+            then,
+            error,
+            toJson, toText
+        );
+    }
+
     public static getSessions(
         then: FtCallback<any, any>,
         error?: FtCallback<string, any>
     ): Promise<Response> {
         return this.basicGet(
             ApiEndpoint.Sessions, [],
+            then,
+            error || console.error
+        );
+    }
+
+    public static newSession(
+        table_id: string,
+        then: FtCallback<any, any>,
+        error?: FtCallback<string, any>
+    ): Promise<Response> {
+        return this.responsePost(
+            ApiEndpoint.NewSession, [table_id],
+            undefined,
             then,
             error || console.error
         );

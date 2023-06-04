@@ -1,32 +1,78 @@
+import { useEffect, useState } from "react";
+import Session from "../../model/api/Session";
+import StaffAPI from "../../services/StaffApi";
+
 interface Props {
 
 }
 
 const Tables = ({}: Props) => {
-  let mesas = [10, 11, 12, 13];
+  const [sessions, setSessions] = useState<Session[] | null>(null);
+
+  const updateSessions = () => {
+    StaffAPI.getSessions(
+      (sessions) => {
+        setSessions(Session.fromJsonArray(sessions));
+      }
+    )
+  };
+
+  useEffect(updateSessions, []);
+
+  const newSession = (mesa: any) => {
+    StaffAPI.newSession(
+      mesa.name,
+      (session) => {
+        console.log(session);
+        updateSessions();
+      }
+    )
+  };
+
+  const endSession = (mesa: any) => {
+    // StaffAPI.endSession(
+    //   mesa.session.id,
+    //   (r) => {
+    //     console.log(r);
+    //     updateSessions();
+    //   }
+    // )
+  };
+
+  if (sessions == null) {
+    return <p>Loading...</p>;
+  }
+
+  let mesasNames = ["10", "11", "12", "13", "14", "15"];
+  let mesas: any[] = mesasNames.map((mesaName) => {return {name: mesaName, session: null};});
+  for (let i = 0; i < sessions.length; i++) {
+    let tableId = sessions[i].table_id;
+    if (!/^1\d$/.test(tableId))
+      continue;
+    let mesaIndex = parseInt(tableId) - 10;
+    mesas[mesaIndex].session = sessions[i];
+  }
 
   return <>
     <h1>Tables</h1>
-    {mesas.map((mesa) => (
-      <div key={mesa}>
-        <h5>Mesa {mesa}</h5>
+    {mesas.map((mesa, i) => (
+      <div key={`${mesa.name}-${i}`}>
+        <h5>Mesa {mesa.name}</h5>
         <div style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-between",
         }}>
-          <span>{mesa % 2? "In progress" : "Available"}</span>
-          {mesa % 2 == 1 &&
+          <span>{mesa.session? "In progress" : "Available"}</span>
+          {mesa.session &&
             <>
               <span>details</span>
               <span>bill</span>
-              <span>end</span>
+              <button onClick={() => {endSession(mesa)}}>end</button>
             </>
           }
-          {mesa % 2 == 0 &&
-            <>
-              <span>new session</span>
-            </>
+          {!mesa.session &&
+            <button onClick={() => {newSession(mesa)}}>new session</button>
           }
         </div>
         <br />

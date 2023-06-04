@@ -3,10 +3,10 @@ import StaffAPI from "../../services/StaffApi";
 import Session from "../../model/api/Session";
 
 interface Props {
-  
+  onClose: () => void;
 }
 
-const Sessions = ({}: Props) => {
+const Sessions = ({onClose}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
 
   useEffect(() => {
@@ -22,7 +22,14 @@ const Sessions = ({}: Props) => {
   }
 
   return <>
-    <h1>Sessions</h1>
+    <div style={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    }}>
+      <h1>Sessions</h1>
+      <button onClick={onClose}>Close</button>
+    </div>
     {sessions.map((session) => {
       return (
         <div key={session.id}>
@@ -34,7 +41,7 @@ const Sessions = ({}: Props) => {
             <span>{session.id}</span>
             <span>{session.table_id}</span>
             <span>{session.in_progress && "In progress"}</span>
-            <span>bill</span>
+            <span>bill</span> {/* TODO */}
           </div>
         </div>
       );

@@ -55,6 +55,10 @@ function App() {
     setMenu(Menu.Sessions);
   }
 
+  const toTables = () => {
+    setMenu(Menu.Tables);
+  }
+
   const menuHtml = () => {
     switch (menu) {
       case Menu.Tables:
@@ -64,7 +68,9 @@ function App() {
       case Menu.Bill:
         return <Bill />;
       case Menu.Sessions:
-        return <Sessions />;
+        return <Sessions 
+          onClose={toTables}
+        />;
     }
   };
 
