@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import landingImg from './assets/landing/landing.png'
+import Header from './components/header/Header';
 
 function App() {
   const [begin, setBegin] = useState(true);
@@ -9,9 +10,14 @@ function App() {
     setBegin(false);
   };
 
+  const ftRestart = () => {
+    setBegin(true);
+  };
+
   if (begin) {
     return (
       <div>
+        <Header onRefresh={ftRestart} />
         <h1>Satisfy your cravings with a tap!</h1>
         <img className="landing-img" src={landingImg} alt="landing image" />
         <button onClick={ftBegin}>Begin</button>
@@ -22,7 +28,16 @@ function App() {
 
   let mesas = [10, 11, 12, 13]
 
-  return (
+  return (<>
+    <Header
+      onRefresh={ftRestart}
+      options={[
+        {
+          label: "Sessions",
+          onClick: ftRestart, // TODO
+        }
+      ]}
+    />
     <div style={{
       margin: "9px",
     }}>
@@ -142,7 +157,7 @@ function App() {
       <br />
       <span>Total: 32um</span>
     </div>
-  );
+  </>);
 }
 
 export default App
