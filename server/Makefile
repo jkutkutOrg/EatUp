@@ -24,6 +24,9 @@ DOCKER_EXEC = docker run -it --rm --name eatup_server \
 run:
 	${DOCKER_EXEC} run 80 172.17.0.4 5432
 
+connect:
+	docker exec -it eatup_server sh
+
 build:
 	${DOCKER_EXEC} build
 

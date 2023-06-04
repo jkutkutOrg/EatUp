@@ -23,7 +23,7 @@ fn print_qr(qr: Vec<Vec<bool>>) {
     println!("{}\n{}\n{}", border_row, qr_string, border_row);
 }
 
-pub fn generate(content: &str, output_file: &str) {
+fn generate_qr(content: &str, output_file: &str) {
     qrcode_generator::to_png_to_file(
         content,
         QrCodeEcc::High,
@@ -32,7 +32,11 @@ pub fn generate(content: &str, output_file: &str) {
     ).unwrap();
 }
 
-pub fn generate_with_debug(content: &str, output_file: &str) {
-    generate(content, output_file);
-    print_qr(qrcode_generator::to_matrix(content, QrCodeEcc::Low).unwrap())
+#[cfg(debug_assertions)]
+pub fn generate(content: &str, output_file: &str) {
+    #[cfg(debug_assertions)]
+    println!("Generating QR code: {}", output_file);
+    generate_qr(content, output_file);
+    #[cfg(debug_assertions)]
+    print_qr(qrcode_generator::to_matrix(content, QrCodeEcc::Low).unwrap());
 }

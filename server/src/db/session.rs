@@ -76,7 +76,7 @@ pub async fn create_session(
             let qr_path = format!("/qr/{}.png", &id_str);
             let qr_real_path = format!("{}/{}.png", QR_DIR, &id_str);
 
-            qr::generate_with_debug(&id_str, &qr_real_path);
+            qr::generate(&id_str, &qr_real_path);
             Ok(SessionUuid::new(
                 simple_id,
                 id,
