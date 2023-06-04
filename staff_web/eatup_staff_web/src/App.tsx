@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import landingImg from './assets/landing/landing.png'
 import Header from './components/header/Header';
+import Landing from './pages/Landing';
 
 function App() {
   const [begin, setBegin] = useState(true);
@@ -16,12 +15,10 @@ function App() {
 
   if (begin) {
     return (
-      <div>
-        <Header onRefresh={ftRestart} />
-        <h1>Satisfy your cravings with a tap!</h1>
-        <img className="landing-img" src={landingImg} alt="landing image" />
-        <button onClick={ftBegin}>Begin</button>
-      </div>
+      <Landing
+        onHeaderRefresh={ftRestart}
+        onBegin={ftBegin}
+      />
     );
   }
 
