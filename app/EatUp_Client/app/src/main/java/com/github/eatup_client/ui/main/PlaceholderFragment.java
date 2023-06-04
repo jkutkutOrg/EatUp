@@ -1,8 +1,6 @@
 package com.github.eatup_client.ui.main;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,26 +16,19 @@ import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.databinding.FragmentMenuBinding;
 import com.github.eatup_client.model.Product;
 import com.github.eatup_client.utils.ProductAdapter;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String TAG = "PlaceholderFragment";
-    private static final TypeToken<List<Product>> LIST_TYPE_TOKEN = new TypeToken<List<Product>>() {};
 
     private FragmentMenuBinding binding;
     private RecyclerView recyclerView;
     private ProductAdapter adapter;
-    private LiveData<List<Product>> productListLiveData;
     private ProductApiService productApiService;
     private String category;
-    private SharedPreferences prefs;
-    private Gson gson;
 
     public static PlaceholderFragment newInstance(int fragmentIndex) {
         PlaceholderFragment fragment = new PlaceholderFragment();
@@ -76,53 +67,31 @@ public class PlaceholderFragment extends Fragment {
                 throw new IllegalArgumentException("Invalid fragment index " + index);
         }
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(requireContext());
-        gson = new Gson();
+        adapter = new ProductAdapter(requireContext());
+
+        productApiService = new ProductApiService(requireContext());
+
+        loadProductsFromAPI();
+    }
+
+    private void loadProductsFromAPI() {
+        LiveData<List<Product>> productListLiveData = productApiService.getProductsByCategory(category);
+        productListLiveData.observe(this, productList -> {
+            adapter.setProducts(productList);
+            Log.d(TAG, "Loaded products from API");
+        });
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentMenuBinding.inflate(inflater, container, false);
         initializeRecyclerView();
-
-        productApiService = new ProductApiService(requireContext());
-        List<Product> cachedProducts = loadCachedProducts();
-
-        if (cachedProducts != null) {
-            adapter.setProducts(cachedProducts);
-            Log.d(TAG, "Loaded products from cache");
-        } else {
-            Log.d(TAG, "Loaded products from API");
-            productListLiveData = productApiService.getProductsByCategory(category);
-            productListLiveData.observe(getViewLifecycleOwner(), productList -> {
-                adapter.setProducts(productList);
-                String productsJson = gson.toJson(productList);
-                prefs.edit()
-                        .putString(category, productsJson)
-                        .putLong(category + "_last_update_time", System.currentTimeMillis())
-                        .apply();
-            });
-        }
-
         return binding.getRoot();
-    }
-
-    private List<Product> loadCachedProducts() {
-        String cachedProductsJson = prefs.getString(category, null);
-        if (cachedProductsJson != null) {
-            long lastUpdateTime = prefs.getLong(category + "_last_update_time", 0);
-            if (System.currentTimeMillis() - lastUpdateTime < TimeUnit.MINUTES.toMillis(15)) {
-                // Use cached data if it is less than 15 minutes old
-                return gson.fromJson(cachedProductsJson, LIST_TYPE_TOKEN.getType());
-            }
-        }
-        return null;
     }
 
     private void initializeRecyclerView() {
         recyclerView = binding.rvProducts;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-        adapter = new ProductAdapter(requireContext());
         recyclerView.setAdapter(adapter);
     }
 }
