@@ -22,7 +22,7 @@ DOCKER_EXEC = docker run -it --rm --name eatup_server \
 	jkutkut/docker4rust
 
 run:
-	${DOCKER_EXEC} run 80 172.17.0.5 5432
+	${DOCKER_EXEC} run 80 172.17.0.4 5432
 
 build:
 	${DOCKER_EXEC} build

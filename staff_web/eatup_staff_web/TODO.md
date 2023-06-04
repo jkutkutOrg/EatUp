@@ -7,3 +7,7 @@
 - [ ] use api in UI
 
 - [ ] styling
+
+- [ ] Dockerize
+- [ ] Update server docker
+  - [ ] Update documentation

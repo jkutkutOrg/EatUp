@@ -9,6 +9,7 @@ mod api;
 mod db;
 mod tools;
 mod qr;
+mod cors;
 
 use tools::route_error;
 
@@ -96,8 +97,9 @@ async fn rocket() -> Rocket<Build> {
         ..config()
     };
     rocket::custom(&config)
+        .attach(cors::CORS)
         .manage(client)
-        .mount("/", routes![ping])
+        .mount("/", routes![ping, cors::options])
         .mount("/api/v1", api::get_v1_routes())
         .register("/api", catchers![route_error::api_not_implemented])
         .mount("/", rocket::fs::FileServer::from(PUBLIC_DIR))
