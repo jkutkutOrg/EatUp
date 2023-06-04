@@ -52,24 +52,14 @@
                     android:text="Italian Resto"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvTotalBill"
+
+            <ImageView
+                android:id="@+id/ivResume"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:padding="5dp"
-                android:textColor="@color/text_color_black"
-                android:text="0.00$"
-                android:textSize="18sp"
-                android:textStyle="bold"/>
-
-            <ImageView
-                android:id="@+id/language_flag"
-                android:layout_width="30dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:padding="5dp"
-                android:src="@drawable/icons8_language" />
+                android:src="@drawable/icons8_cart" />
 
         </LinearLayout>
 
