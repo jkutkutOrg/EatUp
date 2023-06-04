@@ -1,4 +1,4 @@
-- [ ] create UI components
+- [x] create UI components
 
 - [ ] create api models
 - [ ] create api logic
