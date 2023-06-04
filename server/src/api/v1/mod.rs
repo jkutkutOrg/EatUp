@@ -4,6 +4,7 @@ use rocket::http::Status;
 use rocket::serde::json::Json;
 
 use crate::db;
+use crate::ERROR_INVALID_SESSION_ID;
 use crate::tools::{UuidWrapper, route_error::InvalidAPI};
 
 mod model;

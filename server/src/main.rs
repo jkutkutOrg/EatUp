@@ -12,6 +12,14 @@ mod qr;
 
 use tools::route_error;
 
+pub const ENV: &'static str = "/installation/.env";
+pub const PUBLIC_DIR: &'static str = "/installation/public";
+pub const QR_DIR: &'static str = "/installation/public/qr";
+
+pub const ERROR_INVALID_SESSION_ID: &'static str = "Invalid session id";
+pub const ERROR_NO_PRODUCTS_ORDER: &'static str = "No products in order";
+pub const ERROR_INVALID_PRODUCT_ID: &'static str = "Invalid product id";
+
 #[get("/")]
 fn ping() -> Json<&'static str> {
     Json("Eatup up and running!")
@@ -29,20 +37,36 @@ fn config() -> rocket::Config {
 
 #[launch]
 async fn rocket() -> Rocket<Build> {
-    dotenv::from_path("/db/.env").ok();
-
-    match env::var("DB_IP") {
-        Ok(_) => (),
-        Err(_) => {
-            eprintln!("Error: DB is not configured or it's not running");
+    let args = env::args().collect::<Vec<String>>();
+    match args.len() {
+        4 => (),
+        _ => {
+            eprintln!("Usage: {} <port> <db_host> <db_port>", args[0]);
             std::process::exit(1);
         }
     }
 
+    let port = match args[1].parse::<u16>() {
+        Ok(port) => port,
+        Err(_) => {
+            eprintln!("Invalid port number");
+            std::process::exit(1);
+        }
+    };
+    let db_host = &args[2];
+    let db_port = match args[3].parse::<u16>() {
+        Ok(port) => port,
+        Err(_) => {
+            eprintln!("Invalid db_port number");
+            std::process::exit(1);
+        }
+    };
+
+    dotenv::from_path(ENV).ok();
+
     let db_properties = format!(
         "host={} port={} dbname={} user={} password={}",
-        env::var("DB_IP").unwrap(),
-        env::var("DB_PORT").unwrap(),
+        db_host, db_port,
         env::var("DB_NAME").unwrap(),
         env::var("DB_USER").unwrap(),
         env::var("DB_USER_PASSWD").unwrap(),
@@ -68,6 +92,7 @@ async fn rocket() -> Rocket<Build> {
 
     let config = Config {
         address: Ipv4Addr::new(0, 0, 0, 0).into(),
+        port,
         ..config()
     };
     rocket::custom(&config)
@@ -75,6 +100,6 @@ async fn rocket() -> Rocket<Build> {
         .mount("/", routes![ping])
         .mount("/api/v1", api::get_v1_routes())
         .register("/api", catchers![route_error::api_not_implemented])
-        .mount("/", rocket::fs::FileServer::from("/db/public"))
+        .mount("/", rocket::fs::FileServer::from(PUBLIC_DIR))
         .register("/qr/", catchers![route_error::qr_not_found, route_error::internal_server_error])
 }

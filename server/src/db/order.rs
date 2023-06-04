@@ -2,9 +2,9 @@ use super::*;
 
 pub async fn get_orders(
     db: &State<Client>,
-    session_id: UuidWrapper
-) -> Result<Vec<Order>, Status> {
-    let session_id: Uuid = session_id.unwrap();
+    session_id: Uuid,
+) -> Result<Vec<Order>, InvalidAPI> {
+    // ? Idea check if session exists
     let query = "SELECT * FROM orders WHERE session = $1".to_string();
     let stmt = db.prepare(&query).await.unwrap();
     let mut orders: Vec<Order> = Vec::new();
@@ -53,15 +53,14 @@ async fn get_product_order(
 
 pub async fn create_order(
     db: &State<Client>,
-    session_id: UuidWrapper,
+    session_id: Uuid,
     order: OrderQuery
 ) -> Result<(), InvalidAPI> {
-    let session_id: Uuid = session_id.unwrap();
     if order.products.len() == 0 {
-        return Err(InvalidAPI::new(format!("No products in order")));
+        return Err(InvalidAPI::new(ERROR_NO_PRODUCTS_ORDER));
     }
     if !is_active_session(db, session_id).await {
-        return Err(InvalidAPI::new(format!("Invalid session id")));
+        return Err(InvalidAPI::new(ERROR_INVALID_SESSION_ID));
     }
     let query: String = "
         INSERT INTO orders (session)
@@ -82,7 +81,7 @@ pub async fn create_order(
             }
             Ok(())
         },
-        Err(_) => Err(InvalidAPI::new(format!("Invalid session id")))
+        Err(_) => Err(InvalidAPI::new(ERROR_INVALID_SESSION_ID))
     }
 }
 
@@ -103,7 +102,7 @@ async fn create_product_order(
     ];
     match db.execute(&stmt, &params).await {
         Ok(_) => Ok(()),
-        Err(_) => Err(InvalidAPI::new(format!("Invalid product id")))
+        Err(_) => Err(InvalidAPI::new(ERROR_INVALID_PRODUCT_ID))
     }
 }
 

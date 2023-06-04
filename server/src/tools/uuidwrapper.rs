@@ -3,18 +3,27 @@ use rocket::serde::Deserialize;
 use rocket::request::FromParam;
 use uuid::Uuid;
 
-pub struct UuidWrapper(Uuid);
+pub struct UuidWrapper(Result<Uuid, String>);
 
 impl UuidWrapper {
-    pub fn unwrap(&self) -> Uuid {
+    // pub fn unwrap(&self) -> Uuid {
+    //     match self.0 {
+    //         Ok(uuid) => uuid,
+    //         Err(_) => panic!("tried to unwrap invalid uuid")
+    //     }
+    // }
+
+    pub fn get(self) -> Result<Uuid, String> {
         self.0
     }
 }
 
 impl<'v> FromFormField<'v> for UuidWrapper {
     fn from_value(field: ValueField<'v>) -> rocket::form::Result<'v, Self> {
-        let uuid = Uuid::parse_str(field.value).unwrap();
-        Ok(UuidWrapper(uuid))
+        Ok(match Uuid::parse_str(field.value) {
+            Ok(uuid) => UuidWrapper(Ok(uuid)),
+            Err(_) => UuidWrapper(Err("invalid uuid".to_string()))
+        })
     }
 }
 
@@ -22,8 +31,16 @@ impl<'r> FromParam<'r> for UuidWrapper {
     type Error = &'r str;
 
     fn from_param(param: &'r str) -> Result<Self, Self::Error> {
-        let uuid = Uuid::parse_str(param).unwrap();
-        Ok(UuidWrapper(uuid))
+        // let uuid = Uuid::parse_str(param).unwrap();
+        // Ok(UuidWrapper(uuid))
+        // match Uuid::parse_str(param) {
+        //     Ok(uuid) => Ok(UuidWrapper(uuid)),
+        //     Err(_) => Err("invalid uuid")
+        // }
+        Ok(match Uuid::parse_str(param) {
+            Ok(uuid) => UuidWrapper(Ok(uuid)),
+            Err(_) => UuidWrapper(Err("invalid uuid".to_string()))
+        })
     }
 }
 
@@ -32,8 +49,12 @@ impl<'de> Deserialize<'de> for UuidWrapper {
     where
         D: serde::Deserializer<'de>,
     {
-        let uuid = Uuid::deserialize(deserializer)?;
-        Ok(UuidWrapper(uuid))
+        // let uuid = Uuid::deserialize(deserializer)?;
+        // Ok(UuidWrapper(uuid))
+        Ok(match Uuid::deserialize(deserializer) {
+            Ok(uuid) => UuidWrapper(Ok(uuid)),
+            Err(_) => UuidWrapper(Err("invalid uuid".to_string()))
+        })
     }
 }
 impl std::fmt::Debug for UuidWrapper {
