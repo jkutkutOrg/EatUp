@@ -70,6 +70,23 @@ class StaffAPI extends API {
         );
     }
 
+    private static responsePatch(
+        endpoint: ApiEndpoint | string,
+        options: string[],
+        body: any | undefined,
+        then: FtCallback<any, any>,
+        error: FtCallback<string, any>
+    ): Promise<Response> {
+        return this.patchResponse(
+            this.url,
+            `${endpoint}/${options.join("/")}`,
+            body,
+            then,
+            error,
+            toJson, toText
+        );
+    }
+
     public static getSessions(
         then: FtCallback<any, any>,
         error?: FtCallback<string, any>
@@ -88,6 +105,20 @@ class StaffAPI extends API {
     ): Promise<Response> {
         return this.responsePost(
             ApiEndpoint.NewSession, [table_id],
+            undefined,
+            then,
+            error || console.error
+        );
+    }
+
+    public static endSession(
+        session_id: string,
+        then: FtCallback<any, any>,
+        error?: FtCallback<string, any>
+    ): Promise<Response> {
+        return this.responsePatch(
+            `${ApiEndpoint.EndSessionPre}/${session_id}${ApiEndpoint.EndSessionPost}`,
+            [],
             undefined,
             then,
             error || console.error

@@ -7,6 +7,7 @@ const unitFtCallback: FtFuture<any, any> = (data: Promise<any>) => data;
 enum ApiMethod {
     Get = "GET",
     Post = "POST",
+    Patch = "PATCH",
 };
 
 const ApiHeaders = {
@@ -126,6 +127,25 @@ class API {
         return this.callResponse(
             url, endpoint,
             ApiMethod.Post, body,
+            ftOk, ftErrorCode,
+            responseOkParser, responseErrorCodeParser,
+            ftError || ftErrorCode
+        );
+    }
+
+    protected static patchResponse<OK, ERROR>(
+        url: string,
+        endpoint: string,
+        body: any | undefined,
+        ftOk: FtCallback<OK, any>,
+        ftErrorCode: FtCallback<ERROR, any>,
+        responseOkParser: FtFuture<Response, OK> = unitFtCallback,
+        responseErrorCodeParser: FtFuture<Response, ERROR> = unitFtCallback,
+        ftError: FtCallback<any, any> | null = null
+    ): Promise<Response> {
+        return this.callResponse(
+            url, endpoint,
+            ApiMethod.Patch, body,
             ftOk, ftErrorCode,
             responseOkParser, responseErrorCodeParser,
             ftError || ftErrorCode

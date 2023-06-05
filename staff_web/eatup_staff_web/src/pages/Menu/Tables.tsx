@@ -30,13 +30,13 @@ const Tables = ({}: Props) => {
   };
 
   const endSession = (mesa: any) => {
-    // StaffAPI.endSession(
-    //   mesa.session.id,
-    //   (r) => {
-    //     console.log(r);
-    //     updateSessions();
-    //   }
-    // )
+    StaffAPI.endSession(
+      mesa.session.id,
+      (r) => {
+        console.log(r);
+        updateSessions();
+      }
+    );
   };
 
   if (sessions == null) {
@@ -47,6 +47,8 @@ const Tables = ({}: Props) => {
   let mesas: any[] = mesasNames.map((mesaName) => {return {name: mesaName, session: null};});
   for (let i = 0; i < sessions.length; i++) {
     let tableId = sessions[i].table_id;
+    if (!sessions[i].in_progress)
+      continue;
     if (!/^1\d$/.test(tableId))
       continue;
     let mesaIndex = parseInt(tableId) - 10;
