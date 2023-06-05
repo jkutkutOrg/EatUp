@@ -22,41 +22,44 @@ public class ProductRes {
         return orderProducts;
     }
 
-    public void setOrderProducts(List<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
-
     public void addProduct(Product product) {
-        for (OrderProduct orderProduct : orderProducts) {
-            if (orderProduct.getProduct().equals(product)) {
-                orderProduct.setQuantity(orderProduct.getQuantity() + 1);
-                return;
-            }
+        OrderProduct orderProduct = getOrderProduct(product);
+        if (orderProduct != null) {
+            orderProduct.setQuantity(orderProduct.getQuantity() + 1);
+        } else {
+            OrderProduct newOrderProduct = new OrderProduct(1, product);
+            orderProducts.add(newOrderProduct);
         }
-        OrderProduct newOrderProduct = new OrderProduct(1, product);
-        orderProducts.add(newOrderProduct);
     }
 
     public void removeProduct(Product product) {
-        for (OrderProduct orderProduct : orderProducts) {
-            if (orderProduct.getProduct().equals(product)) {
-                int newQuantity = orderProduct.getQuantity() - 1;
-                if (newQuantity > 0) {
-                    orderProduct.setQuantity(newQuantity);
-                } else {
-                    orderProducts.remove(orderProduct);
-                }
-                return;
+        OrderProduct orderProduct = getOrderProduct(product);
+        if (orderProduct != null) {
+            int newQuantity = orderProduct.getQuantity() - 1;
+            if (newQuantity > 0) {
+                orderProduct.setQuantity(newQuantity);
+            } else {
+                orderProducts.remove(orderProduct);
             }
         }
     }
 
-    public int getQuantity(Product product) {
+    public OrderProduct getOrderProduct(Product product) {
         for (OrderProduct orderProduct : orderProducts) {
             if (orderProduct.getProduct().equals(product)) {
-                return orderProduct.getQuantity();
+                return orderProduct;
             }
         }
-        return 0;
+        return null;
+    }
+
+    public void setQuantity(Product product, int quantity) {
+        OrderProduct orderProduct = getOrderProduct(product);
+        if (orderProduct != null) {
+            orderProduct.setQuantity(quantity);
+        } else {
+            OrderProduct newOrderProduct = new OrderProduct(quantity, product);
+            orderProducts.add(newOrderProduct);
+        }
     }
 }

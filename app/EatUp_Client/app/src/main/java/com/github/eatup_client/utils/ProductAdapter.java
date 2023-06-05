@@ -17,7 +17,6 @@ import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
 import com.github.eatup_client.model.ProductRes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,8 +56,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.productList = productList;
         orderProductMap.clear();
 
+        List<OrderProduct> orderProducts = productRes.getOrderProducts();
+
         for (Product product : productList) {
-            OrderProduct orderProduct = getOrderProductByProduct(product);
+            OrderProduct orderProduct = null;
+            for (OrderProduct existingOrderProduct : orderProducts) {
+                if (existingOrderProduct.getProduct().getName().equals(product.getName())) {
+                    orderProduct = existingOrderProduct;
+                    break;
+                }
+            }
+
             if (orderProduct != null) {
                 orderProductMap.put(product, orderProduct);
             } else {
@@ -68,14 +76,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
 
         notifyDataSetChanged();
-    }
-
-    private OrderProduct getOrderProductByProduct(Product product) {
-        return orderProductMap.get(product);
-    }
-
-    public List<Product> getOrderProducts() {
-        return new ArrayList<>(orderProductMap.keySet());
     }
 
     public class ProductViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -140,38 +140,31 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         }
 
         private void updateOrderProduct(int quantity) {
-            orderProduct.setQuantity(quantity);
-            notifyItemChanged(getAdapterPosition());
-
-            if (quantity > 0) {
-                productRes.addProduct(product);
+            if (orderProduct != null) {
+                productRes.setQuantity(orderProduct.getProduct(), quantity);
+                orderProduct.setQuantity(quantity);
             } else {
-                productRes.removeProduct(product);
+                orderProduct = new OrderProduct(quantity, product);
+                orderProductMap.put(product, orderProduct);
+                productRes.addProduct(product);
             }
+
+            notifyItemChanged(getAdapterPosition());
         }
 
         @Override
         public void onClick(View v) {
             int quantity = orderProduct.getQuantity();
 
-            switch (v.getId()) {
-                case R.id.btnDecreaseQuantity:
-                    if (quantity > 0) {
-                        quantity--;
-                        updateOrderProduct(quantity);
-                    }
-                    break;
-                case R.id.btnIncreaseQuantity:
-                    quantity++;
-                    updateOrderProduct(quantity);
-                    break;
-                case R.id.btnAddProduct:
-                    quantity++;
-                    updateOrderProduct(quantity);
-                    break;
+            if (v.getId() == R.id.btnDecreaseQuantity) {
+                quantity--;
+            } else if (v.getId() == R.id.btnIncreaseQuantity || v.getId() == R.id.btnAddProduct) {
+                quantity++;
             }
 
+            updateOrderProduct(quantity);
             updateQuantityView();
         }
+
     }
 }

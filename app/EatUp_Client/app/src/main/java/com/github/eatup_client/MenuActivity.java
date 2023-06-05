@@ -62,4 +62,5 @@ public class MenuActivity extends AppCompatActivity {
         tabs.setupWithViewPager(viewPager);
     }
 
+
 }
