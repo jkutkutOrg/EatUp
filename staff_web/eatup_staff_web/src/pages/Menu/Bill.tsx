@@ -41,7 +41,7 @@ const Bill = ({session}: Props) => {
   {orders.length > 0 && orders.map((order, index) => 
     <>
       <hr/>
-      <div key={index} className="container text-center">
+      <div className="container text-center">
         <div className="row">
           <div className="col">
             <h5>Order {index + 1}</h5>

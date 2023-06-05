@@ -64,7 +64,7 @@ const Tables = ({onDetails, onBill}: Props) => {
       <div className="container">
         <div className="row">
           <div className="col-5">
-            <h5>Mesa {mesa.name}</h5>
+            <h5>Table {mesa.name}</h5>
           </div>
         </div>
         <div className="row">

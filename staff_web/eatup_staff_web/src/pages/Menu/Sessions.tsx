@@ -28,7 +28,7 @@ const Sessions = ({onBill}: Props) => {
         return (
           <div key={session.id} className="row">
             <div className="col-5">{session.id}</div>
-            <div className="col">{session.table_id}</div>
+            <div className="col">Table {session.table_id}</div>
             <div className="col">
               {session.in_progress && "In progress"}
             </div>
