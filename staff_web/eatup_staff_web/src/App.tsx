@@ -59,7 +59,9 @@ function App() {
           session={selected}
         />;
       case Menu.Sessions:
-        return <Sessions />;
+        return <Sessions 
+          onBill={toBill}
+        />;
     }
   };
 

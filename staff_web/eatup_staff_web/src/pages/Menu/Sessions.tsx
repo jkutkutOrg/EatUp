@@ -3,9 +3,10 @@ import StaffAPI from "../../services/StaffApi";
 import Session from "../../model/api/Session";
 
 interface Props {
+  onBill: (selected: Session) => void;
 }
 
-const Sessions = ({}: Props) => {
+const Sessions = ({onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
 
   useEffect(() => {
@@ -22,22 +23,24 @@ const Sessions = ({}: Props) => {
 
   return <>
     <h1>Sessions</h1>
-    {sessions.map((session) => {
-      return (
-        <div key={session.id}>
-          <div style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}>
-            <span>{session.id}</span>
-            <span>{session.table_id}</span>
-            <span>{session.in_progress && "In progress"}</span>
-            <span>bill</span> {/* TODO */}
+    <div className="container text-center">
+      {sessions.map((session) => {
+        return (
+          <div key={session.id} className="row">
+            <div className="col-5">{session.id}</div>
+            <div className="col">{session.table_id}</div>
+            <div className="col">
+              {session.in_progress && "In progress"}
+            </div>
+            <div className="col">
+              <button className="btn btn-primary" 
+                onClick={() => onBill(session)}
+              >Bill</button>
+            </div>
           </div>
-        </div>
-      );
-    })}
+        );
+      })}
+    </div>
   </>;
 }
 
