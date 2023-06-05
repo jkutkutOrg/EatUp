@@ -308,7 +308,7 @@
                     "examples": [
                         {
                             "description": "Get all the orders of the session with id `AAAAAAA`",
-                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "endpoint": "/api/v1/orders/AAAAAAA",
                             "data": null,
                             "response_description": "This is the result",
                             "response_code": 200,
@@ -355,7 +355,7 @@
                         },
                         {
                             "description": "Attempt to get all the orders with invalid session_id `AAAAAAA`",
-                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "endpoint": "/api/v1/orders/AAAAAAA",
                             "data": null,
                             "response_description": "This is the result",
                             "response_code": 409,
@@ -380,7 +380,7 @@
                     "examples": [
                         {
                             "description": "Create a new order in the session with id `AAAAAAA`",
-                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "endpoint": "/api/v1/orders/AAAAAAA",
                             "data": [
                                 "{",
                                 "  \"products\": [",
@@ -424,7 +424,7 @@
                         },
                         {
                             "description": "Create a new order in invalid session with id `BBBBBBB`",
-                            "endpoint": "/api/v1/orders/session/BBBBBBB",
+                            "endpoint": "/api/v1/orders/BBBBBBB",
                             "data": [
                                 "{",
                                 "  \"products\": [",

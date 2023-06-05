@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Session from "../../model/api/Session";
 import Details from "./Details"
+import StaffAPI from "../../services/StaffApi";
+import Order from "../../model/api/Order";
 
 interface Props {
   session: Session;
@@ -11,170 +13,15 @@ const priceFormat = (price: number) => {
 }
 
 const Bill = ({session}: Props) => {
-  const [orders, setOrders] = useState<any[] | null>(null);
-  // const [orders, setOrders] = useState<Order[] | null>(null);
+  const [orders, setOrders] = useState<Order[] | null>(null);
 
   useEffect(() => {
-    // setOrders([
-    //   {
-    //     "id": "AAAAAAA",
-    //     "products": [
-    //       {
-    //         "id": "BBBBBBB",
-    //         "quantity": 2,
-    //         "product": {
-    //           "id": "CCCCCCC",
-    //           "name": "Bruschetta",
-    //           "description": "Tomato, garlic, basil, olive oil",
-    //           "img_id": "bruchetta.png",
-    //           "price": 5.0,
-    //           "allergies": [
-    //             {
-    //               "id": "DDDDDDD",
-    //               "name": "Gluten",
-    //               "img_id": "gluten.png"
-    //             },
-    //             {
-    //               "id": "EEEEEEE",
-    //               "name": "Lactose",
-    //               "img_id": "lactose.png"
-    //             }
-    //           ],
-    //           "categories": [
-    //             {
-    //               "id": "FFFFFFF",
-    //               "name": "Appetizers"
-    //             }
-    //           ]
-    //         }
-    //       },
-    //       {
-    //         "id": "GGGGGGG",
-    //         "quantity": 1,
-    //         "product": {
-    //           "id": "HHHHHHH",
-    //           "name": "Margherita",
-    //           "description": "Tomato, mozzarella, basil",
-    //           "img_id": "margherita.png",
-    //           "price": 7.0,
-    //           "allergies": [
-    //             {
-    //               "id": "IIIIIII",
-    //               "name": "Gluten",
-    //               "img_id": "gluten.png"
-    //             },
-    //             {
-    //               "id": "JJJJJJJ",
-    //               "name": "Lactose",
-    //               "img_id": "lactose.png"
-    //             }
-    //           ],
-    //           "categories": [
-    //             {
-    //               "id": "KKKKKKK",
-    //               "name": "Pizzas"
-    //             }
-    //           ]
-    //         }
-    //       }
-    //     ],
-    //   },
-    //   {
-    //     "id": "AAAAAAA",
-    //     "products": [
-    //       {
-    //         "id": "BBBBBBB",
-    //         "quantity": 2,
-    //         "product": {
-    //           "id": "CCCCCCC",
-    //           "name": "Bruschetta",
-    //           "description": "Tomato, garlic, basil, olive oil",
-    //           "img_id": "bruchetta.png",
-    //           "price": 5.0,
-    //           "allergies": [
-    //             {
-    //               "id": "DDDDDDD",
-    //               "name": "Gluten",
-    //               "img_id": "gluten.png"
-    //             },
-    //             {
-    //               "id": "EEEEEEE",
-    //               "name": "Lactose",
-    //               "img_id": "lactose.png"
-    //             }
-    //           ],
-    //           "categories": [
-    //             {
-    //               "id": "FFFFFFF",
-    //               "name": "Appetizers"
-    //             }
-    //           ]
-    //         }
-    //       },
-    //       {
-    //         "id": "GGGGGGG",
-    //         "quantity": 1,
-    //         "product": {
-    //           "id": "HHHHHHH",
-    //           "name": "Margherita",
-    //           "description": "Tomato, mozzarella, basil",
-    //           "img_id": "margherita.png",
-    //           "price": 7.0,
-    //           "allergies": [
-    //             {
-    //               "id": "IIIIIII",
-    //               "name": "Gluten",
-    //               "img_id": "gluten.png"
-    //             },
-    //             {
-    //               "id": "JJJJJJJ",
-    //               "name": "Lactose",
-    //               "img_id": "lactose.png"
-    //             }
-    //           ],
-    //           "categories": [
-    //             {
-    //               "id": "KKKKKKK",
-    //               "name": "Pizzas"
-    //             }
-    //           ]
-    //         }
-    //       },
-    //       {
-    //         "id": "BBBBBBB",
-    //         "quantity": 3,
-    //         "product": {
-    //           "id": "CCCCCCC",
-    //           "name": "Beer",
-    //           "description": "Beer",
-    //           "img_id": "beer.png",
-    //           "price": 15.0,
-    //           "allergies": [
-    //             {
-    //               "id": "DDDDDDD",
-    //               "name": "Gluten",
-    //               "img_id": "gluten.png"
-    //             },
-    //             {
-    //               "id": "EEEEEEE",
-    //               "name": "Lactose",
-    //               "img_id": "lactose.png"
-    //             }
-    //           ],
-    //           "categories": [
-    //             {
-    //               "id": "FFFFFFF",
-    //               "name": "Drinks"
-    //             }
-    //           ]
-    //         }
-    //       }
-    //     ],
-    //   },
-    // ]);
-
-
-    // setOrders([]);
+    StaffAPI.getOrders(
+      session.id,
+      (orders) => {
+        setOrders(Order.fromJSONArray(orders));
+      }
+    );
   }, []);
 
   if (orders == null) {

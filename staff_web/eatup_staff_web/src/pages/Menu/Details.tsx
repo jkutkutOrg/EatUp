@@ -6,8 +6,6 @@ interface Props {
 }
 
 const Details = ({session}: Props) => {
-  console.log(session);
-
   const localSessionStr = localStorage.getItem(session.id);
 
   if (localSessionStr == null) {

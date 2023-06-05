@@ -130,6 +130,18 @@ class StaffAPI extends API {
     ): string {
         return `${this.url}${qr}`;
     }
+
+    public static getOrders(
+        session_id: string,
+        then: FtCallback<any, any>,
+        error?: FtCallback<string, any>
+    ): Promise<Response> {
+        return this.basicGet(
+            ApiEndpoint.Orders, [session_id],
+            then,
+            error || console.error
+        );
+    }
 }
 
 export default StaffAPI;
