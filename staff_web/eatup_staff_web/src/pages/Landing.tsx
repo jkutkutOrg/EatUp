@@ -5,11 +5,27 @@ interface Props {
 }
 
 const Landing = ({onBegin}: Props) => {
-    return <>
-        <h1>Satisfy your cravings with a tap!</h1>
-        <img className="landing-img" src={landingImg} alt="landing image" />
-        <button onClick={onBegin}>Begin</button>
-    </>;
+    return <div className='container text-center'>
+        <div className='row'>
+            <div className='col'>
+                <h2 className='display-2'>Satisfy your cravings with a tap!</h2>
+            </div>
+        </div>
+        <br />
+        <br />
+        <div className='row'>
+            <div className='col'>
+                <img className="landing-img" src={landingImg} alt="landing image" />
+            </div>
+        </div>
+        <br />
+        <br />
+        <div className='row'>
+            <div className='col'>
+                <button className='btn btn-primary btn-lg' onClick={onBegin}>Begin</button>
+            </div>
+        </div>
+    </div>;
 }
 
 export default Landing;
