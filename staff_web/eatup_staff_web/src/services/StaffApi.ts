@@ -124,6 +124,12 @@ class StaffAPI extends API {
             error || console.error
         );
     }
+
+    public static getQR(
+        qr: string
+    ): string {
+        return `${this.url}${qr}`;
+    }
 }
 
 export default StaffAPI;

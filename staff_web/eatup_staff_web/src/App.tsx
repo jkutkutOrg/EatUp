@@ -5,6 +5,7 @@ import Tables from './pages/Menu/Tables';
 import Details from './pages/Menu/Details';
 import Bill from './pages/Menu/Bill';
 import Sessions from './pages/Menu/Sessions';
+import Session from './model/api/Session';
 
 enum Menu {
   Tables,
@@ -16,6 +17,8 @@ enum Menu {
 function App() {
   const [begin, setBegin] = useState(true);
   const [menu, setMenu] = useState(Menu.Tables);
+
+  const [selected, setSelected] = useState<Session | null>(null);
 
   const ftBegin = () => {
     setBegin(false);
@@ -52,21 +55,43 @@ function App() {
   };
 
   const toSessions = () => {
+    setSelected(null);
     setMenu(Menu.Sessions);
   }
 
   const toTables = () => {
+    setSelected(null);
     setMenu(Menu.Tables);
+  }
+
+  const toDetails = (selected: Session) => {
+    setSelected(selected);
+    setMenu(Menu.Details);
+  }
+
+  const toBill = (selected: Session) => {
+    setSelected(selected);
+    setMenu(Menu.Bill);
   }
 
   const menuHtml = () => {
     switch (menu) {
       case Menu.Tables:
-        return <Tables />;
+        return <Tables
+          onDetails={toDetails}
+          onBill={toBill}
+        />;
       case Menu.Details:
-        return <Details />;
+        if (selected == null)
+          throw new Error("selected is null");
+        return <Details
+          session={selected}
+          onClose={toTables}
+        />;
       case Menu.Bill:
-        return <Bill />;
+        if (selected == null)
+          throw new Error("selected is null");
+        return <Bill />; // TODO
       case Menu.Sessions:
         return <Sessions 
           onClose={toTables}

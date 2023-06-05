@@ -3,10 +3,11 @@ import Session from "../../model/api/Session";
 import StaffAPI from "../../services/StaffApi";
 
 interface Props {
-
+  onDetails: (session: Session) => void;
+  onBill: (session: Session) => void;
 }
 
-const Tables = ({}: Props) => {
+const Tables = ({onDetails, onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
 
   const updateSessions = () => {
@@ -24,6 +25,7 @@ const Tables = ({}: Props) => {
       mesa.name,
       (session) => {
         console.log(session);
+        localStorage.setItem(session.id, JSON.stringify(session));
         updateSessions();
       }
     )
@@ -68,8 +70,8 @@ const Tables = ({}: Props) => {
           <span>{mesa.session? "In progress" : "Available"}</span>
           {mesa.session &&
             <>
-              <span>details</span>
-              <span>bill</span>
+              <button onClick={() => {onDetails(mesa.session)}}>details</button>
+              <button onClick={() => {onBill(mesa.session)}}>bill</button>
               <button onClick={() => {endSession(mesa)}}>end</button>
             </>
           }

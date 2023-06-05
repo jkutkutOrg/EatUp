@@ -1,14 +1,39 @@
-interface Props {
+import Session from "../../model/api/Session";
+import StaffAPI from "../../services/StaffApi";
 
+interface Props {
+  session: Session;
+  onClose: () => void;
 }
 
-const Details = ({}: Props) => {
+const Details = ({session, onClose}: Props) => {
+  console.log(session);
+
+  const localSessionStr = localStorage.getItem(session.id);
+
+  if (localSessionStr == null) {
+    return <p>No info for this session</p>;
+  }
+  const localSession = JSON.parse(localSessionStr);
+  const simple_id = localSession.simple_id;
+  const qr_code = StaffAPI.getQR(localSession.qr_img);
   return <>
-    <h1>Details</h1>
-    <h5>Mesa XXX</h5>
-    <h5>Id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</h5>
-    <h5>Simple_id: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</h5>
-    <img src="" alt="QR code" />
+    <div style={{
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    }}>
+      <button onClick={onClose}>Close</button>
+    </div>
+    <div className="container text-center">
+      <h2>Mesa {session.table_id}</h2>
+      <h5>{session.id}</h5>
+      <img src={qr_code} alt={session.id} style={{
+        width:  "150px",
+        height: "150px"
+      }}/>
+      <h5>{simple_id}</h5>
+    </div>
   </>;
 }
 
