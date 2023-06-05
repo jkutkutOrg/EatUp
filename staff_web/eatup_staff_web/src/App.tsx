@@ -56,7 +56,7 @@ function App() {
         if (selected == null)
           throw new Error("selected is null");
         return <Bill
-          // session={selected} // TODO
+          session={selected}
         />;
       case Menu.Sessions:
         return <Sessions />;
