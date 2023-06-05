@@ -40,8 +40,13 @@ const Bill = ({session}: Props) => {
   {orders.length == 0 && <p>No orders</p>}
   {orders.length > 0 && orders.map((order, index) => 
     <>
-      <h5>Order {index + 1}</h5>
+      <hr/>
       <div key={index} className="container text-center">
+        <div className="row">
+          <div className="col">
+            <h5>Order {index + 1}</h5>
+          </div>
+        </div>
         <div className="row">
           <div className="col"><b>Product</b></div>
           <div className="col"><b>Quantity</b></div>
@@ -58,6 +63,7 @@ const Bill = ({session}: Props) => {
       <br />
     </>
   )}
+  <hr/>
   <div className="container text-end">
     <div className="row">
       <div className="col-11">Total {priceFormat(total)}</div>

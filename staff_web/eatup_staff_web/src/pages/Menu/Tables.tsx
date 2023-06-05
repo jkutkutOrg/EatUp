@@ -59,30 +59,40 @@ const Tables = ({onDetails, onBill}: Props) => {
 
   return <>
     <h1>Tables</h1>
-    {mesas.map((mesa, i) => (
-      <div key={`${mesa.name}-${i}`}>
-        <h5>Mesa {mesa.name}</h5>
-        <div style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-        }}>
-          <span>{mesa.session? "In progress" : "Available"}</span>
+    {mesas.map((mesa, i) => (<>
+      <br />
+      <div className="container">
+        <div className="row">
+          <div className="col-5">
+            <h5>Mesa {mesa.name}</h5>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col">
+            {mesa.session? "In progress" : "Available"}
+          </div>
           {mesa.session &&
             <>
-              <button onClick={() => {onDetails(mesa.session)}}>details</button>
-              <button onClick={() => {onBill(mesa.session)}}>bill</button>
-              <button onClick={() => {endSession(mesa)}}>end</button>
+              <div className="col">{btn("details", () => {onDetails(mesa.session)})}</div>
+              <div className="col">{btn("bill", () => {onBill(mesa.session)})}</div>
+              <div className="col">{btn("end", () => {endSession(mesa)})}</div>
             </>
           }
           {!mesa.session &&
-            <button onClick={() => {newSession(mesa)}}>new session</button>
+            <>
+              <div className="col"></div>
+              <div className="col"></div>
+              <div className="col">{btn("new session", () => {newSession(mesa)})}</div>
+            </>
           }
         </div>
-        <br />
       </div>
-    ))}
+    </>))}
   </>;
 }
+
+const btn = (txt: string, action: () => void) => (
+  <button className="btn btn-primary w-100" onClick={action}>{txt}</button>
+);
 
 export default Tables;
