@@ -3,10 +3,9 @@ import StaffAPI from "../../services/StaffApi";
 
 interface Props {
   session: Session;
-  onClose: () => void;
 }
 
-const Details = ({session, onClose}: Props) => {
+const Details = ({session}: Props) => {
   console.log(session);
 
   const localSessionStr = localStorage.getItem(session.id);
@@ -17,14 +16,7 @@ const Details = ({session, onClose}: Props) => {
   const localSession = JSON.parse(localSessionStr);
   const simple_id = localSession.simple_id;
   const qr_code = StaffAPI.getQR(localSession.qr_img);
-  return <>
-    <div style={{
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-    }}>
-      <button onClick={onClose}>Close</button>
-    </div>
+  return (
     <div className="container text-center">
       <h2>Mesa {session.table_id}</h2>
       <h5>{session.id}</h5>
@@ -34,7 +26,7 @@ const Details = ({session, onClose}: Props) => {
       }}/>
       <h5>{simple_id}</h5>
     </div>
-  </>;
+  );
 }
 
 export default Details;

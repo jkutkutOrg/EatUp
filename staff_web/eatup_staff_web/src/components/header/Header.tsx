@@ -1,18 +1,18 @@
 import appLogo from '../../assets/logo.png';
 import ghLogo from '../../assets/header/github.png';
-
-interface HeaderOption {
-    label: string;
-    onClick: () => void;
-}
+import HeaderOption from '../../model/header/HeaderOption';
+import Menu from '../../model/App/Menu';
 
 interface Props {
     onRefresh: () => void;
-    options?: HeaderOption[];
+    onClose: () => void;
+    menu: Menu;
+    extraOptions?: HeaderOption[];
 }
 
-function Header({onRefresh, options}: Props) {
-    options = options || [];
+function Header({onRefresh, onClose, menu, extraOptions}: Props) {
+    extraOptions = extraOptions || [];
+    let closeBtn: boolean = menu != Menu.Tables && menu != Menu.Landing;
     return <header>
         <nav className="navbar bg-dark d-flex" data-bs-theme="dark" style={{
             padding: "0px 9px",
@@ -20,7 +20,7 @@ function Header({onRefresh, options}: Props) {
             <div className='p-2' onClick={onRefresh} style={{cursor: "pointer"}}>
                 <img src={appLogo} alt="GitHub" width="42" height="42"/>
             </div>
-            {options.map((option) => (
+            {extraOptions.map((option) => (
                 <div key={option.label}
                     className='p-2' style={{cursor: "pointer", color: "white"}}
                     onClick={option.onClick}
@@ -28,9 +28,17 @@ function Header({onRefresh, options}: Props) {
                     {option.label}
                 </div>
             ))}
-            <a href="https://github.com/jkutkutorg/EatUp" target='_blank' className='ml-auto p-2' style={{cursor: "pointer"}}>
-                <img src={ghLogo} alt="GitHub" width="30" height="30"/>
-            </a>
+            {!closeBtn &&
+                <a href="https://github.com/jkutkutorg/EatUp" target='_blank' className='ml-auto p-2' style={{cursor: "pointer"}}>
+                    <img src={ghLogo} alt="GitHub" width="30" height="30"/>
+                </a>
+            }
+            {closeBtn && <div
+                className='p-2' style={{cursor: "pointer", color: "white"}}
+                onClick={onClose}
+            >
+                Close
+            </div>}
         </nav>
     </header>
 }

@@ -6,53 +6,14 @@ import Details from './pages/Menu/Details';
 import Bill from './pages/Menu/Bill';
 import Sessions from './pages/Menu/Sessions';
 import Session from './model/api/Session';
-
-enum Menu {
-  Tables,
-  Details,
-  Bill,
-  Sessions
-}
+import Menu from './model/App/Menu';
 
 function App() {
-  const [begin, setBegin] = useState(true);
-  const [menu, setMenu] = useState(Menu.Tables);
-
+  const [menu, setMenu] = useState(Menu.Landing);
   const [selected, setSelected] = useState<Session | null>(null);
 
-  const ftBegin = () => {
-    setBegin(false);
-  };
-
-  const ftRestart = () => {
-    setBegin(true);
-  };
-
-  if (begin) {
-    return (
-      <Landing
-        onHeaderRefresh={ftRestart}
-        onBegin={ftBegin}
-      />
-    );
-  }
-
-  const loopMenu = () => { // TODO debug
-    switch (menu) {
-      case Menu.Tables:
-        setMenu(Menu.Details);
-        break;
-      case Menu.Details:
-        setMenu(Menu.Bill);
-        break;
-      case Menu.Bill:
-        setMenu(Menu.Sessions);
-        break;
-      case Menu.Sessions:
-        setMenu(Menu.Tables);
-        break;
-    }
-  };
+  const ftBegin = () => setMenu(Menu.Tables);
+  const ftRestart = () => setMenu(Menu.Landing);
 
   const toSessions = () => {
     setSelected(null);
@@ -76,6 +37,10 @@ function App() {
 
   const menuHtml = () => {
     switch (menu) {
+      case Menu.Landing:
+        return <Landing
+          onBegin={ftBegin}
+        />;
       case Menu.Tables:
         return <Tables
           onDetails={toDetails}
@@ -86,33 +51,36 @@ function App() {
           throw new Error("selected is null");
         return <Details
           session={selected}
-          onClose={toTables}
         />;
       case Menu.Bill:
         if (selected == null)
           throw new Error("selected is null");
-        return <Bill />; // TODO
-      case Menu.Sessions:
-        return <Sessions 
-          onClose={toTables}
+        return <Bill
+          // session={selected} // TODO
         />;
+      case Menu.Sessions:
+        return <Sessions />;
     }
   };
+
+  const headerOptions = [];
+  if (menu && menu != Menu.Sessions) {
+    headerOptions.push({
+      label: "Sessions",
+      onClick: toSessions,
+    });
+  }
 
   return (<>
     <Header
       onRefresh={ftRestart}
-      options={[
-        {
-          label: "Sessions",
-          onClick: toSessions,
-        }
-      ]}
+      onClose={toTables}
+      menu={menu}
+      extraOptions={headerOptions}
     />
     <div style={{
       margin: "9px",
     }}>
-      <button onClick={loopMenu}>Loop</button>
       {menuHtml()}
     </div>
   </>);
