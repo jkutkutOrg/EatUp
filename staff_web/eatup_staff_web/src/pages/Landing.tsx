@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Landing = ({onBegin}: Props) => {
-    return <div className='container text-center'>
+    return <div className='container-fluid eatup-landing  text-center'>
         <div className='row'>
             <div className='col'>
                 <h2 className='display-2'>Satisfy your cravings with a tap!</h2>

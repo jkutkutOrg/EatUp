@@ -20,6 +20,17 @@
   --text_color_dark_red: #F93F00;
 }
 
+/* #root > div { */
+  /* padding: 9px; */
+  /* background: red; */
+/* } */
+
+.eatup-landing {
+  padding: 9px;
+  height: 100vh;
+  background-color: var(--eatup_yellow);
+}
+
 .landing-img {
-  max-width: 500px;
+  width: 60%;
 }

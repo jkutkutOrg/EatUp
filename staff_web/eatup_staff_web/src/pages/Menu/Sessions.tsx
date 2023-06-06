@@ -8,6 +8,7 @@ interface Props {
 
 const Sessions = ({onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
+  const [inProgressFilter, setInProgressFilter] = useState<boolean>(false);
 
   useEffect(() => {
     StaffAPI.getSessions(
@@ -17,14 +18,21 @@ const Sessions = ({onBill}: Props) => {
     )
   }, []);
 
+  const toggleFilter = () => {
+    setInProgressFilter(!inProgressFilter);
+  }
+
   if (sessions === null) {
     return <p>Loading...</p>;
   }
 
   return <>
     <h1>Sessions</h1>
+    <button onClick={toggleFilter}>{inProgressFilter ? "Show all" : "Show in progress"}</button>
     <div className="container text-center">
       {sessions.map((session) => {
+        if (inProgressFilter && !session.in_progress)
+          return <></>;
         return (
           <div key={session.id} className="row">
             <div className="col-5">{session.id}</div>

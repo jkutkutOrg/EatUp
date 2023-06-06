@@ -80,11 +80,7 @@ function App() {
       menu={menu}
       extraOptions={headerOptions}
     />
-    <div style={{
-      margin: "9px",
-    }}>
-      {menuHtml()}
-    </div>
+    {menuHtml()}
   </>);
 }
 
