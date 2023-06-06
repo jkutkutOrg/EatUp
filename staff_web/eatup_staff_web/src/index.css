@@ -1,6 +1,6 @@
 :root {
   --eatup_yellow: #FFC83A;
-  --eatup_ligth_yellow: #FFCE50;
+  --eatup_light_yellow: #FFCE50;
   --eatup_red: #FE554A;
   --eatup_light_red: #FF685E;
   --eatup_green: #0B735F;
@@ -20,17 +20,41 @@
   --text_color_dark_red: #F93F00;
 }
 
-/* #root > div { */
-  /* padding: 9px; */
-  /* background: red; */
-/* } */
-
 .eatup-landing {
   padding: 9px;
   height: 100vh;
-  background-color: var(--eatup_yellow);
+  --bg-gradient: linear-gradient(200deg, #FFC83A 0%, #ff8e5e 100%);
+  background: var(--bg-gradient);
+}
+
+.landing-header {
+  font-size: xx-large;
+  font-weight: bold;
+  color: var(--text_color_dark_red);
 }
 
 .landing-img {
-  width: 60%;
+  width: 70%;
+}
+
+.landing-logo {
+  height: 17vh;
+}
+
+.landing-btn, .landing-btn:hover, .landing-btn:first-child:active {
+  width: 80%;
+  border-radius: 5px;
+  background-color: var(--eatup_light_yellow);
+  color: var(--text_color_red);
+  font-weight: bold;
+
+  margin-top: 20px;
+
+  border: none;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.landing-btn:hover {
+  background-color: var(--eatup_yellow);
 }

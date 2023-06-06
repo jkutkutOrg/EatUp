@@ -1,4 +1,5 @@
 import landingImg from '../assets/landing/landing.png'
+import logo from '../assets/logo.png'
 
 interface Props {
     onBegin: () => void;
@@ -7,8 +8,11 @@ interface Props {
 const Landing = ({onBegin}: Props) => {
     return <div className='container-fluid eatup-landing  text-center'>
         <div className='row'>
-            <div className='col'>
-                <h2 className='display-2'>Satisfy your cravings with a tap!</h2>
+            <div className='col-8'>
+                <h2 className='landing-header'>Satisfy your cravings with a tap!</h2>
+            </div>
+            <div className='col-3'>
+                <img className="landing-logo" src={logo} alt="logo" />
             </div>
         </div>
         <br />
@@ -22,7 +26,7 @@ const Landing = ({onBegin}: Props) => {
         <br />
         <div className='row'>
             <div className='col'>
-                <button className='btn btn-primary btn-lg' onClick={onBegin}>Begin</button>
+                <button className='btn btn-primary btn-lg landing-btn' onClick={onBegin}>Begin</button>
             </div>
         </div>
     </div>;
