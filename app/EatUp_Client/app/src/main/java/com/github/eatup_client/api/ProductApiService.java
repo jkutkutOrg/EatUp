@@ -10,6 +10,7 @@ import com.github.eatup_client.model.Allergy;
 import com.github.eatup_client.model.Category;
 import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
+import com.github.eatup_client.model.ProductRes;
 import com.github.eatup_client.model.Session;
 import com.github.eatup_client.model.SessionId;
 import com.google.gson.Gson;
@@ -50,6 +51,7 @@ public class ProductApiService {
     private final ProductService mProductService;
     private final SessionService mSessionService;
     private final SessionIdService mSessionIdService;
+    private ProductRes productRes;
     //private final OrderService mOrderService;
 
     private Context mContext;
@@ -68,6 +70,7 @@ public class ProductApiService {
         mProductService = retrofit.create(ProductService.class);
         mSessionService = retrofit.create(SessionService.class);
         mSessionIdService = retrofit.create(SessionIdService.class);
+
         //mOrderService = retrofit.create(OrderService.class);
     }
 
@@ -104,24 +107,17 @@ public class ProductApiService {
     public LiveData<Boolean> isQRValid(String qrCode) {
         MutableLiveData<Boolean> data = new MutableLiveData<>();
 
-        loadSessions().observeForever(sessionList -> {
-            if (sessionList != null) {
-                for (Session session : sessionList) {
-                    Log.d(TAG, "Session ID: " + session.getId());
-                    if (session.getId().equals(qrCode)) {
-                        userUUID = session.getId();
-                        Log.d(TAG, "Session ID matches QR code");
-                        data.setValue(true);
-                        return;
-                    }
-                }
-            }
-            Log.d(TAG, "Session ID does not match QR code");
+        Session session = ProductRes.getInstance().getSession(qrCode);
+        if (session != null) {
+            userUUID = session.getId();
+            data.setValue(true);
+        } else {
             data.setValue(false);
-        });
+        }
 
         return data;
     }
+
 
     public LiveData<List<Session>> loadSessions() {
         MutableLiveData<List<Session>> data = new MutableLiveData<>();
@@ -130,7 +126,11 @@ public class ProductApiService {
             @Override
             public void onResponse(Call<List<Session>> call, Response<List<Session>> response) {
                 if (response.isSuccessful()) {
-                    data.setValue(response.body());
+                    List<Session> sessions = response.body();
+                    for (Session session : sessions) {
+                        ProductRes.getInstance().addSession(session);
+                    }
+                    data.setValue(sessions);
                     Log.i(TAG, "loadSessions success: " + new Gson().toJson(response.body()));
                 } else {
                     Log.e(TAG, "loadSessions error: " + response.code());
@@ -145,6 +145,7 @@ public class ProductApiService {
 
         return data;
     }
+
 
     public LiveData<SessionId> getValidSession(String sessionId) {
         MutableLiveData<SessionId> data = new MutableLiveData<>();

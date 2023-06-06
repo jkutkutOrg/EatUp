@@ -1,17 +1,20 @@
 package com.github.eatup_client;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.WindowManager;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.github.eatup_client.api.ProductApiService;
+
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private Button btnGetStarted;
+    private ProductApiService productApiService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,10 @@ public class MainActivity extends AppCompatActivity {
 
         setFullScreenWindowFlags();
         setContentView(R.layout.activity_main);
+
+        productApiService = new ProductApiService(this);
+
+        productApiService.loadSessions();
 
         btnGetStarted = findViewById(R.id.btnGetStarted);
 

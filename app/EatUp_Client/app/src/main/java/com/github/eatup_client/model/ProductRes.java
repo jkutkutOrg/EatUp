@@ -1,17 +1,21 @@
 package com.github.eatup_client.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductRes {
     private static ProductRes instance;
-    private List<OrderProduct> orderProducts;
+    private Map<Product, OrderProduct> orderProductMap;
+    private Map<String, Session> sessionMap;
 
     private ProductRes() {
-        orderProducts = new ArrayList<>();
+        orderProductMap = new HashMap<>();
+        sessionMap = new HashMap<>();
     }
 
-    public static ProductRes getInstance() {
+    public static synchronized ProductRes getInstance() {
         if (instance == null) {
             instance = new ProductRes();
         }
@@ -19,47 +23,52 @@ public class ProductRes {
     }
 
     public List<OrderProduct> getOrderProducts() {
-        return orderProducts;
+        return new ArrayList<>(orderProductMap.values());
     }
 
     public void addProduct(Product product) {
-        OrderProduct orderProduct = getOrderProduct(product);
+        OrderProduct orderProduct = orderProductMap.get(product);
         if (orderProduct != null) {
             orderProduct.setQuantity(orderProduct.getQuantity() + 1);
         } else {
             OrderProduct newOrderProduct = new OrderProduct(1, product);
-            orderProducts.add(newOrderProduct);
+            orderProductMap.put(product, newOrderProduct);
         }
     }
 
-    public void removeProduct(Product product) {
-        OrderProduct orderProduct = getOrderProduct(product);
-        if (orderProduct != null) {
-            int newQuantity = orderProduct.getQuantity() - 1;
-            if (newQuantity > 0) {
-                orderProduct.setQuantity(newQuantity);
-            } else {
-                orderProducts.remove(orderProduct);
-            }
+    public double getTotalPrice() {
+        double totalPrice = 0;
+        for (OrderProduct orderProduct : orderProductMap.values()) {
+            totalPrice += orderProduct.getQuantity() * orderProduct.getProduct().getPrice();
         }
+        return totalPrice;
     }
 
     public OrderProduct getOrderProduct(Product product) {
-        for (OrderProduct orderProduct : orderProducts) {
-            if (orderProduct.getProduct().equals(product)) {
-                return orderProduct;
-            }
-        }
-        return null;
+        return orderProductMap.get(product);
     }
 
     public void setQuantity(Product product, int quantity) {
-        OrderProduct orderProduct = getOrderProduct(product);
-        if (orderProduct != null) {
-            orderProduct.setQuantity(quantity);
+        if (quantity <= 0) {
+            orderProductMap.remove(product);
         } else {
-            OrderProduct newOrderProduct = new OrderProduct(quantity, product);
-            orderProducts.add(newOrderProduct);
+            OrderProduct orderProduct = orderProductMap.get(product);
+            if (orderProduct != null) {
+                orderProduct.setQuantity(quantity);
+            } else {
+                OrderProduct newOrderProduct = new OrderProduct(quantity, product);
+                orderProductMap.put(product, newOrderProduct);
+            }
         }
     }
+
+    // Sesions
+    public void addSession(Session session) {
+        sessionMap.put(session.getId(), session);
+    }
+
+    public Session getSession(String id) {
+        return sessionMap.get(id);
+    }
+
 }

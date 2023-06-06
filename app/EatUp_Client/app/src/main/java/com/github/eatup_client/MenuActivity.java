@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
-import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.databinding.ActivityMenuBinding;
 import com.github.eatup_client.ui.main.SectionsPagerAdapter;
 import com.google.android.material.tabs.TabLayout;
@@ -19,7 +18,6 @@ public class MenuActivity extends AppCompatActivity {
 
     private ActivityMenuBinding binding;
     private FragmentManager fragmentManager;
-    private ProductApiService productApiService;
     private ImageView ivResume;
     private ImageView ivBackButton;
 
@@ -50,7 +48,6 @@ public class MenuActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        productApiService = ProductApiService.getInstance(getApplicationContext());
     }
 
     private void setupViewPagerAndTabs() {
