@@ -59,7 +59,7 @@ const Tables = ({onDetails, onBill}: Props) => {
 
   return <>
     <h1>Tables</h1>
-    {mesas.map((mesa, i) => (<>
+    {mesas.map((mesa, i) => (<div key={i}>
       <br />
       <div className="container">
         <div className="row">
@@ -87,7 +87,7 @@ const Tables = ({onDetails, onBill}: Props) => {
           }
         </div>
       </div>
-    </>))}
+    </div>))}
   </>;
 }
 
