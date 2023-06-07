@@ -58,9 +58,11 @@ const Tables = ({onDetails, onBill}: Props) => {
   }
 
   return <>
-    <h1>Tables</h1>
+    <div className="container text-center">
+      <h1>Tables</h1>
+    </div>
     {mesas.map((mesa, i) => (<div key={i}>
-      <br />
+      <hr />
       <div className="container">
         <div className="row">
           <div className="col-5">
@@ -68,26 +70,25 @@ const Tables = ({onDetails, onBill}: Props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col">
+          <div className="col-3 align-self-center">
             {mesa.session? "In progress" : "Available"}
           </div>
           {mesa.session &&
             <>
               <div className="col">{btn("details", () => {onDetails(mesa.session)})}</div>
               <div className="col">{btn("bill", () => {onBill(mesa.session)})}</div>
-              <div className="col">{btn("end", () => {endSession(mesa)})}</div>
-            </>
-          }
-          {!mesa.session &&
+              <div className="col-4">{btn("end", () => {endSession(mesa)})}</div>
+            </> ||
             <>
-              <div className="col"></div>
-              <div className="col"></div>
-              <div className="col">{btn("new session", () => {newSession(mesa)})}</div>
+              <div className="col-3"></div>
+              <div className="col-2"></div>
+              <div className="col-4">{btn("new session", () => {newSession(mesa)})}</div>
             </>
           }
         </div>
       </div>
     </div>))}
+    <hr />
   </>;
 }
 
