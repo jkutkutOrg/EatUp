@@ -22,19 +22,21 @@
 
 .eatup-landing {
   padding: 9px;
-  height: 100vh;
+  height: calc(100vh - 58px);
   --bg-gradient: linear-gradient(200deg, #FFC83A 0%, #ff8e5e 100%);
   background: var(--bg-gradient);
+  /* background: blueviolet; */
 }
 
 .landing-header {
-  font-size: xx-large;
+  /* font-size: xx-large; */
+  font-size: calc(2.5rem + 1.5vw);
   font-weight: bold;
   color: var(--text_color_dark_red);
 }
 
 .landing-img {
-  width: 70%;
+  padding: 20px;
 }
 
 .landing-logo {
