@@ -1,11 +1,11 @@
 import ApiEndpoint from "../model/ApiEndpoint";
 import FtCallback from "../model/Futures/FtCallback";
 import FtVoid from "../model/Futures/FtVoid";
-import API, { ApiMethod } from "./API";
+import API from "./API";
 
 function apiURL(): string {
     const urlParams = new URLSearchParams(window.location.search);
-    const ip = urlParams.get("ip") || "localhost";
+    const ip = urlParams.get("ip") || window.location.hostname;
     const port = urlParams.get("port") || "80";
     return `http://${ip}:${port}`;
 }
