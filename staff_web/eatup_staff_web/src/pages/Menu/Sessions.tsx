@@ -32,22 +32,29 @@ const Sessions = ({onBill}: Props) => {
     <div className="container text-center">
       {sessions.map((session) => {
         if (inProgressFilter && !session.in_progress)
-          return <></>;
-        return (
-          <div key={session.id} className="row">
-            <div className="col-5">{session.id}</div>
+          return;
+        return (<div key={session.id}>
+          <hr />
+          <div className="row">
+            <div className="col">
+              <h5>{session.id}</h5>
+            </div>
+          </div>
+          <br />
+          <div className="row">
             <div className="col">Table {session.table_id}</div>
             <div className="col">
-              {session.in_progress && "In progress"}
+              {session.in_progress && "In progress" || "Finished"}
             </div>
             <div className="col">
-              <button className="btn btn-primary" 
+              <button className="btn btn-primary w-100"
                 onClick={() => onBill(session)}
               >Bill</button>
             </div>
           </div>
-        );
+        </div>);
       })}
+      <hr />
     </div>
   </>;
 }
