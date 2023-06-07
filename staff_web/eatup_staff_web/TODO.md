@@ -11,4 +11,4 @@
 - [ ] Dockerize
 - [ ] Update server docker
   - [ ] Update documentation
-    - [x] Update server src file: /api/v1/orders/:session_id
+    - [ ] Update server src file: /api/v1/orders/:session_id

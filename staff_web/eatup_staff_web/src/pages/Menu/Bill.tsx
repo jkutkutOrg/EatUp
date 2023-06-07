@@ -39,7 +39,7 @@ const Bill = ({session}: Props) => {
   <br />
   {orders.length == 0 && <p>No orders</p>}
   {orders.length > 0 && orders.map((order, index) => 
-    <>
+    <div key={index}>
       <hr/>
       <div className="container text-center">
         <div className="row">
@@ -48,20 +48,28 @@ const Bill = ({session}: Props) => {
           </div>
         </div>
         <div className="row">
-          <div className="col"><b>Product</b></div>
-          <div className="col"><b>Quantity</b></div>
-          <div className="col"><b>Unit price</b></div>
+          <div className="col-6"><b>Product</b></div>
+          <div className="col-3"><b>Quantity</b></div>
+          <div className="col-3"><b>Unit price</b></div>
         </div>
         {order.products.map((product) => {
           return <div key={product.product.name} className="row">
-            <div className="col">{product.product.name}</div>
-            <div className="col">{product.quantity}</div>
-            <div className="col">{priceFormat(product.product.price)}</div>
+            <div className="col-6">{product.product.name}</div>
+            <div className="col-3">{product.quantity}</div>
+            <div className="col-3">{priceFormat(product.product.price)}</div>
           </div>;
         })}
+        <br />
+        <div className="row text-end">
+          <div className="col-11">Subtotal {priceFormat(
+            order.products.reduce((acc, product) => {
+              return acc + product.quantity * product.product.price;
+            }, 0)
+          )}</div>
+        </div>
       </div>
       <br />
-    </>
+    </div>
   )}
   <hr/>
   <div className="container text-end">
@@ -69,8 +77,8 @@ const Bill = ({session}: Props) => {
       <div className="col-11">Total {priceFormat(total)}</div>
     </div>
   </div>
-
-
+  <br />
+  <br />
   </>;
 }
 
