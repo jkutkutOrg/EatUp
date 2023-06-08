@@ -25,7 +25,7 @@ import java.util.List;
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private static final String TAG = "PlaceholderFragment";
+    private static final String TAG = PlaceholderFragment.class.getSimpleName();
 
     private FragmentMenuBinding binding;
     private RecyclerView recyclerView;

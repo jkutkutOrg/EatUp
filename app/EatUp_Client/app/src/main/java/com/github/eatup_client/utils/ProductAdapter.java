@@ -28,13 +28,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private List<Product> productList;
     private Map<Product, OrderProduct> orderProductMap;
-    private MVCManager MVCManager;
+    private MVCManager mvcManager;
     private Context context;
 
     public ProductAdapter(Context context) {
         this.context = context;
         orderProductMap = new HashMap<>();
-        MVCManager = MVCManager.getInstance();
+        mvcManager = MVCManager.getInstance();
     }
 
     @NonNull
@@ -59,7 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.productList = productList;
         orderProductMap.clear();
 
-        List<OrderProduct> orderProducts = MVCManager.getOrderProducts();
+        List<OrderProduct> orderProducts = mvcManager.getOrderProducts();
 
         for (Product product : productList) {
             OrderProduct orderProduct = null;
@@ -164,12 +164,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
          */
         private void updateOrderProduct(int quantity) {
             if (orderProduct != null) {
-                MVCManager.setQuantity(orderProduct.getProduct(), quantity);
+                mvcManager.setQuantity(orderProduct.getProduct(), quantity);
                 orderProduct.setQuantity(quantity);
             } else {
                 orderProduct = new OrderProduct(quantity, product);
                 orderProductMap.put(product, orderProduct);
-                MVCManager.addProduct(product);
+                mvcManager.addProduct(product);
             }
 
             notifyItemChanged(getAdapterPosition());

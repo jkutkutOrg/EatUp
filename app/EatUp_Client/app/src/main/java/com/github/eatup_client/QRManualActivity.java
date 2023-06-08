@@ -28,12 +28,11 @@ import com.github.eatup_client.model.SessionId;
 public class QRManualActivity extends AppCompatActivity {
 
     private static final int AUTH_WORDS_COUNT = 3;
-
     private EditText[] edAuthWords = new EditText[AUTH_WORDS_COUNT];
     private Button btnConfirmOTP;
     private Button bntReturnToScan;
     private ProductApiService productApiService;
-    private static final String TAG = "QRManualActivity";
+    private static final String TAG = QRManualActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +61,7 @@ public class QRManualActivity extends AppCompatActivity {
             }
 
             if (authWords.toString().isEmpty()) {
-                showToast("Please enter the authentication words");
+                showToast(getString(R.string.qr_manual_empty_auth_words));
                 return;
             }
 
@@ -71,8 +70,7 @@ public class QRManualActivity extends AppCompatActivity {
 
         bntReturnToScan = findViewById(R.id.bntReturnToScan);
         bntReturnToScan.setOnClickListener(v -> {
-            Intent intent = new Intent(QRManualActivity.this, QRActivity.class);
-            startActivity(intent);
+            goNewActivity(QRActivity.class);
         });
     }
 
@@ -89,7 +87,7 @@ public class QRManualActivity extends AppCompatActivity {
                 goNewActivity(MenuActivity.class);
                 Log.d(TAG, "SUCCESS auth words: " + authWords);
             } else {
-                showToast("Invalid authentication words");
+                showToast(getString(R.string.qr_manual_invalid_auth_words));
                 vibrate();
                 Log.d(TAG, "FAILED auth words: " + authWords);
             }

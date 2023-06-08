@@ -28,4 +28,9 @@
     <!-- Menu -->
     <string name="bottega_ristorante">Bottega Ristorante</string>
     <string name="italian_resto">Italian Resto</string>
+    <string name="resume_activity_empty_order">You have to add products to your order</string>
+    <string name="qr_manual_empty_auth_words">Please enter the authentication words</string>
+    <string name="qr_manual_invalid_auth_words">Invalid authentication words</string>
+    <string name="qr_camera_permission_denied">Camera permission is required to scan QR codes</string>
+    <string name="qr_activity_invalid_qr">Invalid QR code\\nPlease try again</string>
 </resources>

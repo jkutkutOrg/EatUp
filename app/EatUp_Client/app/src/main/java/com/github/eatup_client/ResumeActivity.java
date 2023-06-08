@@ -28,7 +28,7 @@ import java.util.List;
  */
 public class ResumeActivity extends AppCompatActivity {
 
-    private static final String TAG = "ResumeActivity";
+    private static final String TAG = ResumeActivity.class.getSimpleName();
     private Button btnConfirmOrder;
     private ImageView ivBackButton;
     private TextView tvResume;
@@ -57,8 +57,7 @@ public class ResumeActivity extends AppCompatActivity {
         orderProducts = mvcManager.getOrderProducts();
 
         // Display the total price of the order
-        tvResume.setText(String.format("Total: %.2f€", mvcManager.getTotalPrice()));
-
+        tvResume.setText(String.format("Total: %s €", mvcManager.getTotalPrice()));
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
@@ -68,7 +67,7 @@ public class ResumeActivity extends AppCompatActivity {
         // Action when the confirm order button is clicked
         btnConfirmOrder.setOnClickListener(v -> {
             if (orderProducts.isEmpty()) {
-                Toast.makeText(context, "You have to add products to your order", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.resume_activity_empty_order, Toast.LENGTH_SHORT).show();
                 goNewActivity(MenuActivity.class);
             } else {
                 mvcManager.clear();

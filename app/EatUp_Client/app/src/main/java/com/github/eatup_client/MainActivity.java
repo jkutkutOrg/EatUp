@@ -20,7 +20,7 @@ import com.github.eatup_client.api.ProductApiService;
  */
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = MainActivity.class.getSimpleName();
     private Button btnGetStarted;
     private ProductApiService productApiService;
 

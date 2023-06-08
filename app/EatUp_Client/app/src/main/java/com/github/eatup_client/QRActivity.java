@@ -32,7 +32,7 @@ import java.io.IOException;
  */
 public class QRActivity extends AppCompatActivity {
 
-    private static final String TAG = "QRActivity";
+    private static final String TAG = QRActivity.class.getSimpleName();
     private static final int REQUEST_CAMERA_PERMISSION = 201;
 
     private SurfaceView sfvQR;
@@ -98,7 +98,7 @@ public class QRActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CAMERA_PERMISSION && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             recreate();
         } else {
-            Toast.makeText(this, "Camera permission is required to scan QR codes", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.qr_camera_permission_denied), Toast.LENGTH_LONG).show();
             startActivity(new Intent(QRActivity.this, QRManualActivity.class));
         }
     }
@@ -166,7 +166,7 @@ public class QRActivity extends AppCompatActivity {
                         } else {
                             // Vibrate and update UI with error message
                             vibrator.vibrate(100);
-                            tvQR.setText("Invalid QR code\nPlease try again");
+                            tvQR.setText(R.string.qr_activity_invalid_qr);
                             Log.d(TAG, "Invalid QR code, changing text and vibrating");
                         }
                     });
