@@ -10,6 +10,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.github.eatup_client.R;
 
+/**
+ * Adapter for managing the tabs and fragments in the main menu activity.
+ */
 public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
     @StringRes

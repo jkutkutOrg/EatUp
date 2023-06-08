@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Adapter for displaying products in the RecyclerView with quantity and add functionality.
+ */
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
     private List<Product> productList;
@@ -107,11 +110,17 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             llQuantity = itemView.findViewById(R.id.llQuantity);
             llAddProduct = itemView.findViewById(R.id.llAddProduct);
 
+            // Set click listeners for quantity buttons and add button
             btnDecreaseQuantity.setOnClickListener(this);
             btnIncreaseQuantity.setOnClickListener(this);
             btnAddProduct.setOnClickListener(this);
         }
 
+        /**
+         * Binds the product data to the ViewHolder views.
+         *
+         * @param product The product to bind.
+         */
         public void bind(Product product) {
             this.product = product;
             orderProduct = getOrderProduct(product);
@@ -124,6 +133,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             updateQuantityView();
         }
 
+        /**
+         * Updates the visibility of the quantity view based on the order product's quantity.
+         */
         private void updateQuantityView() {
             if (orderProduct != null && orderProduct.getQuantity() > 0) {
                 llQuantity.setVisibility(View.VISIBLE);
@@ -135,10 +147,21 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             }
         }
 
+        /**
+         * Retrieves the corresponding OrderProduct for the given Product.
+         *
+         * @param product The product to retrieve the OrderProduct for.
+         * @return The corresponding OrderProduct or null if not found.
+         */
         private OrderProduct getOrderProduct(Product product) {
             return orderProductMap.get(product);
         }
 
+        /**
+         * Updates the order product's quantity and notifies the adapter of the change.
+         *
+         * @param quantity The new quantity value.
+         */
         private void updateOrderProduct(int quantity) {
             if (orderProduct != null) {
                 productRes.setQuantity(orderProduct.getProduct(), quantity);

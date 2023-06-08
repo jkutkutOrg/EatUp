@@ -8,7 +8,6 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.github.eatup_client.model.Allergy;
 import com.github.eatup_client.model.Category;
-import com.github.eatup_client.model.Order;
 import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
 import com.github.eatup_client.model.ProductRes;
@@ -36,25 +35,23 @@ import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Service class for making API calls related to products.
+ */
 public class ProductApiService {
 
     private static final String BASE_URL = "http://159.69.216.101/api/v1/";
     private static final String ENDPOINT_PRODUCTS = "products";
     private static final String ENDPOINT_SESSIONS = "sessions";
     private static final String ENDPOINT_SESSIONS_ID = "session_id";
-    private static final String ENDPOINT_ORDERS = "orders";
 
     private static String userUUID = "1234567890";
     private static String TAG = "ProductApiService";
-    //private OrderItem oi;
-    //private List<OrderItem> orderItems;
 
     private static ProductApiService sInstance;
     private final ProductService mProductService;
     private final SessionService mSessionService;
     private final SessionIdService mSessionIdService;
-    private ProductRes productRes;
-    private final OrderService mOrderService;
 
     private Context mContext;
 
@@ -72,11 +69,14 @@ public class ProductApiService {
         mProductService = retrofit.create(ProductService.class);
         mSessionService = retrofit.create(SessionService.class);
         mSessionIdService = retrofit.create(SessionIdService.class);
-        mOrderService = retrofit.create(OrderService.class);
-
-        //mOrderService = retrofit.create(OrderService.class);
     }
 
+    /**
+     * Returns the singleton instance of ProductApiService.
+     *
+     * @param context the application context
+     * @return the ProductApiService instance
+     */
     public static synchronized ProductApiService getInstance(Context context) {
         if (sInstance == null) {
             sInstance = new ProductApiService(context.getApplicationContext());
@@ -84,6 +84,12 @@ public class ProductApiService {
         return sInstance;
     }
 
+    /**
+     * Retrieves a list of products by category from the API.
+     *
+     * @param category the category to filter the products
+     * @return LiveData containing the list of products
+     */
     public LiveData<List<Product>> getProductsByCategory(String category) {
         MutableLiveData<List<Product>> data = new MutableLiveData<>();
         Call<List<Product>> call = mProductService.getProductsByCategory(category);
@@ -107,6 +113,12 @@ public class ProductApiService {
         return data;
     }
 
+    /**
+     * Checks if a QR code is valid and returns the result as LiveData.
+     *
+     * @param qrCode the QR code to validate
+     * @return LiveData indicating if the QR code is valid
+     */
     public LiveData<Boolean> isQRValid(String qrCode) {
         MutableLiveData<Boolean> data = new MutableLiveData<>();
 
@@ -121,7 +133,11 @@ public class ProductApiService {
         return data;
     }
 
-
+    /**
+     * Retrieves a list of sessions from the API.
+     *
+     * @return LiveData containing the list of sessions
+     */
     public LiveData<List<Session>> loadSessions() {
         MutableLiveData<List<Session>> data = new MutableLiveData<>();
         Call<List<Session>> call = mSessionService.getSessions();
@@ -149,7 +165,12 @@ public class ProductApiService {
         return data;
     }
 
-
+    /**
+     * Retrieves a valid session ID from the API.
+     *
+     * @param sessionId the session ID to validate
+     * @return LiveData containing the session ID if valid, null otherwise
+     */
     public LiveData<SessionId> getValidSession(String sessionId) {
         MutableLiveData<SessionId> data = new MutableLiveData<>();
         Call<SessionId> call = mSessionIdService.getSessionId(sessionId);
@@ -178,6 +199,11 @@ public class ProductApiService {
         return data;
     }
 
+    /**
+     * Submits an order to the API.
+     *
+     * @param orderProducts the list of ordered products
+     */
     public void submitOrder(List<OrderProduct> orderProducts) {
         JsonObject requestBody = new JsonObject();
 
@@ -251,12 +277,14 @@ public class ProductApiService {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.e(TAG, "submitOrder failure: " + t.getMessage());
-                // Manejar fallo
+                // Handle failure
             }
         });
     }
 
-
+    /**
+     * Retrofit service interface for product-related API endpoints.
+     */
     public interface ProductService {
         @Headers({"device: android"})
         @GET(ENDPOINT_PRODUCTS)
@@ -267,30 +295,23 @@ public class ProductApiService {
                 @Path("userUUID") String userUUID,
                 @Body JsonObject orderProducts
         );
-
     }
 
+    /**
+     * Retrofit service interface for session-related API endpoints.
+     */
     public interface SessionService {
         @Headers({"device: android"})
         @GET(ENDPOINT_SESSIONS)
         Call<List<Session>> getSessions();
     }
 
+    /**
+     * Retrofit service interface for session ID-related API endpoints.
+     */
     public interface SessionIdService {
         @Headers({"device: android"})
         @GET(ENDPOINT_SESSIONS_ID + "/{session_id}")
         Call<SessionId> getSessionId(@Path("session_id") String session_id);
     }
-
-    public interface OrderService {
-        @Headers({"device: android"})
-        @GET(ENDPOINT_ORDERS + "/{userUUID}")
-        Call<List<Order>> getOrders(@Path("userUUID") String userUUID);
-    }
-
-    //public interface OrderService {
-    //    @Headers({"device: android"})
-    //    @GET("orders/{session_id}")
-    //    Call<List<OrderItem>> getOrdersBySessionUUID(@Path("session_id") String session_id);
-    //}
 }

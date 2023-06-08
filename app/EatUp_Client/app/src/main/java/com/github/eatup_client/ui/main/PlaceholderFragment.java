@@ -19,6 +19,9 @@ import com.github.eatup_client.utils.ProductAdapter;
 
 import java.util.List;
 
+/**
+ * A placeholder fragment containing a category-specific menu.
+ */
 public class PlaceholderFragment extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
@@ -46,7 +49,6 @@ public class PlaceholderFragment extends Fragment {
             index = getArguments().getInt(ARG_SECTION_NUMBER);
         }
 
-        // Set the category based on the index
         switch (index) {
             case 1:
                 category = "Starters";
@@ -74,6 +76,9 @@ public class PlaceholderFragment extends Fragment {
         loadProductsFromAPI();
     }
 
+    /**
+     * Loads the products for the current category from the API and updates the adapter.
+     */
     private void loadProductsFromAPI() {
         LiveData<List<Product>> productListLiveData = productApiService.getProductsByCategory(category);
         productListLiveData.observe(this, productList -> {
@@ -89,6 +94,9 @@ public class PlaceholderFragment extends Fragment {
         return binding.getRoot();
     }
 
+    /**
+     * Initializes the RecyclerView and sets up the adapter.
+     */
     private void initializeRecyclerView() {
         recyclerView = binding.rvProducts;
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
