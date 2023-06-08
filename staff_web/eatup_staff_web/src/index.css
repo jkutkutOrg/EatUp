@@ -37,6 +37,7 @@
 
 .landing-img {
   padding: 20px;
+  max-height: 50vh;
 }
 
 .landing-logo {
