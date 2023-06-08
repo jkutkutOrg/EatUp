@@ -20,6 +20,20 @@
   --text_color_dark_red: #F93F00;
 }
 
+body {
+  /* --bs-dark: header color */
+  --bg-color: #292d31;
+  --color: #adb5db;
+
+  height: 100vh;
+
+  color: var(--color);
+  background-color: var(--bg-color);
+
+  /* overflow: hidden; */
+  overflow-x: hidden;
+}
+
 .eatup-landing {
   padding: 9px;
   height: calc(100vh - 58px);
@@ -60,4 +74,20 @@
 
 .landing-btn:hover {
   background-color: var(--eatup_yellow);
+}
+
+.btn-dark {
+  transform: translateY(-1.5px);
+  box-shadow: 0px 3px 0px rgba(223, 223, 223, 0.25);
+  transition: all 0.1s ease-in-out;
+}
+
+.btn-dark:hover {
+  transform: translateY(0px);
+  box-shadow: 0px 1.5px 0px rgba(223, 223, 223, 0.25);
+}
+
+.btn-dark:active {
+  transform: translateY(1.5px);
+  box-shadow: 0px 0px 0px rgba(223, 223, 223, 0.25);
 }

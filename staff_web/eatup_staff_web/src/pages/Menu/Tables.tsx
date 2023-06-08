@@ -93,7 +93,7 @@ const Tables = ({onDetails, onBill}: Props) => {
 }
 
 const btn = (txt: string, action: () => void) => (
-  <button className="btn btn-primary w-100" onClick={action}>{txt}</button>
+  <button className="btn btn-primary btn-dark w-100" onClick={action}>{txt}</button>
 );
 
 export default Tables;

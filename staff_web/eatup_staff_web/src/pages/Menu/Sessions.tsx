@@ -27,8 +27,21 @@ const Sessions = ({onBill}: Props) => {
   }
 
   return <>
-    <h1>Sessions</h1>
-    <button onClick={toggleFilter}>{inProgressFilter ? "Show all" : "Show in progress"}</button>
+    <br />
+    <div className="container">
+      <div className="row">
+        <div className="col">
+          <h1>Sessions</h1>
+        </div>
+        <div className="col text-end">
+          <button onClick={toggleFilter}
+            className="btn btn-primary btn-dark"
+          >
+            {inProgressFilter ? "Show all" : "Show in progress"}
+          </button>
+        </div>
+      </div>
+    </div>
     <div className="container text-center">
       {sessions.map((session) => {
         if (inProgressFilter && !session.in_progress)

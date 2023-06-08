@@ -22,7 +22,7 @@ function Header({onRefresh, onClose, menu, extraOptions}: Props) {
             </div>
             {extraOptions.map((option) => (
                 <div key={option.label}
-                    className='p-2' style={{cursor: "pointer", color: "white"}}
+                    className='p-2' data-bs-theme="dark" style={{cursor: "pointer"}}
                     onClick={option.onClick}
                 >
                     {option.label}

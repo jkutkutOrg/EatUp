@@ -1,12 +1,14 @@
 - [x] create UI components
 
-- [ ] create api models
-- [ ] create api logic
+- [x] create api models
+- [x] create api logic
 
-- [ ] connect UI to api
-- [ ] use api in UI
+- [x] connect UI to api
+- [x] use api in UI
 
 - [ ] styling
+
+- [ ] Modularize into components
 
 - [ ] Dockerize
 - [ ] Update server docker
