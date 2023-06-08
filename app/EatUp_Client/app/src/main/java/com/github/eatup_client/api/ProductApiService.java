@@ -10,7 +10,7 @@ import com.github.eatup_client.model.Allergy;
 import com.github.eatup_client.model.Category;
 import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
-import com.github.eatup_client.model.ProductRes;
+import com.github.eatup_client.model.MVCManager;
 import com.github.eatup_client.model.Session;
 import com.github.eatup_client.model.SessionId;
 import com.google.gson.Gson;
@@ -122,7 +122,7 @@ public class ProductApiService {
     public LiveData<Boolean> isQRValid(String qrCode) {
         MutableLiveData<Boolean> data = new MutableLiveData<>();
 
-        Session session = ProductRes.getInstance().getSession(qrCode);
+        Session session = MVCManager.getInstance().getSession(qrCode);
         if (session != null) {
             userUUID = session.getId();
             data.setValue(true);
@@ -147,7 +147,7 @@ public class ProductApiService {
                 if (response.isSuccessful()) {
                     List<Session> sessions = response.body();
                     for (Session session : sessions) {
-                        ProductRes.getInstance().addSession(session);
+                        MVCManager.getInstance().addSession(session);
                     }
                     data.setValue(sessions);
                     Log.i(TAG, "loadSessions success: " + new Gson().toJson(response.body()));

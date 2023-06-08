@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.model.OrderProduct;
-import com.github.eatup_client.model.ProductRes;
+import com.github.eatup_client.model.MVCManager;
 import com.github.eatup_client.utils.ResumeAdapter;
 
 import java.util.List;
@@ -34,6 +34,7 @@ public class ResumeActivity extends AppCompatActivity {
     private TextView tvResume;
     private List<OrderProduct> orderProducts;
     private ProductApiService productApiService;
+    private MVCManager mvcManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class ResumeActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         Context context = this;
-        ProductRes productRes = ProductRes.getInstance();
+        mvcManager = MVCManager.getInstance();
         productApiService = new ProductApiService(context);
 
         // Initialize views
@@ -53,10 +54,10 @@ public class ResumeActivity extends AppCompatActivity {
         tvResume = findViewById(R.id.tvResume);
 
         RecyclerView recyclerView = findViewById(R.id.rvResumeProducts);
-        orderProducts = ProductRes.getInstance().getOrderProducts();
+        orderProducts = mvcManager.getOrderProducts();
 
         // Display the total price of the order
-        tvResume.setText(productRes.getTotalPrice() + "$");
+        tvResume.setText(String.format("Total: %.2f€", mvcManager.getTotalPrice()));
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
@@ -70,7 +71,7 @@ public class ResumeActivity extends AppCompatActivity {
                 Toast.makeText(context, "You have to add products to your order", Toast.LENGTH_SHORT).show();
                 goNewActivity(MenuActivity.class);
             } else {
-                productRes.clear();
+                mvcManager.clear();
                 submitOrder();
             }
 

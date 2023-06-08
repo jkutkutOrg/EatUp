@@ -5,21 +5,21 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProductRes {
-    private static ProductRes instance;
+public class MVCManager {
+    private static MVCManager instance;
     private Map<Product, OrderProduct> orderProductMap;
     private Map<String, Session> sessionMap;
     private Map<String, Order> orderMap;
 
-    private ProductRes() {
+    private MVCManager() {
         orderProductMap = new HashMap<>();
         sessionMap = new HashMap<>();
         orderMap = new HashMap<>();
     }
 
-    public static synchronized ProductRes getInstance() {
+    public static synchronized MVCManager getInstance() {
         if (instance == null) {
-            instance = new ProductRes();
+            instance = new MVCManager();
         }
         return instance;
     }

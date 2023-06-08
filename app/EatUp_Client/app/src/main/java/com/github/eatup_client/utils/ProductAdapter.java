@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.github.eatup_client.R;
 import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
-import com.github.eatup_client.model.ProductRes;
+import com.github.eatup_client.model.MVCManager;
 
 import java.util.HashMap;
 import java.util.List;
@@ -28,13 +28,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private List<Product> productList;
     private Map<Product, OrderProduct> orderProductMap;
-    private ProductRes productRes;
+    private MVCManager MVCManager;
     private Context context;
 
     public ProductAdapter(Context context) {
         this.context = context;
         orderProductMap = new HashMap<>();
-        productRes = ProductRes.getInstance();
+        MVCManager = MVCManager.getInstance();
     }
 
     @NonNull
@@ -59,7 +59,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.productList = productList;
         orderProductMap.clear();
 
-        List<OrderProduct> orderProducts = productRes.getOrderProducts();
+        List<OrderProduct> orderProducts = MVCManager.getOrderProducts();
 
         for (Product product : productList) {
             OrderProduct orderProduct = null;
@@ -164,12 +164,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
          */
         private void updateOrderProduct(int quantity) {
             if (orderProduct != null) {
-                productRes.setQuantity(orderProduct.getProduct(), quantity);
+                MVCManager.setQuantity(orderProduct.getProduct(), quantity);
                 orderProduct.setQuantity(quantity);
             } else {
                 orderProduct = new OrderProduct(quantity, product);
                 orderProductMap.put(product, orderProduct);
-                productRes.addProduct(product);
+                MVCManager.addProduct(product);
             }
 
             notifyItemChanged(getAdapterPosition());
