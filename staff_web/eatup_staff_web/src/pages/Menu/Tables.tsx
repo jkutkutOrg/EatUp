@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import Session from "../../model/api/Session";
 import StaffAPI from "../../services/StaffApi";
-import EatupButton from "../../components/btn/EatupButton";
+import TableComponent from "../../components/Tables/TableComponent";
+import Mesa from "../../model/App/Mesa";
 
 interface Props {
   onDetails: (session: Session) => void;
@@ -21,20 +22,20 @@ const Tables = ({onDetails, onBill}: Props) => {
 
   useEffect(updateSessions, []);
 
-  const newSession = (mesa: any) => {
+  const newSession = (mesa: Mesa) => {
     StaffAPI.newSession(
-      mesa.name,
+      mesa.getName(),
       (session) => {
         console.log(session);
         localStorage.setItem(session.id, JSON.stringify(session));
         updateSessions();
       }
-    )
+    );
   };
 
-  const endSession = (mesa: any) => {
+  const endSession = (session: Session) => {
     StaffAPI.endSession(
-      mesa.session.id,
+      session.id,
       (r) => {
         console.log(r);
         updateSessions();
@@ -46,8 +47,9 @@ const Tables = ({onDetails, onBill}: Props) => {
     return <p>Loading...</p>;
   }
 
-  let mesasNames = ["10", "11", "12", "13", "14", "15"];
-  let mesas: any[] = mesasNames.map((mesaName) => {return {name: mesaName, session: null};});
+  let mesas: Mesa[] = [
+    "10", "11", "12", "13", "14", "15" // TODO Rework
+  ].map((mesaName) => new Mesa(mesaName));
   for (let i = 0; i < sessions.length; i++) {
     let tableId = sessions[i].table_id;
     if (!sessions[i].in_progress)
@@ -55,7 +57,7 @@ const Tables = ({onDetails, onBill}: Props) => {
     if (!/^1\d$/.test(tableId))
       continue;
     let mesaIndex = parseInt(tableId) - 10;
-    mesas[mesaIndex].session = sessions[i];
+    mesas[mesaIndex].setSession(sessions[i]);
   }
 
   return <>
@@ -63,39 +65,17 @@ const Tables = ({onDetails, onBill}: Props) => {
     <div className="container text-center">
       <h1>Tables</h1>
     </div>
-    {mesas.map((mesa, i) => (<div key={i}>
-      <hr />
-      <div className="container">
-        <div className="row">
-          <div className="col-5">
-            <h5>Table {mesa.name}</h5>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-3 align-self-center">
-            {mesa.session? "In progress" : "Available"}
-          </div>
-          {mesa.session &&
-            <>
-              <div className="col">
-                <EatupButton onClick={() => {onDetails(mesa.session)}}>details</EatupButton>
-              </div>
-              <div className="col">
-                <EatupButton onClick={() => {onBill(mesa.session)}}>bill</EatupButton>
-              </div>
-              <div className="col-4">
-                <EatupButton onClick={() => {endSession(mesa)}}>end</EatupButton>
-              </div>
-            </> ||
-            <>
-              <div className="col">
-                <EatupButton onClick={() => {newSession(mesa)}}>new session</EatupButton>
-              </div>
-            </>
-          }
-        </div>
+    {mesas.map((mesa, i) => (
+      <div key={i}>
+        <hr />
+        <TableComponent mesa={mesa}
+          onDetails={onDetails}
+          onBill={onBill}
+          endSession={endSession}
+          newSession={newSession}
+        />
       </div>
-    </div>))}
+    ))}
     <hr />
   </>;
 };
