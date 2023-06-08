@@ -23,6 +23,14 @@ class Order {
     public static fromJSONArray(array: any[]): Order[] {
         return array.map((obj) => Order.fromJSON(obj));
     }
+
+    public static calcTotalPrice(orders: Order[]): number {
+        return orders.reduce((acc, order) => {
+            return acc + order.products.reduce((acc, product) => {
+            return acc + product.quantity * product.product.price;
+            }, 0);
+        }, 0);
+    }
 }
 
 export default Order;

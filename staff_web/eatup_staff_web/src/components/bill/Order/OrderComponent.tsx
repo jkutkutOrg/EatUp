@@ -1,5 +1,6 @@
-import Order from "../../model/api/Order";
-import Price from "./Price";
+import Order from "../../../model/api/Order";
+import Price from "../Price";
+import TotalPrice from "../TotalPrice";
 
 interface Props {
   index: number;
@@ -7,10 +8,6 @@ interface Props {
 };
 
 const OrderComponent = ({order, index}: Props) => {
-  const subTotal = order.products.reduce((acc, product) => {
-    return acc + product.quantity * product.product.price;
-  }, 0);
-
   return <>
     <div className="container text-center">
       <div className="row">
@@ -35,7 +32,7 @@ const OrderComponent = ({order, index}: Props) => {
       <br />
       <div className="row text-end">
         <div className="col-11">
-          Subtotal <Price price={subTotal}/>
+          <TotalPrice title="Subtotal:" orders={[order]}/>
         </div>
       </div>
     </div>

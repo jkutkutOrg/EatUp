@@ -88,9 +88,7 @@ const Tables = ({onDetails, onBill}: Props) => {
               </div>
             </> ||
             <>
-              <div className="col-3"></div>
-              <div className="col-2"></div>
-              <div className="col-4">
+              <div className="col">
                 <EatupButton onClick={() => {newSession(mesa)}}>new session</EatupButton>
               </div>
             </>
