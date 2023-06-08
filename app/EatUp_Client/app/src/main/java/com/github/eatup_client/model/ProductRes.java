@@ -9,10 +9,12 @@ public class ProductRes {
     private static ProductRes instance;
     private Map<Product, OrderProduct> orderProductMap;
     private Map<String, Session> sessionMap;
+    private Map<String, Order> orderMap;
 
     private ProductRes() {
         orderProductMap = new HashMap<>();
         sessionMap = new HashMap<>();
+        orderMap = new HashMap<>();
     }
 
     public static synchronized ProductRes getInstance() {
@@ -44,6 +46,11 @@ public class ProductRes {
         return totalPrice;
     }
 
+    // Remove all OrderProducts
+    public void clear() {
+        orderProductMap.clear();
+    }
+
     public OrderProduct getOrderProduct(Product product) {
         return orderProductMap.get(product);
     }
@@ -71,4 +78,17 @@ public class ProductRes {
         return sessionMap.get(id);
     }
 
+    // Get session UUID
+    public String getSessionId() {
+        return sessionMap.keySet().iterator().next();
+    }
+
+    // Orders
+    public void addOrder(Order order) {
+        orderMap.put(order.getSessionId(), order);
+    }
+
+    public Order getOrder(String sessionId) {
+        return orderMap.get(sessionId);
+    }
 }

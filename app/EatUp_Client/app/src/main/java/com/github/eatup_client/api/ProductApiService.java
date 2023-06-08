@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.github.eatup_client.model.Allergy;
 import com.github.eatup_client.model.Category;
+import com.github.eatup_client.model.Order;
 import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
 import com.github.eatup_client.model.ProductRes;
@@ -41,6 +42,7 @@ public class ProductApiService {
     private static final String ENDPOINT_PRODUCTS = "products";
     private static final String ENDPOINT_SESSIONS = "sessions";
     private static final String ENDPOINT_SESSIONS_ID = "session_id";
+    private static final String ENDPOINT_ORDERS = "orders";
 
     private static String userUUID = "1234567890";
     private static String TAG = "ProductApiService";
@@ -52,7 +54,7 @@ public class ProductApiService {
     private final SessionService mSessionService;
     private final SessionIdService mSessionIdService;
     private ProductRes productRes;
-    //private final OrderService mOrderService;
+    private final OrderService mOrderService;
 
     private Context mContext;
 
@@ -70,6 +72,7 @@ public class ProductApiService {
         mProductService = retrofit.create(ProductService.class);
         mSessionService = retrofit.create(SessionService.class);
         mSessionIdService = retrofit.create(SessionIdService.class);
+        mOrderService = retrofit.create(OrderService.class);
 
         //mOrderService = retrofit.create(OrderService.class);
     }
@@ -254,48 +257,6 @@ public class ProductApiService {
     }
 
 
-
-    /**
-     TODO: Pending to implement
-
-    public LiveData<List<OrderItem>> getOrdersBySessionUUID() {
-        MutableLiveData<List<OrderItem>> data = new MutableLiveData<>();
-        Call<List<OrderItem>> call = mOrderService.getOrdersBySessionUUID(userUUID);
-        Log.i(TAG, "getOrdersBySessionUUID: " + call.request().url());
-        call.enqueue(new Callback<List<OrderItem>>() {
-            @Override
-            public void onResponse(Call<List<OrderItem>> call, Response<List<OrderItem>> response) {
-                if (response.isSuccessful()) {
-                    orderItems = response.body();
-                    data.setValue(orderItems);
-                    OrderItem.setOrderItems(orderItems);
-                    Log.i(TAG, "getOrdersBySessionUUID success: " + orderItems);
-                } else {
-                    Log.e(TAG, "getOrdersBySessionUUID error: " + response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<OrderItem>> call, Throwable t) {
-                Log.e(TAG, "getOrdersBySessionUUID failure: " + t.getMessage());
-            }
-        });
-        return data;
-    }
-
-    public double getCartTotalPrice() {
-        double total = 0.0;
-        if (orderItems != null) {
-            for (OrderItem orderItem : orderItems) {
-                List<OrderProduct> products = orderItem.getProducts();
-                for (OrderProduct orderProduct : products) {
-                    total += orderProduct.getProduct().getPrice();
-                }
-            }
-        }
-        return total;
-    } */
-
     public interface ProductService {
         @Headers({"device: android"})
         @GET(ENDPOINT_PRODUCTS)
@@ -319,6 +280,12 @@ public class ProductApiService {
         @Headers({"device: android"})
         @GET(ENDPOINT_SESSIONS_ID + "/{session_id}")
         Call<SessionId> getSessionId(@Path("session_id") String session_id);
+    }
+
+    public interface OrderService {
+        @Headers({"device: android"})
+        @GET(ENDPOINT_ORDERS + "/{userUUID}")
+        Call<List<Order>> getOrders(@Path("userUUID") String userUUID);
     }
 
     //public interface OrderService {

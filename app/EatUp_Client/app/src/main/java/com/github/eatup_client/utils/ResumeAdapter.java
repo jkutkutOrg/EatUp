@@ -77,6 +77,10 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
             llQuantity.setVisibility(View.VISIBLE);
             llAddProduct.setVisibility(View.GONE);
 
+            btnDecreaseQuantity.setVisibility(View.GONE);
+            btnIncreaseQuantity.setVisibility(View.GONE);
+
+
             tvQuantityText.setText(String.valueOf(orderProduct.getQuantity()));
         }
 

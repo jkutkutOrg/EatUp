@@ -26,6 +26,10 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
 
+/**
+ * Activity for scanning QR codes using the device camera.
+ * Validates the scanned QR code and navigates to the menu screen if valid.
+ */
 public class QRActivity extends AppCompatActivity {
 
     private static final String TAG = "QRActivity";
@@ -47,17 +51,17 @@ public class QRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qr);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+        // Initialize UI components
         tvQR = findViewById(R.id.tvWelcomeTitle);
         sfvQR = findViewById(R.id.sfvQR);
         btnProblemScanner = findViewById(R.id.btnProblemScanner);
 
+        // Set click listener for problem scanner button
         btnProblemScanner.setOnClickListener(v -> {
-            Intent intent = new Intent(QRActivity.this, QRManualActivity.class);
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            }
+            goNewActivity(QRActivity.class);
         });
 
+        // Initialize API service and vibrator
         productApiService = new ProductApiService(this);
         vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
     }
@@ -72,10 +76,18 @@ public class QRActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Checks if the camera permission is granted.
+     *
+     * @return True if the camera permission is granted, false otherwise.
+     */
     private boolean hasCameraPermission() {
         return ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED;
     }
 
+    /**
+     * Requests the camera permission.
+     */
     private void requestCameraPermission() {
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
     }
@@ -91,18 +103,24 @@ public class QRActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Initializes the camera and barcode detector.
+     */
     private void initCameraAndDetector() {
         Log.d(TAG, "Initializing camera and detector");
 
+        // Create barcode detector
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
 
+        // Create camera source
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
                 .setAutoFocusEnabled(true)
                 .build();
 
+        // Set callback for SurfaceView
         sfvQR.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
@@ -111,6 +129,7 @@ public class QRActivity extends AppCompatActivity {
 
             @Override
             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+                // Do nothing
             }
 
             @Override
@@ -119,6 +138,7 @@ public class QRActivity extends AppCompatActivity {
             }
         });
 
+        // Set processor for barcode detection
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
             public void release() {
@@ -132,15 +152,19 @@ public class QRActivity extends AppCompatActivity {
                     return;
                 }
 
+                // Get the scanned QR code
                 String qrCode = barcodes.valueAt(0).displayValue;
                 Log.d(TAG, "QR code detected: " + qrCode);
 
                 runOnUiThread(() -> {
+                    // Check if the QR code is valid using the API service
                     productApiService.isQRValid(qrCode).observe(QRActivity.this, isValid -> {
                         if (isValid != null && isValid) {
+                            // Navigate to the menu screen
                             Intent intent = new Intent(QRActivity.this, MenuActivity.class);
                             startActivity(intent);
                         } else {
+                            // Vibrate and update UI with error message
                             vibrator.vibrate(100);
                             tvQR.setText("Invalid QR code\nPlease try again");
                             Log.d(TAG, "Invalid QR code, changing text and vibrating");
@@ -148,10 +172,20 @@ public class QRActivity extends AppCompatActivity {
                     });
                 });
             }
-
         });
     }
 
+    /**
+     * Navigates to the menu screen.
+     */
+    private void goNewActivity(Class<?> menuActivityClass) {
+        Intent intent = new Intent(this, menuActivityClass);
+        startActivity(intent);
+    }
+
+    /**
+     * Starts the camera preview.
+     */
     private void startCamera() {
         if (!hasCameraPermission()) {
             requestCameraPermission();
@@ -172,6 +206,9 @@ public class QRActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Stops the camera preview.
+     */
     private void stopCamera() {
         if (cameraSource != null) {
             cameraSource.stop();

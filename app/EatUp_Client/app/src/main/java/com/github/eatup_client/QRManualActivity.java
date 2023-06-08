@@ -21,6 +21,10 @@ import androidx.lifecycle.LiveData;
 import com.github.eatup_client.api.ProductApiService;
 import com.github.eatup_client.model.SessionId;
 
+/**
+ * Activity for manually entering authentication words from a QR code.
+ * Validates the entered authentication words and navigates to the menu screen if valid.
+ */
 public class QRManualActivity extends AppCompatActivity {
 
     private static final int AUTH_WORDS_COUNT = 3;
@@ -70,15 +74,19 @@ public class QRManualActivity extends AppCompatActivity {
             Intent intent = new Intent(QRManualActivity.this, QRActivity.class);
             startActivity(intent);
         });
-
     }
 
+    /**
+     * Validates the entered authentication words by making an API call and observes the result.
+     *
+     * @param authWords The entered authentication words.
+     */
     private void validateAuthWords(String authWords) {
         LiveData<SessionId> validSessionLiveData = productApiService.getValidSession(authWords);
 
         validSessionLiveData.observe(this, sessionId -> {
             if (sessionId != null) {
-                navigateToMenuActivity();
+                goNewActivity(MenuActivity.class);
                 Log.d(TAG, "SUCCESS auth words: " + authWords);
             } else {
                 showToast("Invalid authentication words");
@@ -88,15 +96,26 @@ public class QRManualActivity extends AppCompatActivity {
         });
     }
 
-    private void navigateToMenuActivity() {
-        Intent intent = new Intent(QRManualActivity.this, MenuActivity.class);
+    /**
+     * Navigates to the menu screen.
+     */
+    private void goNewActivity(Class<?> menuActivityClass) {
+        Intent intent = new Intent(this, menuActivityClass);
         startActivity(intent);
     }
 
+    /**
+     * Displays a toast message.
+     *
+     * @param message The message to display.
+     */
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Vibrates the device.
+     */
     private void vibrate() {
         Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -106,6 +125,9 @@ public class QRManualActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * TextWatcher implementation for authentication word EditTexts.
+     */
     private class AuthWordTextWatcher implements TextWatcher {
 
         private int mCurrentIndex;
