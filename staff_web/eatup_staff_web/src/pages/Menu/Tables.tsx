@@ -3,6 +3,8 @@ import Session from "../../model/api/Session";
 import StaffAPI from "../../services/StaffApi";
 import TableComponent from "../../components/Tables/TableComponent";
 import Mesa from "../../model/App/Mesa";
+import EatupButton from "../../components/btn/EatupButton";
+import TableAdder from "../../components/Tables/TableAdder";
 
 interface Props {
   onDetails: (session: Session) => void;
@@ -73,10 +75,24 @@ const Tables = ({onDetails, onBill}: Props) => {
           onBill={onBill}
           endSession={endSession}
           newSession={newSession}
+          removeTable={() => {}}
         />
       </div>
     ))}
     <hr />
+    {/* <div className="container">
+      <div className="row justify-content-end">
+        <div className="col-2">
+          <EatupButton type="success" onClick={() => {}}>+</EatupButton>
+        </div>
+      </div>
+    </div> */}
+    <TableAdder
+      onAdd={(mesaName: Mesa) => {
+        console.log("Adding table " + mesaName)
+        return null;
+      }}
+    />
   </>;
 };
 

@@ -9,6 +9,7 @@ interface Props {
   onBill: (session: Session) => void;
   endSession: (session: Session) => void;
   newSession: (mesa: Mesa) => void;
+  removeTable: (mesa: Mesa) => void;
 };
 
 const TableComponent = ({
@@ -16,7 +17,8 @@ const TableComponent = ({
   onDetails,
   onBill,
   endSession,
-  newSession
+  newSession,
+  removeTable
 }: Props) => {
   const session = mesa.getSession();
   const isSession = session != null;
@@ -47,11 +49,8 @@ const TableComponent = ({
             <EatupButton onClick={() => {newSession(mesa)}}>new session</EatupButton>
           </div>
           <div className="col-2">
-            <EatupButton type="danger" onClick={() => {}}>-</EatupButton>
+            <EatupButton type="danger" onClick={() => removeTable(mesa)}>-</EatupButton>
           </div>
-          {/* <div className="col-2">
-            <EatupButton type="success" onClick={() => {}}>+</EatupButton>
-          </div> */}
         </>
       }
     </div>
