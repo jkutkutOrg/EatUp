@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import StaffAPI from "../../services/StaffApi";
 import Session from "../../model/api/Session";
+import EatupButton from "../../components/btn/EatupButton";
 
 interface Props {
   onBill: (selected: Session) => void;
@@ -33,12 +34,10 @@ const Sessions = ({onBill}: Props) => {
         <div className="col">
           <h1>Sessions</h1>
         </div>
-        <div className="col text-end">
-          <button onClick={toggleFilter}
-            className="btn btn-primary btn-dark"
-          >
+        <div className="col-4 text-end">
+          <EatupButton onClick={toggleFilter}>
             {inProgressFilter ? "Show all" : "Show in progress"}
-          </button>
+          </EatupButton>
         </div>
       </div>
     </div>
@@ -60,9 +59,9 @@ const Sessions = ({onBill}: Props) => {
               {session.in_progress && "In progress" || "Finished"}
             </div>
             <div className="col">
-              <button className="btn btn-primary w-100"
-                onClick={() => onBill(session)}
-              >Bill</button>
+              <EatupButton onClick={() => onBill(session)}>
+                Bill
+              </EatupButton>
             </div>
           </div>
         </div>);

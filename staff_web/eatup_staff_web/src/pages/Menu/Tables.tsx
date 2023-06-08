@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Session from "../../model/api/Session";
 import StaffAPI from "../../services/StaffApi";
+import EatupButton from "../../components/btn/EatupButton";
 
 interface Props {
   onDetails: (session: Session) => void;
@@ -58,6 +59,7 @@ const Tables = ({onDetails, onBill}: Props) => {
   }
 
   return <>
+    <br />
     <div className="container text-center">
       <h1>Tables</h1>
     </div>
@@ -75,14 +77,22 @@ const Tables = ({onDetails, onBill}: Props) => {
           </div>
           {mesa.session &&
             <>
-              <div className="col">{btn("details", () => {onDetails(mesa.session)})}</div>
-              <div className="col">{btn("bill", () => {onBill(mesa.session)})}</div>
-              <div className="col-4">{btn("end", () => {endSession(mesa)})}</div>
+              <div className="col">
+                <EatupButton onClick={() => {onDetails(mesa.session)}}>details</EatupButton>
+              </div>
+              <div className="col">
+                <EatupButton onClick={() => {onBill(mesa.session)}}>bill</EatupButton>
+              </div>
+              <div className="col-4">
+                <EatupButton onClick={() => {endSession(mesa)}}>end</EatupButton>
+              </div>
             </> ||
             <>
               <div className="col-3"></div>
               <div className="col-2"></div>
-              <div className="col-4">{btn("new session", () => {newSession(mesa)})}</div>
+              <div className="col-4">
+                <EatupButton onClick={() => {newSession(mesa)}}>new session</EatupButton>
+              </div>
             </>
           }
         </div>
@@ -90,10 +100,6 @@ const Tables = ({onDetails, onBill}: Props) => {
     </div>))}
     <hr />
   </>;
-}
-
-const btn = (txt: string, action: () => void) => (
-  <button className="btn btn-primary btn-dark w-100" onClick={action}>{txt}</button>
-);
+};
 
 export default Tables;

@@ -23,10 +23,12 @@ const Details = ({session}: Props) => {
       <h2>Table {session.table_id}</h2>
       <br />
       <h5>{session.id}</h5>
+      <br />
       <img src={qr_code} alt={session.id} style={{
         width:  "200px",
         height: "200px"
       }}/>
+      <br />
       <h5>{simple_id}</h5>
     </div>
   );

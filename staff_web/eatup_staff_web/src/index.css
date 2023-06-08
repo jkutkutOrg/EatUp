@@ -23,7 +23,7 @@
 body {
   /* --bs-dark: header color */
   --bg-color: #292d31;
-  --color: #adb5db;
+  --color: var(--white);
 
   height: 100vh;
 
