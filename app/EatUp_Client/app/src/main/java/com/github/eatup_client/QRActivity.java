@@ -225,4 +225,12 @@ public class QRActivity extends AppCompatActivity {
             Log.d(TAG, "Barcode detector released");
         }
     }
+
+    /*
+     * Disable back button
+     */
+    @Override
+    public void onBackPressed() {
+        // Do nothing
+    }
 }

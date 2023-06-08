@@ -169,4 +169,13 @@ public class QRManualActivity extends AppCompatActivity {
             }
         }
     }
+
+    /*
+    * Disable back button
+    */
+    @Override
+    public void onBackPressed() {
+        // Do nothing
+    }
+
 }
