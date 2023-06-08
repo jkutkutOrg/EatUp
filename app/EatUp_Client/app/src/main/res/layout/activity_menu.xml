@@ -14,6 +14,7 @@
         android:theme="@style/Theme.EatUpClient.AppBarOverlay">
 
         <LinearLayout
+            android:id="@+id/llMenuHeader"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="5dp"
@@ -31,6 +32,7 @@
                 android:src="@drawable/icons8_back" />
 
             <LinearLayout
+                android:id="@+id/llMenuHeaderInfo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.5"
@@ -38,20 +40,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/restaurant_name"
+                    android:id="@+id/tvRestaurantName"
                     android:textColor="@color/text_color_black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bottega Ristorante"/>
+                    android:text="@string/bottega_ristorante"/>
 
                 <TextView
-                    android:id="@+id/city_name"
+                    android:id="@+id/tvRestaurantAddress"
                     android:textColor="@color/text_color_gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Italian Resto"/>
+                    android:text="@string/italian_resto"/>
             </LinearLayout>
-
 
             <ImageView
                 android:id="@+id/ivResume"
@@ -60,12 +61,10 @@
                 android:layout_gravity="end"
                 android:padding="5dp"
                 android:src="@drawable/icons8_cart" />
-
         </LinearLayout>
 
-
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
+            android:id="@+id/tbLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:tabTextColor="@color/text_color_black"
@@ -77,7 +76,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/view_pager"
+        android:id="@+id/vpMenu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />

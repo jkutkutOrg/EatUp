@@ -32,7 +32,6 @@
         <activity
             android:name=".MenuActivity"
             android:exported="false"
-            android:label="@string/title_activity_menu"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.EatUpClient.NoActionBar" />
         <activity

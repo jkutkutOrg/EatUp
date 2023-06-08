@@ -38,7 +38,7 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/restaurant_name"
+                    android:id="@+id/tvRestaurantName"
                     android:textColor="@color/text_color_black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

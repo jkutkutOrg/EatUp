@@ -65,8 +65,8 @@ public class MenuActivity extends AppCompatActivity {
      */
     private void setupViewPagerAndTabs() {
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, fragmentManager);
-        ViewPager viewPager = binding.viewPager;
-        TabLayout tabs = binding.tabs;
+        ViewPager viewPager = binding.vpMenu;
+        TabLayout tabs = binding.tbLayout;
 
         viewPager.setAdapter(sectionsPagerAdapter);
 

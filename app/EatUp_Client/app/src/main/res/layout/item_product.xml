@@ -31,21 +31,18 @@
                 android:id="@+id/tvProductName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Nombre del producto"
                 android:textColor="@color/text_color_black" />
 
             <TextView
                 android:id="@+id/tvProductDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Descripción del producto"
                 android:textColor="@color/text_color_gray" />
 
             <TextView
                 android:id="@+id/tvProductPrice"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Precio del producto"
                 android:textColor="@color/text_color_black" />
 
         </LinearLayout>
