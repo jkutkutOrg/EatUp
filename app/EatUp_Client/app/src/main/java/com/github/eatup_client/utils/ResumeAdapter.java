@@ -16,6 +16,9 @@ import com.github.eatup_client.model.OrderProduct;
 
 import java.util.List;
 
+/**
+ * Adapter for displaying order products in the resume screen RecyclerView.
+ */
 public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder> {
     private List<OrderProduct> orderProducts;
 
@@ -64,10 +67,16 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
             llQuantity = itemView.findViewById(R.id.llQuantity);
             llAddProduct = itemView.findViewById(R.id.llAddProduct);
 
+            // Set click listeners for quantity buttons
             btnIncreaseQuantity.setOnClickListener(this);
             btnDecreaseQuantity.setOnClickListener(this);
         }
 
+        /**
+         * Binds the order product data to the ViewHolder views.
+         *
+         * @param orderProduct The order product to bind.
+         */
         public void bind(OrderProduct orderProduct) {
             productName.setText(orderProduct.getProduct().getName());
             productPrice.setText("$" + orderProduct.getProduct().getPrice());
@@ -79,7 +88,6 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
 
             btnDecreaseQuantity.setVisibility(View.GONE);
             btnIncreaseQuantity.setVisibility(View.GONE);
-
 
             tvQuantityText.setText(String.valueOf(orderProduct.getQuantity()));
         }
@@ -93,6 +101,9 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
             }
         }
 
+        /**
+         * Increases the quantity of the order product.
+         */
         private void increaseQuantity() {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
@@ -103,6 +114,10 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
             }
         }
 
+        /**
+         * Decreases the quantity of the order product.
+         * Removes the order product if the quantity becomes zero.
+         */
         private void decreaseQuantity() {
             int position = getAdapterPosition();
             if (position != RecyclerView.NO_POSITION) {
