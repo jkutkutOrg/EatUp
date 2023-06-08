@@ -43,9 +43,15 @@ const TableComponent = ({
           </div>
         </> ||
         <>
-          <div className="col">
+          <div className="col-7">
             <EatupButton onClick={() => {newSession(mesa)}}>new session</EatupButton>
           </div>
+          <div className="col-2">
+            <EatupButton type="danger" onClick={() => {}}>-</EatupButton>
+          </div>
+          {/* <div className="col-2">
+            <EatupButton type="success" onClick={() => {}}>+</EatupButton>
+          </div> */}
         </>
       }
     </div>
