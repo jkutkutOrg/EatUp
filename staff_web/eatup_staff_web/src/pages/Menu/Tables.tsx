@@ -24,7 +24,6 @@ const getMesas: () => Mesa[] = () => {
 
 const saveMesas = (mesas: Mesa[]) => {
   localStorage.setItem("mesas", JSON.stringify(mesas.map((mesa) => mesa.getName())));
-  let mesasStr = localStorage.getItem("mesas");
 }
 
 const Tables = ({onDetails, onBill}: Props) => {
@@ -60,24 +59,27 @@ const Tables = ({onDetails, onBill}: Props) => {
   };
 
   const removeTable = (mesa: Mesa) => {
-    setMesitas(mesitas.filter((m) => m.getName() != mesa.getName()));
+    const newMesitas = mesitas.filter((m) => m.getName() != mesa.getName());
+    saveMesas(newMesitas);
+    setMesitas(newMesitas);
   };
 
   const addTable = (mesa: Mesa) => {
     if (mesitas.find((m) => m.getName() == mesa.getName()) != null) {
       return "Table already exists";
     }
-    setMesitas([...mesitas, new Mesa(mesa.getName())]);
+    const newMesitas = [...mesitas, new Mesa(mesa.getName())];
+    saveMesas(newMesitas);
+    setMesitas(newMesitas);
     return null;
   };
 
-  // TODO updateSessions when focused
+  window.addEventListener("focus", updateSessions);
 
   if (sessions == null) {
     return <p>Loading...</p>;
   }
 
-  saveMesas(mesitas); // TODO only save when changed
   const mesas: Mesa[] = mesitas.map((mesa) => new Mesa(mesa.getName()));
   mesas.sort((a, b) => a.getName().localeCompare(b.getName()));
   const untrackedMesas: Mesa[] = [];

@@ -6,6 +6,8 @@
 - [x] connect UI to api
 - [x] use api in UI
 
+- [ ] Focus listeners 
+  - [ ] In setup too
 - [ ] styling
 
 - [ ] Modularize into components

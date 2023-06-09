@@ -24,7 +24,7 @@ const TableComponent = ({
   const isSession = session != null;
   return <div className="container">
     <div className="row">
-      <div className="col-5">
+      <div className="col">
         <h5>Table {mesa.getName()}</h5>
       </div>
     </div>
