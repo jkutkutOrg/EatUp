@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import StaffAPI from "../../services/StaffApi";
 import Session from "../../model/api/Session";
 import EatupButton from "../../components/btn/EatupButton";
+import Loading from "../../components/loading/Loading";
 
 interface Props {
   onBill: (selected: Session) => void;
@@ -26,7 +27,7 @@ const Sessions = ({onBill}: Props) => {
   }
 
   if (sessions === null) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return <>

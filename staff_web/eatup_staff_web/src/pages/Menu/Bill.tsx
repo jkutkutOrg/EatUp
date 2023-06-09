@@ -5,6 +5,7 @@ import StaffAPI from "../../services/StaffApi";
 import Order from "../../model/api/Order";
 import TotalPrice from "../../components/bill/TotalPrice";
 import OrdersComponent from "../../components/bill/Order/OrdersComponent";
+import Loading from "../../components/loading/Loading";
 
 interface Props {
   session: Session;
@@ -24,7 +25,7 @@ const Bill = ({session}: Props) => {
   window.addEventListener("focus", updateOrders);
 
   if (orders == null) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   return <>

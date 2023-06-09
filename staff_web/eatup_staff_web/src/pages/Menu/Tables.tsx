@@ -5,6 +5,7 @@ import TableComponent from "../../components/Tables/TableComponent";
 import Mesa from "../../model/App/Mesa";
 import EatupButton from "../../components/btn/EatupButton";
 import TableAdder from "../../components/Tables/TableAdder";
+import Loading from "../../components/loading/Loading";
 
 interface Props {
   onDetails: (session: Session) => void;
@@ -77,7 +78,7 @@ const Tables = ({onDetails, onBill}: Props) => {
   window.addEventListener("focus", updateSessions);
 
   if (sessions == null) {
-    return <p>Loading...</p>;
+    return <Loading />;
   }
 
   const mesas: Mesa[] = mesitas.map((mesa) => new Mesa(mesa.getName()));
