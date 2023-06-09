@@ -6,14 +6,14 @@
 - [x] connect UI to api
 - [x] use api in UI
 
-- [ ] Sticky header
+- [x] Sticky header
 - [x] loading screen
+
+- [x] styling
 
 - [ ] Focus listeners 
   - [x] staff
   - [ ] In setup too
-
-- [ ] styling
 
 - [ ] Modularize into components
 

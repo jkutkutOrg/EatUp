@@ -13,7 +13,7 @@ interface Props {
 function Header({onRefresh, onClose, menu, extraOptions}: Props) {
     extraOptions = extraOptions || [];
     let closeBtn: boolean = menu != Menu.Tables && menu != Menu.Landing;
-    return <header>
+    return <header className='sticky-top'>
         <nav className="navbar bg-dark d-flex" data-bs-theme="dark" style={{
             padding: "0px 9px",
         }}>
