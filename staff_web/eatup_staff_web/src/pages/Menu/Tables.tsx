@@ -74,8 +74,12 @@ const Tables = ({onDetails, onBill}: Props) => {
     setMesitas(newMesitas);
     return null;
   };
-
-  window.addEventListener("focus", updateSessions);
+  useEffect(() => {
+    window.addEventListener("focus", updateSessions);
+    return () => {
+      window.removeEventListener("focus", updateSessions);
+    }
+  }, []);
 
   if (sessions == null) {
     return <Loading />;

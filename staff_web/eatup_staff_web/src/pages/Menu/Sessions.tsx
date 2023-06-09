@@ -20,7 +20,12 @@ const Sessions = ({onBill}: Props) => {
       }
     )
   }; useEffect(updateSessions, []);
-  window.addEventListener("focus", updateSessions);
+  useEffect(() => {
+    window.addEventListener("focus", updateSessions);
+    return () => {
+      window.removeEventListener("focus", updateSessions);
+    }
+  }, []);
 
   const toggleFilter = () => {
     setInProgressFilter(!inProgressFilter);

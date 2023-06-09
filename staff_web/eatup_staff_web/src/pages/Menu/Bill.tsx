@@ -22,7 +22,12 @@ const Bill = ({session}: Props) => {
       }
     );
   }; useEffect(updateOrders, []);
-  window.addEventListener("focus", updateOrders);
+  useEffect(() => {
+    window.addEventListener("focus", updateOrders);
+    return () => {
+      window.removeEventListener("focus", updateOrders);
+    };
+  });
 
   if (orders == null) {
     return <Loading />;
