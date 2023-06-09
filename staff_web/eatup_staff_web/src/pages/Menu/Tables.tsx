@@ -11,8 +11,15 @@ interface Props {
   onBill: (session: Session) => void;
 }
 
+const getMesas: () => Mesa[] = () => {
+  return [
+    "10", "11", "12", "13", "14", "15" // TODO Rework
+  ].map((mesaName) => new Mesa(mesaName));
+}
+
 const Tables = ({onDetails, onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
+  // const [mesitas, setMesas] = useState<Mesa[] | null>(getMesas());
 
   const updateSessions = () => {
     StaffAPI.getSessions(
@@ -20,6 +27,26 @@ const Tables = ({onDetails, onBill}: Props) => {
         setSessions(Session.fromJsonArray(sessions));
       }
     )
+  };
+
+  const removeTable = (mesa: Mesa) => {
+    console.log("Removing table " + mesa.getName());
+  };
+
+  const addTable = (mesa: Mesa) => {
+    console.log("Adding table " + mesa.getName());
+    let valid = true;
+    for (let i = 0; i < mesas.length; i++) {
+      if (mesas[i].getName() == mesa.getName()) {
+        valid = false;
+        break;
+      }
+    }
+    if (!valid) {
+      return "Table already added";
+    }
+    // setMesas([...mesas, mesa]);
+    return null;
   };
 
   useEffect(updateSessions, []);
@@ -39,27 +66,32 @@ const Tables = ({onDetails, onBill}: Props) => {
     StaffAPI.endSession(
       session.id,
       (r) => {
-        console.log(r);
         updateSessions();
       }
     );
   };
 
-  if (sessions == null) {
+  if (sessions == null/* || mesitas == null*/) {
     return <p>Loading...</p>;
   }
 
-  let mesas: Mesa[] = [
-    "10", "11", "12", "13", "14", "15" // TODO Rework
-  ].map((mesaName) => new Mesa(mesaName));
-  for (let i = 0; i < sessions.length; i++) {
+  let mesitas = getMesas();
+  let mesas: Mesa[] = mesitas.slice(); // Copy
+  for (let i = 0, j, found; i < sessions.length; i++) {
     let tableId = sessions[i].table_id;
     if (!sessions[i].in_progress)
       continue;
-    if (!/^1\d$/.test(tableId))
-      continue;
-    let mesaIndex = parseInt(tableId) - 10;
-    mesas[mesaIndex].setSession(sessions[i]);
+    found = false;
+    for (j = 0; j < mesas.length; j++) {
+      if (mesas[j].getName() == tableId) {
+        mesas[j].setSession(sessions[i]);
+        found = true;
+        break;
+      }
+    }
+    if (!found) {
+      // TODO
+    }
   }
 
   return <>
@@ -75,23 +107,13 @@ const Tables = ({onDetails, onBill}: Props) => {
           onBill={onBill}
           endSession={endSession}
           newSession={newSession}
-          removeTable={() => {}}
+          removeTable={removeTable}
         />
       </div>
     ))}
     <hr />
-    {/* <div className="container">
-      <div className="row justify-content-end">
-        <div className="col-2">
-          <EatupButton type="success" onClick={() => {}}>+</EatupButton>
-        </div>
-      </div>
-    </div> */}
     <TableAdder
-      onAdd={(mesaName: Mesa) => {
-        console.log("Adding table " + mesaName)
-        return null;
-      }}
+      onAdd={addTable}
     />
   </>;
 };

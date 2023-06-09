@@ -7,11 +7,29 @@ interface Props {
   onAdd: (mesa: Mesa) => string | null;
 };
 
-const TableAdder = ({}: Props) => {
+const TableAdder = ({onAdd}: Props) => {
   const [modal, setModal] = useState<boolean>(false);
 
   const enableModal = () => setModal(true);
   const disableModal = () => setModal(false);
+
+  const addTable = () => {
+    const input = document.getElementById("tableInput") as HTMLInputElement;
+    const mesa = new Mesa(input.value.trim());
+    if (mesa.getName() == "") {
+      input.classList.add("is-invalid");
+      return;
+    }
+    input.classList.remove("is-invalid");
+    const error = onAdd(mesa);
+    if (error != null) {
+      input.classList.add("is-invalid");
+      const feedback = document.getElementById("tableInputFeedback") as HTMLDivElement;
+      feedback.innerText = error;
+      return;
+    }
+    disableModal();
+  };
   
   return (<>
     <div className="container">
@@ -30,7 +48,18 @@ const TableAdder = ({}: Props) => {
         <Modal.Title>Add Table</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <input id="tableInput" type="text" placeholder="Table name" />
+        {/* <input id="tableInput" className="form-control w-100" placeholder="Table name" type="text"/> */}
+        <div className="input-group has-validation">
+          <span className="input-group-text" id="inputGroupPrepend">Table:</span>
+          <input id="tableInput" type="text" placeholder="example: 11"
+            className="form-control" aria-describedby="inputGroupPrepend"
+            required
+          />
+          <div id="tableInputFeedback" className="invalid-feedback">
+            Please enter a table name.
+          </div>
+        </div>
+
       </Modal.Body>
       <Modal.Footer>
         <div className="container">
@@ -39,7 +68,7 @@ const TableAdder = ({}: Props) => {
               <EatupButton type="danger" onClick={disableModal}>Cancel</EatupButton>
             </div>
             <div className="col-3">
-              <EatupButton type="success" onClick={disableModal}>Add</EatupButton>
+              <EatupButton type="success" onClick={addTable}>Add</EatupButton>
             </div>
           </div>
         </div>
