@@ -15,7 +15,7 @@
   - [x] staff
   - [ ] In setup too
 
-- [ ] Modularize into components
+- [x] Modularize into components
 
 - [ ] Dockerize
 - [ ] Update server docker

@@ -1,5 +1,4 @@
 import landingImg from '../assets/landing/landing.png'
-import logo from '../assets/logo.png'
 
 interface Props {
     onBegin: () => void;
@@ -9,7 +8,7 @@ const Landing = ({onBegin}: Props) => {
     return <div className='container-fluid eatup-landing text-center'>
         <div className='row'>
             <div className='col'>
-                <h2 className='landing-header'>Satisfy your cravings with a tap!</h2>
+                <h2 className='landing-header'>Satisfy your clients cravings with a tap!</h2>
             </div>
         </div>
         <div className='row'>

@@ -3,6 +3,7 @@ import StaffAPI from "../../services/StaffApi";
 import Session from "../../model/api/Session";
 import EatupButton from "../../components/btn/EatupButton";
 import Loading from "../../components/loading/Loading";
+import SessionComponent from "../../components/Session/SessionComponent";
 
 interface Props {
   onBill: (selected: Session) => void;
@@ -51,28 +52,8 @@ const Sessions = ({onBill}: Props) => {
     </div>
     <div className="container text-center">
       {sessions.map((session) => {
-        if (inProgressFilter && !session.in_progress)
-          return;
-        return (<div key={session.id}>
-          <hr />
-          <div className="row">
-            <div className="col">
-              <h5>{session.id}</h5>
-            </div>
-          </div>
-          <br />
-          <div className="row">
-            <div className="col">Table {session.table_id}</div>
-            <div className="col">
-              {session.in_progress && "In progress" || "Finished"}
-            </div>
-            <div className="col">
-              <EatupButton onClick={() => onBill(session)}>
-                Bill
-              </EatupButton>
-            </div>
-          </div>
-        </div>);
+        return (!inProgressFilter || session.in_progress) && 
+          <SessionComponent key={session.id} session={session} onBill={onBill} />
       })}
       <hr />
     </div>
