@@ -9,17 +9,28 @@ import TableAdder from "../../components/Tables/TableAdder";
 interface Props {
   onDetails: (session: Session) => void;
   onBill: (session: Session) => void;
-}
+};
 
 const getMesas: () => Mesa[] = () => {
-  return [
-    "10", "11", "12", "13", "14", "15" // TODO Rework
-  ].map((mesaName) => new Mesa(mesaName));
+  let mesasStr = localStorage.getItem("mesas");
+  if (mesasStr == null) {
+    mesasStr = JSON.stringify([
+      "10", "11", "12", "13", "14", "15"
+    ]);
+    localStorage.setItem("mesas", mesasStr);
+  }
+  return JSON.parse(mesasStr).map((mesaName: string) => new Mesa(mesaName));
+};
+
+const saveMesas = (mesas: Mesa[]) => {
+  localStorage.setItem("mesas", JSON.stringify(mesas.map((mesa) => mesa.getName())));
+  let mesasStr = localStorage.getItem("mesas");
 }
 
 const Tables = ({onDetails, onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
-  // const [mesitas, setMesas] = useState<Mesa[] | null>(getMesas());
+  const [mesitas, setMesitas] = useState<Mesa[]>(getMesas());
+  const [showUntracked, setShowUntracked] = useState<boolean>(false);
 
   const updateSessions = () => {
     StaffAPI.getSessions(
@@ -27,35 +38,12 @@ const Tables = ({onDetails, onBill}: Props) => {
         setSessions(Session.fromJsonArray(sessions));
       }
     )
-  };
-
-  const removeTable = (mesa: Mesa) => {
-    console.log("Removing table " + mesa.getName());
-  };
-
-  const addTable = (mesa: Mesa) => {
-    console.log("Adding table " + mesa.getName());
-    let valid = true;
-    for (let i = 0; i < mesas.length; i++) {
-      if (mesas[i].getName() == mesa.getName()) {
-        valid = false;
-        break;
-      }
-    }
-    if (!valid) {
-      return "Table already added";
-    }
-    // setMesas([...mesas, mesa]);
-    return null;
-  };
-
-  useEffect(updateSessions, []);
+  }; useEffect(updateSessions, []);
 
   const newSession = (mesa: Mesa) => {
     StaffAPI.newSession(
       mesa.getName(),
       (session) => {
-        console.log(session);
         localStorage.setItem(session.id, JSON.stringify(session));
         updateSessions();
       }
@@ -71,26 +59,39 @@ const Tables = ({onDetails, onBill}: Props) => {
     );
   };
 
-  if (sessions == null/* || mesitas == null*/) {
+  const removeTable = (mesa: Mesa) => {
+    setMesitas(mesitas.filter((m) => m.getName() != mesa.getName()));
+  };
+
+  const addTable = (mesa: Mesa) => {
+    if (mesitas.find((m) => m.getName() == mesa.getName()) != null) {
+      return "Table already exists";
+    }
+    setMesitas([...mesitas, new Mesa(mesa.getName())]);
+    return null;
+  };
+
+  // TODO updateSessions when focused
+
+  if (sessions == null) {
     return <p>Loading...</p>;
   }
 
-  let mesitas = getMesas();
-  let mesas: Mesa[] = mesitas.slice(); // Copy
-  for (let i = 0, j, found; i < sessions.length; i++) {
-    let tableId = sessions[i].table_id;
+  saveMesas(mesitas); // TODO only save when changed
+  const mesas: Mesa[] = mesitas.map((mesa) => new Mesa(mesa.getName()));
+  mesas.sort((a, b) => a.getName().localeCompare(b.getName()));
+  const untrackedMesas: Mesa[] = [];
+  for (let i = 0; i < sessions.length; i++) {
     if (!sessions[i].in_progress)
       continue;
-    found = false;
-    for (j = 0; j < mesas.length; j++) {
-      if (mesas[j].getName() == tableId) {
-        mesas[j].setSession(sessions[i]);
-        found = true;
-        break;
-      }
+    let mesa = mesas.find((m) => m.getName() == sessions[i].table_id);
+    if (mesa) {
+      mesa.setSession(sessions[i]);
     }
-    if (!found) {
-      // TODO
+    else {
+      const newMesa = new Mesa(sessions[i].table_id);
+      newMesa.setSession(sessions[i]);
+      untrackedMesas.push(newMesa);
     }
   }
 
@@ -115,6 +116,42 @@ const Tables = ({onDetails, onBill}: Props) => {
     <TableAdder
       onAdd={addTable}
     />
+    <br />
+    {untrackedMesas.length > 0 && (<>
+      <br />
+      <div className="container">
+        <div className="row">
+          {showUntracked && (<>
+            <div className="col-8">
+              <h2>Untracked tables</h2>
+            </div>
+            <div className="col-4">
+              <EatupButton type="primary" onClick={() => {
+                setShowUntracked(false);
+              }}>Hide</EatupButton>
+            </div>
+          </>) || (<>
+            <div className="col">
+              <EatupButton type="primary" onClick={() => {
+                setShowUntracked(true);
+              }}>Show untracked tables</EatupButton>
+            </div>
+          </>)}
+        </div>
+      </div>
+      {showUntracked && untrackedMesas.map((mesa, i) => (
+        <div key={i}>
+          <hr />
+          <TableComponent mesa={mesa}
+            onDetails={onDetails}
+            onBill={onBill}
+            endSession={endSession}
+            newSession={newSession}
+            removeTable={removeTable}
+          />
+        </div>
+      ))}
+    </>)}
   </>;
 };
 
