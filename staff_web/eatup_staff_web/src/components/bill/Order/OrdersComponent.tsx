@@ -9,14 +9,16 @@ const OrdersComponent = ({orders}: Props) => {
   if (orders.length == 0) {
     return <div className="container text-center">
       <h5>No orders made</h5>
-    </div>
+    </div>;
   }
-  return orders.map((order, index) =>
-    <div key={index}>
-      <hr />
-      <OrderComponent index={index} order={order}/>
-    </div>
-  );
+  return <>
+    {orders.map((order, index) =>
+      <div key={index}>
+        <hr />
+        <OrderComponent index={index} order={order}/>
+      </div>
+    )}
+  </>;
 }
 
 export default OrdersComponent;

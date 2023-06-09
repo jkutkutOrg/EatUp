@@ -13,14 +13,15 @@ interface Props {
 const Bill = ({session}: Props) => {
   const [orders, setOrders] = useState<Order[] | null>(null);
 
-  useEffect(() => {
+  const updateOrders = () => {
     StaffAPI.getOrders(
       session.id,
       (orders) => {
         setOrders(Order.fromJSONArray(orders));
       }
     );
-  }, []);
+  }; useEffect(updateOrders, []);
+  window.addEventListener("focus", updateOrders);
 
   if (orders == null) {
     return <p>Loading...</p>;

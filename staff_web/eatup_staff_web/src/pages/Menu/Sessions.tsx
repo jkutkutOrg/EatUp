@@ -11,13 +11,15 @@ const Sessions = ({onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
   const [inProgressFilter, setInProgressFilter] = useState<boolean>(false);
 
-  useEffect(() => {
+  const updateSessions = () => {
     StaffAPI.getSessions(
       (sessions) => {
+        sessions.reverse();
         setSessions(Session.fromJsonArray(sessions));
       }
     )
-  }, []);
+  }; useEffect(updateSessions, []);
+  window.addEventListener("focus", updateSessions);
 
   const toggleFilter = () => {
     setInProgressFilter(!inProgressFilter);
