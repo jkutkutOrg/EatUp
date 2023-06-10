@@ -120,25 +120,25 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 -- Main Courses
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Soria Carbonara', 'Pasta, bacon, cream, cheese', 'soria_carbonara.png', 8.00
+    'Soria Carbonara', 'Pasta, bacon, cream, cheese', 'public/products/drinks/soria_carbonara.png', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Wellington', 'Beef, mushrooms, puff pastry', 'wellington.png', 12.00
+    'Wellington', 'Beef, mushrooms, puff pastry', 'public/products/drinks/wellington.png', 12.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Iberian Curry', 'Pork, curry, rice', 'iberian_curry.png', 10.00
+    'Iberian Curry', 'Pork, curry, rice', 'public/products/drinks/iberian_curry.png', 10.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Iberian Dam', 'Pork, potatoes, eggs', 'iberian_dam.png', 10.00
+    'Iberian Dam', 'Pork, potatoes, eggs', 'public/products/drinks/iberian_dam.png', 10.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Chic Chicken BBQ', 'Chicken, BBQ sauce, rice', 'chic_chicken_bbq.png', 10.00
+    'Chic Chicken BBQ', 'Chicken, BBQ sauce, rice', 'public/products/drinks/chic_chicken_bbq.jpg', 10.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Vegan Burger', 'Vegan burger, lettuce, tomato', 'vegan_burger.png', 8.00
+    'Vegan Burger', 'Vegan burger, lettuce, tomato', 'public/products/drinks/vegan_burger.jpg', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Benedict', 'Eggs, bacon, bread, sauce', 'benedict.png', 8.00
+    'Benedict', 'Eggs, bacon, bread, sauce', 'public/products/drinks/benedict.jpg', 8.00
 );
 
 -- Desserts
