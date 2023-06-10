@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import Session from "../../model/api/Session";
 import StaffAPI from "../../services/StaffApi";
-import TableComponent from "../../components/Tables/TableComponent";
 import Mesa from "../../model/App/Mesa";
-import EatupButton from "../../components/btn/EatupButton";
 import TableAdder from "../../components/Tables/TableAdder";
 import Loading from "../../components/loading/Loading";
+import UntrackedTables from "../../components/Tables/UntrackedTables";
+import TrackedTables from "../../components/Tables/TrackedTables";
 
 interface Props {
   onDetails: (session: Session) => void;
@@ -30,7 +30,6 @@ const saveMesas = (mesas: Mesa[]) => {
 const Tables = ({onDetails, onBill}: Props) => {
   const [sessions, setSessions] = useState<Session[] | null>(null);
   const [mesitas, setMesitas] = useState<Mesa[]>(getMesas());
-  const [showUntracked, setShowUntracked] = useState<boolean>(false);
 
   const updateSessions = () => {
     StaffAPI.getSessions(
@@ -103,62 +102,24 @@ const Tables = ({onDetails, onBill}: Props) => {
   }
 
   return <>
-    <br />
-    <div className="container text-center">
-      <h1>Tables</h1>
-    </div>
-    {mesas.map((mesa, i) => (
-      <div key={i}>
-        <hr />
-        <TableComponent mesa={mesa}
-          onDetails={onDetails}
-          onBill={onBill}
-          endSession={endSession}
-          newSession={newSession}
-          removeTable={removeTable}
-        />
-      </div>
-    ))}
-    <hr />
+    <TrackedTables
+      mesas={mesas}
+      onDetails={onDetails}
+      onBill={onBill}
+      newSession={newSession}
+      endSession={endSession}
+      removeTable={removeTable}
+    />
     <TableAdder
       onAdd={addTable}
     />
     <br />
-    {untrackedMesas.length > 0 && (<>
-      <br />
-      <div className="container">
-        <div className="row">
-          {showUntracked && (<>
-            <div className="col-8">
-              <h2>Untracked tables</h2>
-            </div>
-            <div className="col-4">
-              <EatupButton type="primary" onClick={() => {
-                setShowUntracked(false);
-              }}>Hide</EatupButton>
-            </div>
-          </>) || (<>
-            <div className="col">
-              <EatupButton type="primary" onClick={() => {
-                setShowUntracked(true);
-              }}>Show untracked tables</EatupButton>
-            </div>
-          </>)}
-        </div>
-      </div>
-      {showUntracked && untrackedMesas.map((mesa, i) => (
-        <div key={i}>
-          <hr />
-          <TableComponent mesa={mesa}
-            onDetails={onDetails}
-            onBill={onBill}
-            endSession={endSession}
-            newSession={newSession}
-            removeTable={removeTable}
-          />
-        </div>
-      ))}
-    </>)}
+    <UntrackedTables
+      untrackedTables={untrackedMesas}
+      onDetails={onDetails}
+      onBill={onBill}
+      endSession={endSession}
+    />
   </>;
 };
 

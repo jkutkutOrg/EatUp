@@ -45,10 +45,9 @@ const TableAdder = ({onAdd}: Props) => {
       keyboard={true}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Add Table</Modal.Title>
+        <Modal.Title>Track table</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {/* <input id="tableInput" className="form-control w-100" placeholder="Table name" type="text"/> */}
         <div className="input-group has-validation">
           <span className="input-group-text" id="inputGroupPrepend">Table:</span>
           <input id="tableInput" type="text" placeholder="example: 11"
