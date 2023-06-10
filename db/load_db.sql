@@ -163,19 +163,19 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 -- Drinks
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Soft Drinks', '', 'soft_drink.png', 2.00
+    'Soft Drinks', '', 'public/products/drinks/soft_drinks.png', 2.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Beer', '', 'beer.png', 3.00
+    'Beer', '', 'public/products/drinks/beer.jpg', 3.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Wine', '', 'wine.png', 12.00
+    'Wine', '', 'public/products/drinks/wine.jpg', 12.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Coffee', '', 'coffee.png', 1.00
+    'Coffee', '', 'public/products/drinks/coffee.jpg', 1.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Tea', '', 'tea.png', 1.00
+    'Tea', '', 'public/products/drinks/tea.jpg', 1.00
 );
 
 -- **** Product Allergies ****
