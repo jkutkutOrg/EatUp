@@ -90,73 +90,91 @@ INSERT INTO category (name) VALUES ('Drinks');
 
 -- **** Products ****
 -- Appetizers
-INSERT INTO product (name, description, price) VALUES (
-    'Bruschetta', 'Tomato, garlic, basil, olive oil', 5.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Stiky Ribs', 'Pork ribs, honey, soy sauce', 'stiky_ribs.png', 8.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Garlic Bread', 'Garlic, olive oil', 4.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Green Power', 'Spinach, apple, celery, ginger', 'green_power.png', 5.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Fried Calamari', 'Calamari, flour, eggs, breadcrumbs', 7.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Rainbow Poke', 'Salmon, avocado, mango, rice', 'rainbow_poke.png', 8.00
 );
 
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Oriental Chicken', 'Chicken, rice, soy sauce', 'oriental_chicken.png', 7.00
+
 -- Starters
-INSERT INTO product (name, description, price) VALUES (
-    'Caprese Salad', 'Tomato, mozzarella, basil, olive oil', 6.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Croquettes', 'Potatoes, eggs, breadcrumbs', 'croquettes.png', 5.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Caesar Salad', 'Lettuce, croutons, parmesan, anchovies', 6.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Bravas potatoes', 'Potatoes, spicy sauce', 'bravas_potatoes.png', 6.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Mozzarella Salad', 'Mozzarella, tomato, basil, olive oil', 6.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Ham Quesadilla', 'Ham and cheese', 'quesadilla.png', 4.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Onion Rings', 'Onion, flour, eggs, breadcrumbs', 'onion_rings.png', 3.00
 );
 
 -- Main Courses
-INSERT INTO product (name, description, price) VALUES (
-    'Spaghetti carbonara', 'Spaghetti, bacon, eggs, parmesan', 12.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Soria Carbonara', 'Pasta, bacon, cream, cheese', 'soria_carbonara.png', 8.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Pizza', 'Tomato, mozzarella, basil, olive oil', 10.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Wellington', 'Beef, mushrooms, puff pastry', 'wellington.png', 12.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Steak', 'Steak, potatoes, salad', 15.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Iberian Curry', 'Pork, curry, rice', 'iberian_curry.png', 10.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Risotto', 'Risotto, tomato, mozzarella, basil, olive oil', 12.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Iberian Dam', 'Pork, potatoes, eggs', 'iberian_dam.png', 10.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Chic Chicken BBQ', 'Chicken, BBQ sauce, rice', 'chic_chicken_bbq.png', 10.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Vegan Burger', 'Vegan burger, lettuce, tomato', 'vegan_burger.png', 8.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Benedict', 'Eggs, bacon, bread, sauce', 'benedict.png', 8.00
 );
 
 -- Desserts
-INSERT INTO product (name, description, price) VALUES (
-    'Tiramisu', 'Mascarpone, eggs, coffee, ladyfingers', 6.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Sweet Nachos', 'Nachos, chocolate, cream', 'sweet_nachos.png', 6.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Panna cotta', 'Cream, sugar, vanilla', 6.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Bun & Roll Choco', 'Bun, chocolate, cream', 'bun_roll_chocolate.png', 6.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Cannoli', 'Cannoli, ricotta, chocolate', 6.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Pancakes', 'Pancakes, chocolate, cream', 'pancakes.png', 6.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Oreo Shake', 'Oreo, milk, cream', 'oreo_shake.png', 6.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Cake Caramel', 'Cake, caramel, cream', 'cake_caramel.png', 6.00
+);
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Brownie', 'Brownie, chocolate, cream', 'brownie.png', 6.00
 );
 
 -- Drinks
-INSERT INTO product (name, description, price) VALUES (
-    'Coca Cola', '', 2.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Soft Drink', '', 'soft_drink.png', 2.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Nestea', '', 2.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Beer', '', 'beer.png', 3.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Water', '', 2.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Wine', '', 'wine.png', 12.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Beer', '', 3.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Coffee', '', 'coffee.png', 1.00
 );
-INSERT INTO product (name, description, price) VALUES (
-    'Wine', '', 12.00
-);
-INSERT INTO product (name, description, price) VALUES (
-    'Coffee', '', 1.00
-);
-INSERT INTO product (name, description, price) VALUES (
-    'Tea', '', 1.00
+INSERT INTO product (name, description, icon, price) VALUES (
+    'Tea', '', 'tea.png', 1.00
 );
 
 -- **** Product Allergies ****
