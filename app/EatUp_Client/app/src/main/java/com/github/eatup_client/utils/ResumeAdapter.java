@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.eatup_client.R;
 import com.github.eatup_client.model.OrderProduct;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -81,7 +82,11 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
             productName.setText(orderProduct.getProduct().getName());
             productPrice.setText("$" + orderProduct.getProduct().getPrice());
             productDescription.setText(orderProduct.getProduct().getDescription());
-            productImage.setImageResource(R.drawable.example_salad_img);
+            Picasso.get()
+                    .load("https://www.vips.es/sites/default/files/styles/optimize/public/product/vips/croquetas_categoria.png?itok=4F5ld5el") // Reemplaza "R.drawable.example_salad_img" con el recurso de imagen de ejemplo
+                    .placeholder(R.drawable.ic_load_image)  // Reemplaza "R.drawable.placeholder_image" con el recurso de imagen de marcador de posición
+                    .error(R.drawable.ic_error_load)  // Reemplaza "R.drawable.error_image" con el recurso de imagen de error
+                    .into(productImage);
 
             llQuantity.setVisibility(View.VISIBLE);
             llAddProduct.setVisibility(View.GONE);

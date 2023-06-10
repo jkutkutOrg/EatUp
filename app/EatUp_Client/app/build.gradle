@@ -61,4 +61,6 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-engine:1.7.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

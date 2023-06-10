@@ -13,9 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.github.eatup_client.R;
+import com.github.eatup_client.model.MVCManager;
 import com.github.eatup_client.model.OrderProduct;
 import com.github.eatup_client.model.Product;
-import com.github.eatup_client.model.MVCManager;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
@@ -128,10 +129,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productName.setText(product.getName());
             productPrice.setText("$" + product.getPrice());
             productDescription.setText(product.getDescription());
-            productImage.setImageResource(R.drawable.example_salad_img);
+
+            Picasso.get()
+                    .load("https://www.vips.es/sites/default/files/styles/optimize/public/product/vips/croquetas_categoria.png?itok=4F5ld5el") // Reemplaza "R.drawable.example_salad_img" con el recurso de imagen de ejemplo
+                    .placeholder(R.drawable.ic_load_image)  // Reemplaza "R.drawable.placeholder_image" con el recurso de imagen de marcador de posición
+                    .error(R.drawable.ic_error_load)  // Reemplaza "R.drawable.error_image" con el recurso de imagen de error
+                    .into(productImage);
 
             updateQuantityView();
         }
+
 
         /**
          * Updates the visibility of the quantity view based on the order product's quantity.
