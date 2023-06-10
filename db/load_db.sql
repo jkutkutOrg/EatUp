@@ -102,6 +102,7 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 INSERT INTO product (name, description, icon, price) VALUES (
     'Oriental Chicken', 'Chicken, rice, soy sauce', 'oriental_chicken.png', 7.00
+);
 
 -- Starters
 INSERT INTO product (name, description, icon, price) VALUES (
@@ -162,7 +163,7 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 -- Drinks
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Soft Drink', '', 'soft_drink.png', 2.00
+    'Soft Drinks', '', 'soft_drink.png', 2.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
     'Beer', '', 'beer.png', 3.00
@@ -179,112 +180,84 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 -- **** Product Allergies ****
 -- ** Appetizers **
--- Bruschetta
+-- Stiky Ribs
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Bruschetta'),
+    (SELECT id FROM product WHERE name = 'Stiky Ribs'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
+
+-- Green Power
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Bruschetta'),
+    (SELECT id FROM product WHERE name = 'Green Power'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
 
--- Garlic Bread
+-- Rainbow Poke
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Garlic Bread'),
-    (SELECT id FROM allergy WHERE name = 'Gluten')
-);
-
--- Fried Calamari
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Fried Calamari'),
+    (SELECT id FROM product WHERE name = 'Rainbow Poke'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
 
 -- ** Starters **
--- Caprese Salad
+-- Croquettes
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Caprese Salad'),
-    (SELECT id FROM allergy WHERE name = 'Lactose')
+    (SELECT id FROM product WHERE name = 'Croquettes'),
+    (SELECT id FROM allergy WHERE name = 'Gluten')
 );
 
--- Caesar Salad
+-- Bravas potatoes
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Caesar Salad'),
-    (SELECT id FROM allergy WHERE name = 'Lactose')
+    (SELECT id FROM product WHERE name = 'Bravas potatoes'),
+    (SELECT id FROM allergy WHERE name = 'Gluten')
 );
 
--- Mozzarella Salad
+-- Ham Quesadilla
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Mozzarella Salad'),
+    (SELECT id FROM product WHERE name = 'Ham Quesadilla'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
 
 -- ** Main Courses **
--- Spaghetti carbonara
+-- Soria Carbonara
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Spaghetti carbonara'),
+    (SELECT id FROM product WHERE name = 'Soria Carbonara'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
+
+-- Wellington
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Spaghetti carbonara'),
-    (SELECT id FROM allergy WHERE name = 'Egg')
-);
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Spaghetti carbonara'),
+    (SELECT id FROM product WHERE name = 'Wellington'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
 
--- Pizza
+-- Iberian Curry
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Pizza'),
-    (SELECT id FROM allergy WHERE name = 'Gluten')
-);
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Pizza'),
-    (SELECT id FROM allergy WHERE name = 'Lactose')
-);
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Pizza'),
+    (SELECT id FROM product WHERE name = 'Iberian Curry'),
     (SELECT id FROM allergy WHERE name = 'Egg')
 );
 
--- Steak
-
--- Risotto
+-- Iberian Dam
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Risotto'),
-    (SELECT id FROM allergy WHERE name = 'Lactose')
+    (SELECT id FROM product WHERE name = 'Iberian Dam'),
+    (SELECT id FROM allergy WHERE name = 'Egg')
 );
 
 -- ** Desserts **
--- Tiramisu
+-- Sweet Nachos
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Tiramisu'),
-    (SELECT id FROM allergy WHERE name = 'Egg')
-);
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Tiramisu'),
+    (SELECT id FROM product WHERE name = 'Sweet Nachos'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
+
+-- Bun & Roll Choco
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Tiramisu'),
+    (SELECT id FROM product WHERE name = 'Bun & Roll Choco'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
 
--- Panna cotta
+-- Pancakes
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Panna cotta'),
-    (SELECT id FROM allergy WHERE name = 'Lactose')
-);
-
--- Cannoli
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Cannoli'),
-    (SELECT id FROM allergy WHERE name = 'Gluten')
-);
-INSERT INTO product_allergy (product_id, allergy_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Cannoli'),
+    (SELECT id FROM product WHERE name = 'Pancakes'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
 
@@ -306,75 +279,102 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
 -- ** Product categories **
 -- Appetizers
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Bruschetta'),
+    (SELECT id FROM product WHERE name = 'Stiky Ribs'),
     (SELECT id FROM category WHERE name = 'Appetizers')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Garlic Bread'),
+    (SELECT id FROM product WHERE name = 'Green Power'),
     (SELECT id FROM category WHERE name = 'Appetizers')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Fried Calamari'),
+    (SELECT id FROM product WHERE name = 'Rainbow Poke'),
+    (SELECT id FROM category WHERE name = 'Appetizers')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Oriental Chicken'),
     (SELECT id FROM category WHERE name = 'Appetizers')
 );
 
 -- Starters
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Caprese Salad'),
+    (SELECT id FROM product WHERE name = 'Croquettes'),
     (SELECT id FROM category WHERE name = 'Starters')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Caesar Salad'),
+    (SELECT id FROM product WHERE name = 'Bravas potatoes'),
     (SELECT id FROM category WHERE name = 'Starters')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Mozzarella Salad'),
+    (SELECT id FROM product WHERE name = 'Ham Quesadilla'),
     (SELECT id FROM category WHERE name = 'Starters')
 );
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Onion Rings'),
+    (SELECT id FROM category WHERE name = 'Starters')
+);
+
 
 -- Main Courses
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Spaghetti carbonara'),
+    (SELECT id FROM product WHERE name = 'Soria Carbonara'),
     (SELECT id FROM category WHERE name = 'Main Courses')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Pizza'),
+    (SELECT id FROM product WHERE name = 'Wellington'),
     (SELECT id FROM category WHERE name = 'Main Courses')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Steak'),
+    (SELECT id FROM product WHERE name = 'Iberian Curry'),
     (SELECT id FROM category WHERE name = 'Main Courses')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Risotto'),
+    (SELECT id FROM product WHERE name = 'Iberian Dam'),
     (SELECT id FROM category WHERE name = 'Main Courses')
 );
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Chic Chicken BBQ'),
+    (SELECT id FROM category WHERE name = 'Main Courses')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Vegan Burger'),
+    (SELECT id FROM category WHERE name = 'Main Courses')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Benedict'),
+    (SELECT id FROM category WHERE name = 'Main Courses')
+);
+
 
 -- Desserts
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Tiramisu'),
+    (SELECT id FROM product WHERE name = 'Sweet Nachos'),
     (SELECT id FROM category WHERE name = 'Desserts')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Panna cotta'),
+    (SELECT id FROM product WHERE name = 'Bun & Roll Choco'),
     (SELECT id FROM category WHERE name = 'Desserts')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Cannoli'),
+    (SELECT id FROM product WHERE name = 'Pancakes'),
+    (SELECT id FROM category WHERE name = 'Desserts')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Oreo Shake'),
+    (SELECT id FROM category WHERE name = 'Desserts')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Cake Caramel'),
+    (SELECT id FROM category WHERE name = 'Desserts')
+);
+INSERT INTO product_category (product_id, category_id) VALUES (
+    (SELECT id FROM product WHERE name = 'Brownie'),
     (SELECT id FROM category WHERE name = 'Desserts')
 );
 
+
 -- Drinks
 INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Coca Cola'),
-    (SELECT id FROM category WHERE name = 'Drinks')
-);
-INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Nestea'),
-    (SELECT id FROM category WHERE name = 'Drinks')
-);
-INSERT INTO product_category (product_id, category_id) VALUES (
-    (SELECT id FROM product WHERE name = 'Water'),
+    (SELECT id FROM product WHERE name = 'Soft Drinks'),
     (SELECT id FROM category WHERE name = 'Drinks')
 );
 INSERT INTO product_category (product_id, category_id) VALUES (
@@ -416,35 +416,35 @@ INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
-    (SELECT id FROM product WHERE name = 'Bruschetta'),
+    (SELECT id FROM product WHERE name = 'Stiky Ribs'),
     2
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
-    (SELECT id FROM product WHERE name = 'Garlic Bread'),
+    (SELECT id FROM product WHERE name = 'Green Power'),
     1
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
-    (SELECT id FROM product WHERE name = 'Steak'),
+    (SELECT id FROM product WHERE name = 'Croquettes'),
     2
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
-    (SELECT id FROM product WHERE name = 'Pizza'),
+    (SELECT id FROM product WHERE name = 'Bravas potatoes'),
     1
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't11'
     )),
-    (SELECT id FROM product WHERE name = 'Coca Cola'),
+    (SELECT id FROM product WHERE name = 'Onion Rings'),
     3
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
@@ -460,14 +460,14 @@ INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id DESC LIMIT 1),
-    (SELECT id FROM product WHERE name = 'Risotto'),
+    (SELECT id FROM product WHERE name = 'Soria Carbonara'),
     1
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id DESC LIMIT 1),
-    (SELECT id FROM product WHERE name = 'Water'),
+    (SELECT id FROM product WHERE name = 'Beer'),
     1
 );
 
@@ -476,7 +476,7 @@ INSERT INTO product_order (order_id, product_id, quantity) VALUES (
     (SELECT id FROM orders WHERE session = (
         SELECT id FROM session WHERE table_id = 't12'
     ) ORDER BY id ASC LIMIT 1),
-    (SELECT id FROM product WHERE name = 'Cannoli'),
+    (SELECT id FROM product WHERE name = 'Ham Quesadilla'),
     1
 );
 INSERT INTO product_order (order_id, product_id, quantity) VALUES (
