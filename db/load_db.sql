@@ -143,27 +143,27 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 -- Desserts
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Sweet Nachos', 'Nachos, chocolate, cream', 'sweet_nachos.png', 6.00
+    'Sweet Nachos', 'Nachos, chocolate, cream', 'public/products/drinks/sweet_nachos.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Bun & Roll Choco', 'Bun, chocolate, cream', 'bun_roll_chocolate.png', 6.00
+    'Bun & Roll Choco', 'Bun, chocolate, cream', 'public/products/drinks/bun_roll_chocolate.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Pancakes', 'Pancakes, chocolate, cream', 'pancakes.png', 6.00
+    'Pancakes', 'Pancakes, chocolate, cream', 'public/products/drinks/pancakes.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Oreo Shake', 'Oreo, milk, cream', 'oreo_shake.png', 6.00
+    'Oreo Shake', 'Oreo, milk, cream', 'public/products/drinks/oreo_shake.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Cake Caramel', 'Cake, caramel, cream', 'cake_caramel.png', 6.00
+    'Cake Caramel', 'Cake, caramel, cream', 'public/products/drinks/cake_caramel.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Brownie', 'Brownie, chocolate, cream', 'brownie.png', 6.00
+    'Brownie', 'Brownie, chocolate, cream', 'public/products/drinks/brownie.jpg', 6.00
 );
 
 -- Drinks
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Soft Drinks', '', 'public/products/drinks/soft_drinks.png', 2.00
+    'Soft Drinks', '', 'public/products/drinks/soft_drinks.jpg', 2.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
     'Beer', '', 'public/products/drinks/beer.jpg', 3.00
