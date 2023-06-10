@@ -91,90 +91,90 @@ INSERT INTO category (name) VALUES ('Drinks');
 -- **** Products ****
 -- Appetizers
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Stiky Ribs', 'Pork ribs, honey, soy sauce', 'public/products/drinks/stiky_ribs.jpg', 8.00
+    'Stiky Ribs', 'Pork ribs, honey, soy sauce', 'products/drinks/stiky_ribs.jpg', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Green Power', 'Spinach, apple, celery, ginger', 'public/products/drinks/green_power.jpg', 5.00
+    'Green Power', 'Spinach, apple, celery, ginger', 'products/drinks/green_power.jpg', 5.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Rainbow Poke', 'Salmon, avocado, mango, rice', 'public/products/drinks/rainbow_poke.jpg', 8.00
+    'Rainbow Poke', 'Salmon, avocado, mango, rice', 'products/drinks/rainbow_poke.jpg', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Oriental Chicken', 'Chicken, rice, soy sauce', 'public/products/drinks/oriental_chicken.jpg', 7.00
+    'Oriental Chicken', 'Chicken, rice, soy sauce', 'products/drinks/oriental_chicken.jpg', 7.00
 );
 
 -- Starters
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Croquettes', 'Potatoes, eggs, breadcrumbs', 'public/products/drinks/croquettes.png', 5.00
+    'Croquettes', 'Potatoes, eggs, breadcrumbs', 'products/drinks/croquettes.png', 5.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Bravas potatoes', 'Potatoes, spicy sauce', 'public/products/drinks/bravas_potatoes.png', 6.00
+    'Bravas potatoes', 'Potatoes, spicy sauce', 'products/drinks/bravas_potatoes.png', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Ham Quesadilla', 'Ham and cheese', 'public/products/drinks/quesadilla.png', 4.00
+    'Ham Quesadilla', 'Ham and cheese', 'products/drinks/quesadilla.png', 4.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Onion Rings', 'Onion, flour, eggs, breadcrumbs', 'public/products/drinks/onion_rings.png', 3.00
+    'Onion Rings', 'Onion, flour, eggs, breadcrumbs', 'products/drinks/onion_rings.png', 3.00
 );
 
 -- Main Courses
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Soria Carbonara', 'Pasta, bacon, cream, cheese', 'public/products/drinks/soria_carbonara.png', 8.00
+    'Soria Carbonara', 'Pasta, bacon, cream, cheese', 'products/drinks/soria_carbonara.png', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Wellington', 'Beef, mushrooms, puff pastry', 'public/products/drinks/wellington.png', 12.00
+    'Wellington', 'Beef, mushrooms, puff pastry', 'products/drinks/wellington.png', 12.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Iberian Curry', 'Pork, curry, rice', 'public/products/drinks/iberian_curry.png', 10.00
+    'Iberian Curry', 'Pork, curry, rice', 'products/drinks/iberian_curry.png', 10.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Iberian Dam', 'Pork, potatoes, eggs', 'public/products/drinks/iberian_dam.png', 10.00
+    'Iberian Dam', 'Pork, potatoes, eggs', 'products/drinks/iberian_dam.png', 10.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Chic Chicken BBQ', 'Chicken, BBQ sauce, rice', 'public/products/drinks/chic_chicken_bbq.jpg', 10.00
+    'Chic Chicken BBQ', 'Chicken, BBQ sauce, rice', 'products/drinks/chic_chicken_bbq.jpg', 10.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Vegan Burger', 'Vegan burger, lettuce, tomato', 'public/products/drinks/vegan_burger.jpg', 8.00
+    'Vegan Burger', 'Vegan burger, lettuce, tomato', 'products/drinks/vegan_burger.jpg', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Benedict', 'Eggs, bacon, bread, sauce', 'public/products/drinks/benedict.jpg', 8.00
+    'Benedict', 'Eggs, bacon, bread, sauce', 'products/drinks/benedict.jpg', 8.00
 );
 
 -- Desserts
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Sweet Nachos', 'Nachos, chocolate, cream', 'public/products/drinks/sweet_nachos.jpg', 6.00
+    'Sweet Nachos', 'Nachos, chocolate, cream', 'products/drinks/sweet_nachos.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Bun & Roll Choco', 'Bun, chocolate, cream', 'public/products/drinks/bun_roll_chocolate.jpg', 6.00
+    'Bun & Roll Choco', 'Bun, chocolate, cream', 'products/drinks/bun_roll_chocolate.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Pancakes', 'Pancakes, chocolate, cream', 'public/products/drinks/pancakes.jpg', 6.00
+    'Pancakes', 'Pancakes, chocolate, cream', 'products/drinks/pancakes.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Oreo Shake', 'Oreo, milk, cream', 'public/products/drinks/oreo_shake.jpg', 6.00
+    'Oreo Shake', 'Oreo, milk, cream', 'products/drinks/oreo_shake.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Cake Caramel', 'Cake, caramel, cream', 'public/products/drinks/cake_caramel.jpg', 6.00
+    'Cake Caramel', 'Cake, caramel, cream', 'products/drinks/cake_caramel.jpg', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Brownie', 'Brownie, chocolate, cream', 'public/products/drinks/brownie.jpg', 6.00
+    'Brownie', 'Brownie, chocolate, cream', 'products/drinks/brownie.jpg', 6.00
 );
 
 -- Drinks
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Soft Drinks', '', 'public/products/drinks/soft_drinks.jpg', 2.00
+    'Soft Drinks', '', 'products/drinks/soft_drinks.jpg', 2.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Beer', '', 'public/products/drinks/beer.jpg', 3.00
+    'Beer', '', 'products/drinks/beer.jpg', 3.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Wine', '', 'public/products/drinks/wine.jpg', 12.00
+    'Wine', '', 'products/drinks/wine.jpg', 12.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Coffee', '', 'public/products/drinks/coffee.jpg', 1.00
+    'Coffee', '', 'products/drinks/coffee.jpg', 1.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Tea', '', 'public/products/drinks/tea.jpg', 1.00
+    'Tea', '', 'products/drinks/tea.jpg', 1.00
 );
 
 -- **** Product Allergies ****
