@@ -6,6 +6,11 @@ android {
     namespace 'com.github.eatup_client'
     compileSdk 33
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_16
+        targetCompatibility JavaVersion.VERSION_16
+    }
+
     defaultConfig {
         applicationId "com.github.eatup_client"
         minSdk 24
@@ -61,6 +66,7 @@ dependencies {
     testImplementation 'org.junit.platform:junit-platform-engine:1.7.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    testImplementation 'org.mockito:mockito-core:3.12.4'
+    testImplementation 'org.robolectric:robolectric:4.9'
     implementation 'com.squareup.picasso:picasso:2.71828'
-
 }

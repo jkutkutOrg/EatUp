@@ -1,6 +1,5 @@
 package com.github.eatup_client;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -22,7 +21,13 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private Button btnGetStarted;
-    private ProductApiService productApiService;
+    protected ProductApiService productApiService;
+    private ConnectivityManager connectivityManager;
+
+    public void setConnectivityManager(ConnectivityManager connectivityManager) {
+        this.connectivityManager = connectivityManager;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +73,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Checks if the device is connected to the internet.
      */
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    boolean isNetworkAvailable() {
         if (connectivityManager != null) {
             NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
             return networkInfo != null && networkInfo.isConnected();
@@ -80,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Shows a dialog if the device is not connected to the internet.
      */
-    private void showNoInternetDialog() {
+    void showNoInternetDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("No Internet Connection");
