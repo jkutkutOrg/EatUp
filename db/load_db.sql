@@ -91,31 +91,30 @@ INSERT INTO category (name) VALUES ('Drinks');
 -- **** Products ****
 -- Appetizers
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Stiky Ribs', 'Pork ribs, honey, soy sauce', 'stiky_ribs.png', 8.00
+    'Stiky Ribs', 'Pork ribs, honey, soy sauce', 'public/products/drinks/stiky_ribs.jpg', 8.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Green Power', 'Spinach, apple, celery, ginger', 'green_power.png', 5.00
+    'Green Power', 'Spinach, apple, celery, ginger', 'public/products/drinks/green_power.jpg', 5.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Rainbow Poke', 'Salmon, avocado, mango, rice', 'rainbow_poke.png', 8.00
+    'Rainbow Poke', 'Salmon, avocado, mango, rice', 'public/products/drinks/rainbow_poke.jpg', 8.00
 );
-
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Oriental Chicken', 'Chicken, rice, soy sauce', 'oriental_chicken.png', 7.00
+    'Oriental Chicken', 'Chicken, rice, soy sauce', 'public/products/drinks/oriental_chicken.jpg', 7.00
 );
 
 -- Starters
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Croquettes', 'Potatoes, eggs, breadcrumbs', 'croquettes.png', 5.00
+    'Croquettes', 'Potatoes, eggs, breadcrumbs', 'public/products/drinks/croquettes.png', 5.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Bravas potatoes', 'Potatoes, spicy sauce', 'bravas_potatoes.png', 6.00
+    'Bravas potatoes', 'Potatoes, spicy sauce', 'public/products/drinks/bravas_potatoes.png', 6.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Ham Quesadilla', 'Ham and cheese', 'quesadilla.png', 4.00
+    'Ham Quesadilla', 'Ham and cheese', 'public/products/drinks/quesadilla.png', 4.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
-    'Onion Rings', 'Onion, flour, eggs, breadcrumbs', 'onion_rings.png', 3.00
+    'Onion Rings', 'Onion, flour, eggs, breadcrumbs', 'public/products/drinks/onion_rings.png', 3.00
 );
 
 -- Main Courses
@@ -185,13 +184,11 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Stiky Ribs'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
-
 -- Green Power
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Green Power'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
-
 -- Rainbow Poke
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Rainbow Poke'),
@@ -204,13 +201,11 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Croquettes'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
-
 -- Bravas potatoes
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Bravas potatoes'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
-
 -- Ham Quesadilla
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Ham Quesadilla'),
@@ -223,19 +218,16 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Soria Carbonara'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
-
 -- Wellington
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Wellington'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
-
 -- Iberian Curry
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Iberian Curry'),
     (SELECT id FROM allergy WHERE name = 'Egg')
 );
-
 -- Iberian Dam
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Iberian Dam'),
@@ -248,13 +240,11 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Sweet Nachos'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
-
 -- Bun & Roll Choco
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Bun & Roll Choco'),
     (SELECT id FROM allergy WHERE name = 'Lactose')
 );
-
 -- Pancakes
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Pancakes'),
@@ -262,19 +252,11 @@ INSERT INTO product_allergy (product_id, allergy_id) VALUES (
 );
 
 -- ** Drinks **
--- Coca Cola
-
--- Nestea
-
--- Water
-
 -- Beer
 INSERT INTO product_allergy (product_id, allergy_id) VALUES (
     (SELECT id FROM product WHERE name = 'Beer'),
     (SELECT id FROM allergy WHERE name = 'Gluten')
 );
-
--- Wine
 
 -- ** Product categories **
 -- Appetizers
@@ -313,7 +295,6 @@ INSERT INTO product_category (product_id, category_id) VALUES (
     (SELECT id FROM category WHERE name = 'Starters')
 );
 
-
 -- Main Courses
 INSERT INTO product_category (product_id, category_id) VALUES (
     (SELECT id FROM product WHERE name = 'Soria Carbonara'),
@@ -344,7 +325,6 @@ INSERT INTO product_category (product_id, category_id) VALUES (
     (SELECT id FROM category WHERE name = 'Main Courses')
 );
 
-
 -- Desserts
 INSERT INTO product_category (product_id, category_id) VALUES (
     (SELECT id FROM product WHERE name = 'Sweet Nachos'),
@@ -370,7 +350,6 @@ INSERT INTO product_category (product_id, category_id) VALUES (
     (SELECT id FROM product WHERE name = 'Brownie'),
     (SELECT id FROM category WHERE name = 'Desserts')
 );
-
 
 -- Drinks
 INSERT INTO product_category (product_id, category_id) VALUES (
