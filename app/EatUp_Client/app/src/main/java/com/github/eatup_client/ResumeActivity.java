@@ -30,11 +30,13 @@ public class ResumeActivity extends AppCompatActivity {
 
     private static final String TAG = ResumeActivity.class.getSimpleName();
     private Button btnConfirmOrder;
+    private Button btnDeleteOrder;
     private ImageView ivBackButton;
     private TextView tvResume;
     private List<OrderProduct> orderProducts;
     private ProductApiService productApiService;
     private MVCManager mvcManager;
+    private Vibrator vibrator;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,7 @@ public class ResumeActivity extends AppCompatActivity {
 
         // Initialize views
         btnConfirmOrder = findViewById(R.id.btnResumeOrder);
+        btnDeleteOrder = findViewById(R.id.btnDeleteOrder);
         ivBackButton = findViewById(R.id.ivBackButton);
         tvResume = findViewById(R.id.tvResume);
 
@@ -77,6 +80,12 @@ public class ResumeActivity extends AppCompatActivity {
             Log.d(TAG, "onClick: " + orderProducts);
         });
 
+        // Action when the delete order button is clicked
+        btnDeleteOrder.setOnClickListener(v -> {
+            mvcManager.clear();
+            goNewActivity(MenuActivity.class);
+        });
+
         // Action when the back button is clicked
         ivBackButton.setOnClickListener(v -> goNewActivity(MenuActivity.class));
     }
@@ -88,7 +97,7 @@ public class ResumeActivity extends AppCompatActivity {
         productApiService.submitOrder(orderProducts);
         goNewActivity(MenuActivity.class);
 
-        Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         if (vibrator != null) {
             vibrator.vibrate(500);
         }

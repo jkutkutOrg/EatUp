@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         this.connectivityManager = connectivityManager;
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setFullScreenWindowFlags();
         setContentView(R.layout.activity_main);
 
+        connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
         productApiService = new ProductApiService(this);
 
         if (!isNetworkAvailable()) {
@@ -87,16 +87,20 @@ public class MainActivity extends AppCompatActivity {
     void showNoInternetDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle("No Internet Connection");
-        builder.setMessage("Please check your internet connection and try again");
-        builder.setPositiveButton("Retry", (dialog, which) -> {
+        builder.setTitle(R.string.main_activity_no_internet_dialog_title);
+        builder.setMessage(R.string.main_activity_no_internet_dialog_message);
+        builder.setPositiveButton(R.string.main_activity_no_internet_dialog_button,
+                (dialog, which) -> {
             if (isNetworkAvailable()) {
                 setContentView(R.layout.activity_main);
             } else {
                 showNoInternetDialog();
             }
         });
-        builder.setNegativeButton("Exit", (dialog, which) -> finish());
+        builder.setNegativeButton(R.string.main_activity_no_internet_dialog_cancel,
+                (dialog, which) -> {
+            finish();
+        });
         builder.setCancelable(false);
         builder.show();
     }

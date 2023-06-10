@@ -42,14 +42,14 @@
                     android:textColor="@color/text_color_black"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Bottega Ristorante"/>
+                    android:text="@string/bottega_ristorante" />
 
                 <TextView
                     android:id="@+id/city_name"
                     android:textColor="@color/text_color_gray"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Italian Resto"/>
+                    android:text="@string/italian_resto" />
             </LinearLayout>
 
             <TextView
@@ -58,7 +58,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:padding="5dp"
-                android:text="0.00$"
                 android:textColor="@color/text_color_black"
                 android:textSize="20sp" />
 
@@ -96,17 +95,17 @@
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/st_button_rounded"
-            android:text="Generate order"
+            android:text="@string/generate_order"
             android:textColor="@color/text_color_black" />
 
         <Button
-            android:id="@+id/btnResumeBill"
+            android:id="@+id/btnDeleteOrder"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
             android:layout_weight="1"
             android:background="@drawable/st_button_rounded"
-            android:text="Get bill"
+            android:text="@string/delete_order"
             android:textColor="@color/text_color_black" />
     </LinearLayout>
 

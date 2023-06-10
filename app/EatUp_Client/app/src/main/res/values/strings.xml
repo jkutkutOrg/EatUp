@@ -33,4 +33,10 @@
     <string name="qr_manual_invalid_auth_words">Invalid authentication words</string>
     <string name="qr_camera_permission_denied">Camera permission is required to scan QR codes</string>
     <string name="qr_activity_invalid_qr">Invalid QR code\\nPlease try again</string>
+    <string name="main_activity_no_internet_dialog_title">No Internet Connection\n</string>
+    <string name="main_activity_no_internet_dialog_message">Please check your internet connection and try again</string>
+    <string name="main_activity_no_internet_dialog_button">Retry</string>
+    <string name="main_activity_no_internet_dialog_cancel">Exit</string>
+    <string name="generate_order">Generate order</string>
+    <string name="delete_order">Delete order</string>
 </resources>
