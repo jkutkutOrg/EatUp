@@ -14,6 +14,8 @@
 - [ ] Focus listeners 
   - [x] staff
   - [ ] In setup too
+- [ ] Setup:
+  - [ ] Responsive table
 
 - [x] Modularize into components
 

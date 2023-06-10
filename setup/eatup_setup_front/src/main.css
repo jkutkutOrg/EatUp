@@ -1,4 +1,26 @@
 @import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
+
+:root {
+  --eatup_yellow: #FFC83A;
+  --eatup_light_yellow: #FFCE50;
+  --eatup_red: #FE554A;
+  --eatup_light_red: #FF685E;
+  --eatup_green: #0B735F;
+  --eatup_dark_grey: #C6C9CC;
+  --eatup_grey: #DFE2E5;
+  --eatup_background: #F7F7FB;
+  --black: #FF000000;
+  --white: #FFFFFFFF;
+  --transparent: #00000000;
+
+  --text_color_yellow: #FFC83A;
+  --text_color_black: #1C1C1C;
+  --text_color_gray: #3D3D3D;
+  --text_color_white: #FFFFFFFF;
+  --text_color_red: #FE554A;
+  --text_color_dark_red: #F93F00;
+}
+
 table,
 thead,
 tr,
@@ -13,14 +35,17 @@ td {
 }
 
 body {
-    /* --bs-dark: header color */
-    --bg-color: #292d31;
-    --color: #adb5db;
+  --bg-color: #292d31;
+  --color: var(--white);
 
-    height: 100vh;
+  height: 100vh;
 
-    color: var(--color);
-    background-color: var(--bg-color);
+  color: var(--color);
+  background-color: var(--bg-color);
 
-    overflow: hidden;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
 }
