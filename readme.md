@@ -39,7 +39,7 @@ We welcome contributions to the Eatup project. If you'd like to contribute, plea
 
 ## License 📄
 
-Eatup is licensed under the [MIT license]([link-to-license](https://opensource.org/license/mit/)).
+Eatup is licensed under the [GNU LICENSE]([link-to-license](LICENSE)).
 
 ## Contact 📧
 
