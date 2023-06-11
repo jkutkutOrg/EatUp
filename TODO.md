@@ -10,6 +10,7 @@
 - [x] loading screen
 
 - [x] styling
+- [x] Modularize into components
 
 - [ ] 2 space indentation
   - [x] Server
@@ -18,26 +19,29 @@
     - [ ] front
     - [ ] back
   - [ ] staff
-- [ ] DB:
-  - [ ] Update docs: no img in allergies
+
 - [x] Focus listeners 
   - [x] staff
   - [x] setup
 - [ ] Setup:
   - [ ] Responsive table
-  - [ ] Update docs
-- [ ] staff
-  - [ ] reduce landing page img
+- [x] staff
+  - [x] reduce landing page img
   - [x] BUG price
-  - [ ] BUG logo not stored as asset
-- [ ] Server:
-  - [ ] Update docs
+  - [x] BUG logo not stored as asset
+- [ ] Documentation:
+  - [ ] Setup
+    - [ ] Update docs
+  - [ ] Staff
+    - [ ] Update docs
+  - [ ] Server
     - [ ] Images
+  - [ ] DB:
+    - [ ] Update docs: no img in allergies
 - [ ] Testing:
   - [ ] Import postman tests
   - [ ] Refactor addOrder.js
 
-- [x] Modularize into components
 
 - [ ] Dockerize
 - [ ] Update server docker

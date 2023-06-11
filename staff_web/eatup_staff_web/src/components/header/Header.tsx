@@ -1,4 +1,4 @@
-import appLogo from '../../assets/logo.png';
+import appLogo from '../../assets/logo/logo.png';
 import ghLogo from '../../assets/header/github.png';
 import HeaderOption from '../../model/header/HeaderOption';
 import Menu from '../../model/App/Menu';
