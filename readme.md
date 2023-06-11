@@ -24,10 +24,30 @@ Eatup harnesses several cutting-edge technologies to deliver a robust and effici
 
 ## Setup 🚀
 
-To get started with Eatup, follow these steps:
+Getting started with Eatup is a straightforward process with a minimal set of prerequisites. Follow the steps outlined below to get up and running:
 
-1. Clone the repository to your local system.
-2. Ensure you've met the system requirements as outlined in the [User Manual]((https://github.com/jkutkutOrg/EatUp/wiki/use_manual)).
+### Prerequisites
+
+Before starting the setup process, ensure that your system meets the following requirements:
+
+- **Docker:** Make sure you have the latest version of Docker installed to handle the containerization of our services.
+- **Bash:** Bash is necessary to execute shell scripts.
+- **Curl:** This tool will allow you to fetch the setup scripts.
+- **Internet connection:** Ensure you have a stable internet connection to fetch necessary data and scripts.
+
+### Installation
+
+Once you have all the prerequisites in place, you can start setting up Eatup with a single command:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/jkutkutorg/EatUp/main/setup/start.sh | bash
+```
+
+This command pulls the setup script from the repository and pipes it to Bash, which then executes the script. The script starts the Dockers containers for the necessary Eatup services.
+
+Upon successful execution, the terminal will output a URL. You can use this URL to access the setup service. Your Eatup system is now up and running, ready for you to revolutionize your dining experience.
+
+Please refer to our [User Manual](https://github.com/jkutkutOrg/EatUp/wiki/use_manual) for more detailed information on how to use the Eatup application and service.
 
 ## Usage 💡
 
