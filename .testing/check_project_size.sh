@@ -10,3 +10,4 @@ for file in $(echo $files2check); do
 done
 
 echo "Nice!"
+echo "Note that files like *.json, *.xml, *.css or *.html are not counted."
