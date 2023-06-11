@@ -1,7 +1,8 @@
 //!/usr/bin/env node
 
 // const ip = "http://localhost:80"
-const ip = "http://172.17.0.5:80"
+// const ip = "http://172.17.0.5:80"
+const ip = "http://159.69.216.101:80"
 const products = `${ip}/api/v1/products`
 const orders = `${ip}/api/v1/orders`
 
@@ -20,7 +21,7 @@ const getRandomOrder = (products) => {
   }
 }
 
-session_id = "0c22753f-9f62-415d-8304-095076b0d473".trim();
+session_id = "56d3e2a4-4d1e-4f9c-8c66-5f7abe87e67e".trim();
 console.log(`session_id: ${session_id}`);
 
 fetch(products, {
