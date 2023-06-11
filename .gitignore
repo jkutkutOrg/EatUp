@@ -1,4 +1,6 @@
 *.swp
+.env
+.secrets
 
 # Gradle files
 .gradle/
@@ -38,3 +40,6 @@ google-services.json
 out/
 target/
 .idea/
+
+# Eatup:
+db/public/qr/

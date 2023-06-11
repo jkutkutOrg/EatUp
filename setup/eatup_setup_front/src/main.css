@@ -1,0 +1,26 @@
+@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css');
+table,
+thead,
+tr,
+tbody,
+th,
+td {
+  text-align: center;
+}
+
+.table td {
+  text-align: center;
+}
+
+body {
+    /* --bs-dark: header color */
+    --bg-color: #292d31;
+    --color: #adb5db;
+
+    height: 100vh;
+
+    color: var(--color);
+    background-color: var(--bg-color);
+
+    overflow: hidden;
+}

@@ -1,0 +1,395 @@
+{
+    "name": "EatUp Setup Server",
+    "description": "Here you will find the documentation of the setup_server microservice of the EatUp project.",
+    "apis": [
+        {
+            "title": "Status",
+            "description": "All the logic to handle the status of the project. Implemented as a finite state machine.",
+            "route": "/api/v1",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "/status",
+                    "description": "Get the status of the project.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "The project is not installed nor created.",
+                            "endpoint": "/api/v1/status",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"not_created\""
+                            ]
+                        },
+                        {
+                            "description": "The project is created but not installed.",
+                            "endpoint": "/api/v1/status",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"created\""
+                            ]
+                        },
+                        {
+                            "description": "The project is created and installed.",
+                            "endpoint": "/api/v1/status",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"installed\""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/create",
+                    "description": "Creates the project. It can only be called if the project is not created.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "The project is not created.",
+                            "endpoint": "/api/v1/create",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": []
+                        },
+                        {
+                            "description": "The project has already been created.",
+                            "endpoint": "/api/v1/create",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Project already created"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/install",
+                    "description": "Installs the project. Creates the database. It can only be called if the project is created.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "The project is created.",
+                            "endpoint": "/api/v1/install",
+                            "data": [
+                                "{",
+                                "  \"db_usr\": \"XXXXXX\",",
+                                "  \"db_usr_passwd\": \"YYYYYY\",",
+                                "  \"server_port\": ZZZZZZ",
+                                "}"
+                            ],
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": []
+                        },
+                        {
+                            "description": "The project is not created.",
+                            "endpoint": "/api/v1/install",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Project not created"
+                            ]
+                        },
+                        {
+                            "description": "The project is already installed.",
+                            "endpoint": "/api/v1/install",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Project already installed"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/uninstall",
+                    "description": "Uninstalls the project. Can be called at any time.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Uninstalling the project.",
+                            "endpoint": "/api/v1/uninstall",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": []
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Microservices",
+            "description": "Logic to handle the microservices of the project.",
+            "route": "/api/v1/microservices",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "",
+                    "description": "Get the state of all microservices.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Get the state of all microservices of a not installed project.",
+                            "endpoint": "/api/v1/microservices",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    \"id\": null,",
+                                "    \"name\": \"YYYYYY\",",
+                                "    \"state\": \"ZZZZZZ\"",
+                                "    \"ip\": null,",
+                                "    \"port\": null",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        },
+                        {
+                            "description": "Get the state of all microservices of an installed project.",
+                            "endpoint": "/api/v1/microservices",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": [
+                                "[",
+                                "  {",
+                                "    \"id\": \"XXXXXX\",",
+                                "    \"name\": \"YYYYYY\",",
+                                "    \"state\": \"ZZZZZZ\"",
+                                "    \"ip\": \"AAAAAA\",",
+                                "    \"port\": BBBBBB",
+                                "  },",
+                                "  ...",
+                                "]"
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/start/:microservice_name",
+                    "description": "Starts a microservice.",
+                    "parameters": [
+                        {
+                            "name": "microservice_name",
+                            "description": "The name of the microservice to start.",
+                            "example": "eatup_db"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Start DB of a not installed project.",
+                            "endpoint": "/api/v1/microservices/start/eatup_db",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid action start for eatup_db"
+                            ]
+                        },
+                        {
+                            "description": "Start DB of an installed project.",
+                            "endpoint": "/api/v1/microservices/start/eatup_db",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": []
+                        },
+                        {
+                            "description": "Start DB when it is already running.",
+                            "endpoint": "/api/v1/microservices/start/eatup_db",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid action start for eatup_db"
+                            ]
+                        },
+                        {
+                            "description": "Start the server when DB is not running.",
+                            "endpoint": "/api/v1/microservices/start/eatup_server",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid action start for eatup_server"
+                            ]
+                        },
+                        {
+                            "description": "Start a microservice that does not exist.",
+                            "endpoint": "/api/v1/microservices/start/invalid_microservice",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "This container does not exist or belong to this project."
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "POST",
+                    "route": "/stop/:microservice_name",
+                    "description": "Stops a microservice.",
+                    "parameters": [
+                        {
+                            "name": "microservice_name",
+                            "description": "The name of the microservice to stop.",
+                            "example": "eatup_db"
+                        }
+                    ],
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Stop DB of a not installed project.",
+                            "endpoint": "/api/v1/microservices/stop/eatup_db",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid action stop for eatup_db"
+                            ]
+                        },
+                        {
+                            "description": "Stop DB of an installed project.",
+                            "endpoint": "/api/v1/microservices/stop/eatup_db",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 200,
+                            "response_body": []
+                        },
+                        {
+                            "description": "Stop server when it is already stopped and DB is stopped.",
+                            "endpoint": "/api/v1/microservices/stop/eatup_server",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 409,
+                            "response_body": [
+                                "Invalid action stop for eatup_server"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "title": "Special requests",
+            "description": "This section contains the documentation for the special requests",
+            "route": "/",
+            "endpoints": [
+                {
+                    "method": "GET",
+                    "route": "",
+                    "description": "Ping request to check if the server is up",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "Ping the server",
+                            "endpoint": "",
+                            "data": null,
+                            "response_description": "This is the result",
+                            "response_code": 200,
+                            "response_body": [
+                                "\"eatup_setup_server up and running!\""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "method": "OPTIONS",
+                    "route": "*",
+                    "description": "CORS preflight request.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "CORS preflight request",
+                            "endpoint": "/",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 204,
+                            "response_body": []
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "legend": [
+        {
+            "description": "This are the meanings of the symbols used in this document",
+            "legend": [
+                ["XXXXXX", "Some value that would be replaced for something else in the real situation."],
+                ["...", "More parameters can be added to the request"]
+            ]
+        },
+        [
+            {
+                "code": 200,
+                "meaning": "200 OK",
+                "description": "The request was successful."
+            },
+            {
+                "code": 204,
+                "meaning": "204 No Content",
+                "description": "The request was successful, but there is no content to return. Used for CORS preflight requests."
+            },
+            {
+                "code": 404,
+                "meaning": "404 Not Found",
+                "description": "The resource does not exist."
+            },
+            {
+                "code": 409,
+                "meaning": "409 Conflict",
+                "description": "Something is not right with the request."
+            },
+            {
+                "code": 500,
+                "meaning": "500 Internal Server Error",
+                "description": "Something went wrong on the server. Please contact with the administrator."
+            },
+            {
+                "code": 501,
+                "meaning": "501 Not Implemented",
+                "description": "The endpoint is not implemented yet."
+            }
+        ],
+        {
+            "description": "This are the available states of a microservice",
+            "legend": [
+                ["Created", "The microservice has been created, but not started."],
+                ["Running", "The microservice is running."],
+                ["Restarting", "The microservice is restarting."],
+                ["Exited", "The microservice has exited."],
+                ["Paused", "The microservice is paused."],
+                ["Dead", "The microservice is dead."],
+                ["NotFound", "The microservice container does not exist."]
+            ]
+        }
+    ]
+}
