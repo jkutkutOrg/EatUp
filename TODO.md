@@ -13,17 +13,23 @@
 
 - [ ] 2 space indentation
   - [x] Server
+  - [x] db
+  - [ ] setup
+    - [ ] front
+    - [ ] back
+  - [ ] staff
 - [ ] DB:
   - [ ] Update docs: no img in allergies
-- [ ] Focus listeners 
+- [x] Focus listeners 
   - [x] staff
-  - [ ] In setup too
+  - [x] setup
 - [ ] Setup:
   - [ ] Responsive table
   - [ ] Update docs
 - [ ] staff
   - [ ] reduce landing page img
-  - [ ] BUG price
+  - [x] BUG price
+  - [ ] BUG logo not stored as asset
 - [ ] Server:
   - [ ] Update docs
     - [ ] Images

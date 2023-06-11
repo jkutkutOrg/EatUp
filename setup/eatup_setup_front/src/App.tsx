@@ -53,6 +53,9 @@ const App = () => {
   useEffect(() => {
     window.addEventListener("focus", updateStatus);
     updateStatus();
+    return () => {
+      window.removeEventListener("focus", updateStatus);
+    };
   }, []);
 
   const changeAction = (action: ApiEndpoint, body: any | null = null) => {

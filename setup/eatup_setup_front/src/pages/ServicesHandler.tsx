@@ -26,7 +26,13 @@ const ServicesHandler = ({ftUninstall}: Props) => {
         );
     };
 
-    useEffect(updateMicroservices, []);
+    useEffect(() => {
+        window.addEventListener("focus", updateMicroservices);
+        updateMicroservices();
+        return () => {
+            window.removeEventListener("focus", updateMicroservices);
+        };
+    }, []);
 
     const doAction = (action: MicroserviceAction, name: string) => {
         SetupApi.doMicroserviceAction(
