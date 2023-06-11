@@ -9,10 +9,9 @@ const toJson = async (response: Response) => await response.json();
 const toText = async (response: Response) => await response.text();
 
 class SetupApi extends API {
-    // TODO make attrs private
-    public static readonly ip = import.meta.env.DEV ? "localhost" : window.location.hostname;
-    public static readonly url = import.meta.env.DEV ? `http://${this.ip}:9000/api/v1` : `/api/v1`
-    public static readonly staffAppUrl = `http://${this.ip}:4000`;
+    private static readonly ip = import.meta.env.DEV ? "localhost" : window.location.hostname;
+    private static readonly url = import.meta.env.DEV ? `http://${this.ip}:9000/api/v1` : `/api/v1`
+    private static readonly staffAppUrl = import.meta.env.DEV ? `http://${this.ip}:4000` : `/staff.html`;
 
     private static formatEndpoint(endpoint: ApiEndpoint, options: string[]): string {
         if (options.length === 0)
@@ -113,10 +112,6 @@ class SetupApi extends API {
         return this.staffAppUrl;
     }
 }
-
-console.log("SetupApi.ip", SetupApi.ip); // TODO debug
-console.log("SetupApi.url", SetupApi.url);
-console.log("SetupApi.staffAppUrl", SetupApi.staffAppUrl);
 
 export default SetupApi;
 export { ApiEndpoint };

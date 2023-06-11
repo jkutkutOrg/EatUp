@@ -21,6 +21,9 @@
 - [ ] Setup:
   - [ ] Responsive table
   - [ ] Update docs
+- [ ] staff
+  - [ ] reduce landing page img
+  - [ ] BUG price
 - [ ] Server:
   - [ ] Update docs
     - [ ] Images

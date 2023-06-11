@@ -14,7 +14,7 @@ class MicroService {
     ) {
         this.id = id;
         this.name = name;
-        this.state = state; // ? TODO enum
+        this.state = state; // ? enum
         this.ip = ip;
         this.port = port;
     }

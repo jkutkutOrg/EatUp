@@ -3,7 +3,7 @@ interface Props {
 };
 
 const Price = ({price}: Props) => {
-  return price.toFixed(2) + "€";
+  return <>{price.toFixed(2)}€</>;
 }
 
 export default Price;

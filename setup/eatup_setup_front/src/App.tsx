@@ -17,7 +17,6 @@ const App = () => {
     SetupApi.getStatus(
       (rStatus: string) => {
         let newStatus;
-        console.log("Status str: ", rStatus); // TODO remove
         switch (rStatus) {
           case Status.NotConnected:
             newStatus = Status.NotConnected;
@@ -38,7 +37,6 @@ const App = () => {
             newStatus = Status.NotConnected;
             break;
         }
-        console.info("Status: ", newStatus) // TODO: Remove
         if (newStatus !== status)
           setStatus(newStatus);
       },
