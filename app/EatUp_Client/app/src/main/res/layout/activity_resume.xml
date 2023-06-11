@@ -1,0 +1,112 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ResumeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/ablResume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background_color"
+        android:theme="@style/Theme.EatUpClient.AppBarOverlay">
+
+        <LinearLayout
+            android:id="@+id/llResume"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:padding="0dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivBackButton"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.10"
+                android:padding="5dp"
+                android:layout_gravity="start"
+                android:src="@drawable/icons8_back" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:paddingStart="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRestaurantName"
+                    android:textColor="@color/text_color_black"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/bottega_ristorante" />
+
+                <TextView
+                    android:id="@+id/city_name"
+                    android:textColor="@color/text_color_gray"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/italian_resto" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvResume"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:padding="5dp"
+                android:textColor="@color/text_color_black"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvResumeProducts"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="5dp"
+        android:background="@color/background_color"
+        android:scrollbars="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/llResumeButtons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ablResume" />
+
+    <LinearLayout
+        android:id="@+id/llResumeButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="5dp"
+        android:weightSum="2"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <Button
+            android:id="@+id/btnResumeOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/st_button_rounded"
+            android:text="@string/generate_order"
+            android:textColor="@color/text_color_black" />
+
+        <Button
+            android:id="@+id/btnDeleteOrder"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/st_button_rounded"
+            android:text="@string/delete_order"
+            android:textColor="@color/text_color_black" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

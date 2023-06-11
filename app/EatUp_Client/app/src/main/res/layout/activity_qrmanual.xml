@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_color">
+
+    <ImageView
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_large"
+        android:src="@drawable/icon" />
+
+    <TextView
+        android:id="@+id/tvWelcomeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imgLogo"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:gravity="center"
+        android:text="@string/enter_the_qr_code_manual"
+        android:textColor="@color/text_color_black"
+        android:textSize="26sp"
+        android:fontFamily="@font/sf_pro_rounded_bold" />
+
+    <TextView
+        android:id="@+id/tvWelcomeSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvWelcomeTitle"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:layout_marginTop="@dimen/margin_large"
+        android:layout_marginEnd="@dimen/margin_medium"
+        android:gravity="center"
+        android:text="@string/enter_the_qr_code_manual_subtitle"
+        android:textColor="@color/text_color_gray"
+        android:textSize="14sp"
+        android:fontFamily="@font/sf_pro_rounded_bold" />
+
+    <LinearLayout
+        android:id="@+id/llOTPCodeFields"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_below="@+id/tvWelcomeSubtitle"
+        android:padding="25dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/edAuthWord1"
+            style="@style/OTPCodeField" />
+
+        <EditText
+            android:id="@+id/edAuthWord2"
+            style="@style/OTPCodeField" />
+
+        <EditText
+            android:id="@+id/edAuthWord3"
+            style="@style/OTPCodeField" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/llBottomMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical"
+        android:layout_marginBottom="@dimen/margin_large">
+
+        <Button
+            android:id="@+id/btnConfirmOTP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@drawable/st_button_rounded_color"
+            android:text="@string/btn_manual_confirm"
+            android:textColor="@color/text_color_white"
+            android:textSize="16sp"
+            android:fontFamily="@font/sf_pro_rounded_bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_small" />
+
+        <Button
+            android:id="@+id/bntReturnToScan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_medium"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginEnd="@dimen/margin_medium"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/sf_pro_rounded_medium"
+            android:text="@string/btn_manual_return_to_scan"
+            android:textColor="@color/text_color_black"
+            android:textSize="12sp" />
+    </LinearLayout>
+
+</RelativeLayout>

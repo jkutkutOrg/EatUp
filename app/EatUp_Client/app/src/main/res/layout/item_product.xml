@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="@drawable/st_button_rounded"
+    android:layout_margin="5dp"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/llProductAll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingStart="2dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/ivProductImage"
+            android:layout_width="0dp"
+            android:padding="10dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.7"
+            android:paddingStart="10dp"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvProductName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_black" />
+
+            <TextView
+                android:id="@+id/tvProductDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_gray" />
+
+            <TextView
+                android:id="@+id/tvProductPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/text_color_black" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llAddProduct"
+            android:layout_width="90dp"
+            android:visibility="visible"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnAddProduct"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.20"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_rounded_corners"
+                android:text="Add"
+                android:textColorHint="@color/text_color_yellow"
+                android:textColor="@color/text_color_gray" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llQuantity"
+            android:layout_width="90dp"
+            android:visibility="gone"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btnDecreaseQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_rounded_corners"
+                android:text="-"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:textColorHint="@color/text_color_yellow"
+                android:textColor="@color/text_color_gray" />
+
+            <TextView
+                android:id="@+id/tvQuantityText"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:background="@drawable/bg_rounded_corners"
+                android:text="1"
+                android:textColorHint="@color/text_color_yellow"
+                android:textColor="@color/text_color_gray"
+                android:gravity="center" />
+
+            <Button
+                android:id="@+id/btnIncreaseQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/bg_rounded_corners"
+                android:text="+"
+                android:textColorHint="@color/text_color_yellow"
+                android:textColor="@color/text_color_gray" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</LinearLayout>
