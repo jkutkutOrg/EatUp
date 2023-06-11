@@ -58,7 +58,7 @@ public class QRActivity extends AppCompatActivity {
 
         // Set click listener for problem scanner button
         btnProblemScanner.setOnClickListener(v -> {
-            goNewActivity(QRActivity.class);
+            goNewActivity(QRManualActivity.class);
         });
 
         // Initialize API service and vibrator
