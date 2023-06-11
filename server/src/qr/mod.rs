@@ -1,5 +1,6 @@
 use qrcode_generator::QrCodeEcc;
 
+#[cfg(debug_assertions)]
 fn print_qr(qr: Vec<Vec<bool>>) {
     let empty = "██";
     let filled = "  ";
@@ -32,7 +33,6 @@ fn generate_qr(content: &str, output_file: &str) {
     ).unwrap();
 }
 
-#[cfg(debug_assertions)]
 pub fn generate(content: &str, output_file: &str) {
     #[cfg(debug_assertions)]
     println!("Generating QR code: {}", output_file);

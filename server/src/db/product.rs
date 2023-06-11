@@ -74,7 +74,6 @@ pub async fn get_allergies(
         allergies.push(Allergy::new(
             row.get(0), // id
             row.get(1), // name
-            row.get(2) // img_id
         ));
     }
     allergies

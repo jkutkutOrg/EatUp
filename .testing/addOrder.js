@@ -1,16 +1,9 @@
 //!/usr/bin/env node
-// Nodejs
 
 // const ip = "http://localhost:80"
 const ip = "http://172.17.0.5:80"
 const products = `${ip}/api/v1/products`
 const orders = `${ip}/api/v1/orders`
-
-
-const readline = require('readline').createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
 
 const getRandomOrder = (products) => {
   const elements = Math.floor(Math.random() * 6) + 3;
@@ -27,7 +20,7 @@ const getRandomOrder = (products) => {
   }
 }
 
-session_id = "5a5cb63a-feba-41e3-b160-620b0bf1af63".trim();
+session_id = "0c22753f-9f62-415d-8304-095076b0d473".trim();
 console.log(`session_id: ${session_id}`);
 
 fetch(products, {
@@ -45,10 +38,20 @@ fetch(products, {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(data),
-  }).then(response => response.json())
+  }).then(response => {
+    if (response.status == 200) {
+      return response.json();
+    }
+    else {
+      return response.text().then(text => {
+        throw new Error(text);
+      });
+    }
+  })
   .then(data => {
     console.log('Success:', data);
-  }).catch((error) => {
-    console.error('Error:', error);
+  })
+  .catch((error) => {
+    console.error(error);
   });
 });

@@ -46,23 +46,19 @@ class Product {
 class Allergy {
     private id: string;
     private name: string;
-    private img_id: string;
 
     constructor(
         id: string,
         name: string,
-        img_id: string
     ) {
         this.id = id;
         this.name = name;
-        this.img_id = img_id;
     }
 
     private static fromJSON(json: any): Allergy {
         return new Allergy(
             json.id,
             json.name,
-            json.img_id
         );
     }
 

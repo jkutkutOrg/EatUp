@@ -11,11 +11,19 @@
 
 - [x] styling
 
+- [ ] 2 space indentation
+- [ ] DB:
+  - [ ] Update docs: no img in allergies
 - [ ] Focus listeners 
   - [x] staff
   - [ ] In setup too
 - [ ] Setup:
   - [ ] Responsive table
+- [ ] Server
+  - [ ] Update docs
+- [ ] Testing:
+  - [ ] Import postman tests
+  - [ ] Refactor addOrder.js
 
 - [x] Modularize into components
 

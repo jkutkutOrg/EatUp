@@ -10,7 +10,7 @@ pub struct Product {
     description: String,
     img_id: String,
     price: f32,
-    allergies: Vec<Allergy>, // ? TODO allergies or allergens?
+    allergies: Vec<Allergy>,
     categories: Vec<ProductCategory>
 }
 
@@ -39,20 +39,17 @@ impl Product {
 #[derive(Serialize, Deserialize)]
 pub struct Allergy {
     id: Uuid,
-    name: String,
-    img_id: String
+    name: String
 }
 
 impl Allergy {
     pub fn new(
         id: Uuid,
         name: String,
-        img_id: String
     ) -> Self {
         Self {
             id,
             name,
-            img_id
         }
     }
 }
