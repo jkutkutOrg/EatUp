@@ -158,7 +158,7 @@ INSERT INTO product (name, description, icon, price) VALUES (
 
 -- Drinks
 INSERT INTO product (name, description, icon, price) VALUES (
-  'Soft Drinks', 'Coca Cola, Nestea, Fanta', 'products/drinks/soft_drinks.jpg', 2.00
+  'Soft Drinks', 'Coca Cola, Nestea, Fanta', 'products/drinks/soft_drink.png', 2.00
 );
 INSERT INTO product (name, description, icon, price) VALUES (
   'Beer', '', 'products/drinks/beer.jpg', 3.00
