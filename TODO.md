@@ -34,9 +34,9 @@
     - [ ] Update docs
   - [ ] Staff
     - [ ] Update docs
-  - [ ] Server
-    - [ ] Images
-    - [ ] Update server src file: /api/v1/orders/:session_id
+  - [x] Server
+    - [x] Images
+    - [x] Update server src file: /api/v1/orders/:session_id
   - [ ] DB:
     - [ ] Update docs: no img in allergies
 - [ ] Testing:
