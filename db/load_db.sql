@@ -430,7 +430,7 @@ DECLARE
   output TEXT := '';
 BEGIN
   FOR i IN 0..2 LOOP
-      output := output || words[(hash_uuid / power(array_length(words, 1), i)::INTEGER) % array_length(words, 1) + 1] || ' ';
+    output := output || words[(hash_uuid / power(array_length(words, 1), i)::INTEGER) % array_length(words, 1) + 1] || ' ';
   END LOOP;
   RETURN TRIM(output);
 END
@@ -444,7 +444,7 @@ CREATE TABLE map_session_uuid (
 
 -- create_session
 -- inputs:
---     table_id
+--  table_id
 -- First, check if there is a session in progress for the table_id
 -- If there is, return error code
 -- If not, continue

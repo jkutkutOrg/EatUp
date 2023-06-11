@@ -1,6 +1,6 @@
 [package]
-name = "eatup"
-version = "0.9.0"
+name = "eatup_server"
+version = "1.0.0"
 edition = "2021"
 authors = ["Jkutkut"]
 
