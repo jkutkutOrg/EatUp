@@ -12,6 +12,7 @@
 - [x] styling
 
 - [ ] 2 space indentation
+  - [x] Server
 - [ ] DB:
   - [ ] Update docs: no img in allergies
 - [ ] Focus listeners 
@@ -19,8 +20,10 @@
   - [ ] In setup too
 - [ ] Setup:
   - [ ] Responsive table
-- [ ] Server
   - [ ] Update docs
+- [ ] Server:
+  - [ ] Update docs
+    - [ ] Images
 - [ ] Testing:
   - [ ] Import postman tests
   - [ ] Refactor addOrder.js
