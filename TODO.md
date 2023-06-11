@@ -12,19 +12,19 @@
 - [x] styling
 - [x] Modularize into components
 
-- [ ] 2 space indentation
+- [x] 2 space indentation
   - [x] Server
   - [x] db
-  - [ ] setup
-    - [ ] front
-    - [ ] back
-  - [ ] staff
+  - [x] setup
+    - [x] front
+    - [x] back
+  - [x] staff
 
 - [x] Focus listeners 
   - [x] staff
   - [x] setup
-- [ ] Setup:
-  - [ ] Responsive table
+- [x] Setup:
+  - [x] Responsive table
 - [x] staff
   - [x] reduce landing page img
   - [x] BUG price
@@ -36,14 +36,9 @@
     - [ ] Update docs
   - [ ] Server
     - [ ] Images
+    - [ ] Update server src file: /api/v1/orders/:session_id
   - [ ] DB:
     - [ ] Update docs: no img in allergies
 - [ ] Testing:
   - [ ] Import postman tests
   - [ ] Refactor addOrder.js
-
-
-- [ ] Dockerize
-- [ ] Update server docker
-  - [ ] Update documentation
-    - [ ] Update server src file: /api/v1/orders/:session_id

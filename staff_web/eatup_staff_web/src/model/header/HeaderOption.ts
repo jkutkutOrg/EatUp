@@ -1,6 +1,6 @@
 interface HeaderOption {
-    label: string;
-    onClick: () => void;
+  label: string;
+  onClick: () => void;
 }
 
 export default HeaderOption;

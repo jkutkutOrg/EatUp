@@ -1,5 +1,5 @@
 interface FtVoid {
-    (): void;
+  (): void;
 }
 
 export default FtVoid;

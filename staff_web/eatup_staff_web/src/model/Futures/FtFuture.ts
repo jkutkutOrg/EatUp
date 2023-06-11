@@ -1,5 +1,5 @@
 interface FtFuture<T, S> {
-    (data: T): Promise<S>;
+  (data: T): Promise<S>;
 }
 
 export default FtFuture;

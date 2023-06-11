@@ -1,5 +1,5 @@
 interface FtCreate {
-    (): void;
+  (): void;
 }
 
 export default FtCreate;

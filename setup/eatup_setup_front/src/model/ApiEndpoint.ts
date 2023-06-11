@@ -1,11 +1,11 @@
 enum ApiEndpoint {
-    Status = "/status",
+  Status = "/status",
 
-    Create = "/create",
-    Install = "/install",
-    Uninstall = "/uninstall",
+  Create = "/create",
+  Install = "/install",
+  Uninstall = "/uninstall",
 
-    Microservices = "/microservices",
+  Microservices = "/microservices",
 }
 
 export default ApiEndpoint;

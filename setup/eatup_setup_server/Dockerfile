@@ -1,7 +1,7 @@
 FROM jkutkut/docker4rust:latest as dev
 
 RUN apk add --update docker openrc && \
-    rc-update add docker boot
+  rc-update add docker boot
 
 # ------------------
 
@@ -9,8 +9,8 @@ FROM alpine:3.16 as release
 # * This should be run from the root of the project
 
 RUN apk add --update docker openrc && \
-    rc-update add docker boot; \
-    rm -rf /var/cache/apk/*
+  rc-update add docker boot; \
+  rm -rf /var/cache/apk/*
 
 WORKDIR /app
 
