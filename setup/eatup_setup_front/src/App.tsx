@@ -8,23 +8,37 @@ import FtUninstall from './model/FtApiActions/FtUninstall';
 import FtCreate from './model/FtApiActions/FtCreate';
 import SetupApi from './services/SetupApi';
 import ApiEndpoint from './model/ApiEndpoint';
-
-enum Status {
-  Connecting = "connecting",
-  NotConnected = "not_connected",
-  NotCreated = "not_created",
-  Created = "created",
-  Installed = "installed",
-};
+import Status from './model/Status';
 
 const App = () => {
-  const [status, setStatus] = useState<string>(Status.Connecting);
+  const [status, setStatus] = useState<Status>(Status.Connecting);
 
   const updateStatus = () => {
     SetupApi.getStatus(
       (rStatus: string) => {
-          if (rStatus !== status)
-            setStatus(rStatus);
+        let newStatus;
+        switch (rStatus) {
+          case Status.NotConnected:
+            newStatus = Status.NotConnected;
+            break;
+          case Status.Connecting:
+            newStatus = Status.Connecting;
+            break;
+          case Status.Installed:
+            newStatus = Status.Installed;
+            break;
+          case Status.Created:
+            newStatus = Status.Created;
+            break;
+          case Status.NotCreated:
+            newStatus = Status.NotCreated;
+            break;
+          default:
+            newStatus = Status.NotConnected;
+            break;
+        }
+        if (newStatus !== status)
+          setStatus(newStatus);
       },
       (e: string) => {
           setStatus(Status.NotConnected);
@@ -39,6 +53,9 @@ const App = () => {
   useEffect(() => {
     window.addEventListener("focus", updateStatus);
     updateStatus();
+    return () => {
+      window.removeEventListener("focus", updateStatus);
+    };
   }, []);
 
   const changeAction = (action: ApiEndpoint, body: any | null = null) => {
@@ -89,7 +106,7 @@ const App = () => {
   }
 
   return <>
-    <Header onRefresh={updateStatus}/>
+    <Header status={status} onRefresh={updateStatus}/>
     {body}
   </>;
 }

@@ -7,9 +7,9 @@ import logo from './assets/img/eatup_logo.png'
 
 var link = document.querySelector("link[rel~='icon']") as HTMLLinkElement;
 if (!link) {
-    link = document.createElement('link');
-    link.rel = 'icon';
-    document.head.appendChild(link);
+  link = document.createElement('link');
+  link.rel = 'icon';
+  document.head.appendChild(link);
 }
 link.href = logo;
 

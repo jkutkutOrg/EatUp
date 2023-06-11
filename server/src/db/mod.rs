@@ -5,9 +5,9 @@ use rocket::http::{Status};
 
 use crate::qr;
 use crate::{
-    ERROR_INVALID_SESSION_ID,
-    ERROR_NO_PRODUCTS_ORDER,
-    ERROR_INVALID_PRODUCT_ID
+  ERROR_INVALID_SESSION_ID,
+  ERROR_NO_PRODUCTS_ORDER,
+  ERROR_INVALID_PRODUCT_ID
 };
 use crate::tools::{route_error::InvalidAPI};
 use crate::api::*;

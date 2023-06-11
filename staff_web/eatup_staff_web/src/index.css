@@ -1,0 +1,97 @@
+:root {
+  --eatup_yellow: #FFC83A;
+  --eatup_light_yellow: #FFCE50;
+  --eatup_red: #FE554A;
+  --eatup_light_red: #FF685E;
+  --eatup_green: #0B735F;
+  --eatup_dark_grey: #C6C9CC;
+  --eatup_grey: #DFE2E5;
+  --eatup_background: #F7F7FB;
+  --black: #FF000000;
+  --white: #FFFFFFFF;
+  --transparent: #00000000;
+
+  --text_color_yellow: #FFC83A;
+  --text_color_black: #1C1C1C;
+  --text_color_gray: #3D3D3D;
+  --text_color_white: #FFFFFFFF;
+  --text_color_red: #FE554A;
+  --text_color_dark_red: #F93F00;
+}
+
+body {
+  --bg-color: #292d31;
+  --color: var(--white);
+
+  height: 100vh;
+
+  color: var(--color);
+  background-color: var(--bg-color);
+
+  overflow-x: hidden;
+}
+
+.eatup-landing {
+  padding: 9px;
+  height: calc(100vh - 58px);
+  --bg-gradient: linear-gradient(200deg, #FFC83A 0%, #ff8e5e 100%);
+  background: var(--bg-gradient);
+}
+
+.landing-header {
+  font-size: calc(2.5rem + 1.5vw);
+  font-weight: bold;
+  color: var(--text_color_dark_red);
+}
+
+.landing-img {
+  padding: 20px;
+  max-height: 75vh;
+}
+
+.landing-btn, .landing-btn:hover, .landing-btn:first-child:active {
+  width: 80%;
+  border-radius: 5px;
+  background-color: var(--eatup_light_yellow);
+  color: var(--text_color_red);
+  font-weight: bold;
+
+  margin-top: 20px;
+
+  border: none;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 15px;
+}
+
+.landing-btn:hover {
+  background-color: var(--eatup_yellow);
+}
+
+.btn-dark {
+  transform: translateY(-1.5px);
+  box-shadow: 0px 3px 0px rgba(223, 223, 223, 0.25);
+  transition: all 0.1s ease-in-out;
+}
+
+.btn-dark:hover {
+  transform: translateY(0px);
+  box-shadow: 0px 1.5px 0px rgba(223, 223, 223, 0.25);
+}
+
+.btn-dark:active {
+  transform: translateY(1.5px);
+  box-shadow: 0px 0px 0px rgba(223, 223, 223, 0.25);
+}
+
+.modal-header, .modal-footer, .modal-content {
+  background-color: var(--bg-color);
+  border: none;
+}
+
+.modal-header .btn-close {
+  --bs-btn-close-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+}
+
+hr {
+  border-top: 3px solid var(--eatup_dark_grey);
+}

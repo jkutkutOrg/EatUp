@@ -291,11 +291,11 @@
         {
             "title": "Orders",
             "description": "Logic to manage the orders made by the clients in a session.",
-            "route": "/orders",
+            "route": "/api/v1",
             "endpoints": [
                 {
                     "method": "GET",
-                    "route": "/session/:session_id",
+                    "route": "/orders/:session_id",
                     "description": "Fetch all the orders of a session",
                     "parameters": [
                         {
@@ -308,7 +308,7 @@
                     "examples": [
                         {
                             "description": "Get all the orders of the session with id `AAAAAAA`",
-                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "endpoint": "/api/v1/orders/AAAAAAA",
                             "data": null,
                             "response_description": "This is the result",
                             "response_code": 200,
@@ -355,7 +355,7 @@
                         },
                         {
                             "description": "Attempt to get all the orders with invalid session_id `AAAAAAA`",
-                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "endpoint": "/api/v1/orders/AAAAAAA",
                             "data": null,
                             "response_description": "This is the result",
                             "response_code": 409,
@@ -367,7 +367,7 @@
                 },
                 {
                     "method": "POST",
-                    "route": "/session/:session_id",
+                    "route": "/orders/:session_id",
                     "description": "Create a new order in a session",
                     "parameters": [
                         {
@@ -380,7 +380,7 @@
                     "examples": [
                         {
                             "description": "Create a new order in the session with id `AAAAAAA`",
-                            "endpoint": "/api/v1/orders/session/AAAAAAA",
+                            "endpoint": "/api/v1/orders/AAAAAAA",
                             "data": [
                                 "{",
                                 "  \"products\": [",
@@ -424,7 +424,7 @@
                         },
                         {
                             "description": "Create a new order in invalid session with id `BBBBBBB`",
-                            "endpoint": "/api/v1/orders/session/BBBBBBB",
+                            "endpoint": "/api/v1/orders/BBBBBBB",
                             "data": [
                                 "{",
                                 "  \"products\": [",
@@ -509,7 +509,7 @@
                     "examples": [
                         {
                             "description": "Get QR png",
-                            "endpoint": "/qr/AAAAAAA.png",
+                            "endpoint": "qr/AAAAAAA.png",
                             "data": null,
                             "response_description": "This is the result",
                             "response_code": 200,
@@ -519,13 +519,30 @@
                         },
                         {
                             "description": "Get qr that does not exist",
-                            "endpoint": "/qr/BBBBBBB.png",
+                            "endpoint": "qr/BBBBBBB.png",
                             "data": null,
                             "response_description": "This is the result",
                             "response_code": 404,
                             "response_body": [
                                 "\"QR not found. Are you sure the QR should be valid?\""
                             ]
+                        }
+                    ]
+                },
+                {
+                    "method": "OPTIONS",
+                    "route": "*",
+                    "description": "CORS preflight request.",
+                    "parameters": null,
+                    "filters": null,
+                    "examples": [
+                        {
+                            "description": "CORS preflight request",
+                            "endpoint": "/",
+                            "data": null,
+                            "response_description": "",
+                            "response_code": 204,
+                            "response_body": []
                         }
                     ]
                 }

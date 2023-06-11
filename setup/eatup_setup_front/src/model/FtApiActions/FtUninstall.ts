@@ -1,5 +1,5 @@
 interface FtUninstall {
-    (): void;
+  (): void;
 }
 
 export default FtUninstall;
