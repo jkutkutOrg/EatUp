@@ -17,4 +17,4 @@ echo
 echo
 echo "Starting setup service"
 
-docker run -it --rm --name eatup_setup -p $port:$port -v eatup_installation:/installation:rw -v /var/run/docker.sock:/var/run/docker.sock:rw jkutkut/eatup:setup_latest $port
+docker run -t --rm --name eatup_setup -p $port:$port -v eatup_installation:/installation:rw -v /var/run/docker.sock:/var/run/docker.sock:rw jkutkut/eatup:setup_latest $port
