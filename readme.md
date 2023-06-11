@@ -27,11 +27,11 @@ Eatup harnesses several cutting-edge technologies to deliver a robust and effici
 To get started with Eatup, follow these steps:
 
 1. Clone the repository to your local system.
-2. Ensure you've met the system requirements as outlined in the [User Manual]([link-to-user-manual](https://github.com/jkutkutOrg/EatUp/wiki/use_manual)).
+2. Ensure you've met the system requirements as outlined in the [User Manual]((https://github.com/jkutkutOrg/EatUp/wiki/use_manual)).
 
 ## Usage 💡
 
-For a detailed guide on how to use Eatup and its range of features, check out our [User Manual]([link-to-user-manual](https://github.com/jkutkutOrg/EatUp/wiki/use_manual)).
+For a detailed guide on how to use Eatup and its range of features, check out our [User Manual]((https://github.com/jkutkutOrg/EatUp/wiki/use_manual)).
 
 ## Contributions 🤝
 
@@ -39,7 +39,7 @@ We welcome contributions to the Eatup project. If you'd like to contribute, plea
 
 ## License 📄
 
-Eatup is licensed under the [GNU LICENSE]([link-to-license](LICENSE)).
+Eatup is licensed under the [GNU LICENSE](LICENSE).
 
 ## Contact 📧
 
