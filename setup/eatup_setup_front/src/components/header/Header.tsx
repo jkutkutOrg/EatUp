@@ -1,6 +1,7 @@
 import appLogo from '../../assets/img/eatup_logo.png';
 import ghLogo from '../../assets/img/github.png';
 import Status from '../../model/Status';
+import SetupApi from '../../services/SetupApi';
 
 interface Props {
   onRefresh: () => void;
@@ -8,14 +9,14 @@ interface Props {
 }
 
 function Header({status, onRefresh}: Props) {
-  const staffHref = "http://localhost:4000"; // TODO
+  const staffHref = SetupApi.getStaffAppUrl();
 
   return <header className='sticky-top'>
     <div className="navbar bg-dark justify-content-between" style={{
       padding: "0px 9px",
     }}>
       <div className="col">
-        <img src={appLogo} alt="GitHub" width="42" height="42"/>
+        <img src={appLogo} alt="Logo" width="42" height="42" onClick={onRefresh}/>
       </div>
       <div className="col text-center">
         {status == Status.Installed &&

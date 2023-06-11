@@ -1,19 +1,3 @@
-askData() {
-	question="$1"
-	default="$2"
-
-	if [ ! "$default" = "" ]; then
-			question="$question [$default]: ";
-	fi
-
-	read -p "$question" data
-
-	if [ "$data" = "" ]; then
-			data="$default"
-	fi
-}
-
-
 images="\
 	jkutkut/eatup:db_latest \
 	jkutkut/eatup:server_latest \
@@ -28,9 +12,8 @@ for i in $images; do
 		exit 1;
 	}
 done
-
+port=9000
 echo
-askData "Port to use in the setup service" "9000"; port=$data
 echo
 echo "Starting setup service"
 

@@ -32,6 +32,7 @@ class API {
             headers = ApiHeaders.json;
             body = JSON.stringify(body);
         }
+        console.info("API: get", url + endpoint); // TODO debug
         return fetch(
             url + endpoint,
             {
