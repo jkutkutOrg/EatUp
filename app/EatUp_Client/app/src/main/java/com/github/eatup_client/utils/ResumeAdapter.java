@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder> {
     private List<OrderProduct> orderProducts;
+    private final String URL = "http://159.69.216.101/";
 
     public ResumeAdapter(List<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
@@ -83,9 +84,8 @@ public class ResumeAdapter extends RecyclerView.Adapter<ResumeAdapter.ViewHolder
             productPrice.setText("$" + orderProduct.getProduct().getPrice());
             productDescription.setText(orderProduct.getProduct().getDescription());
             Picasso.get()
-                    .load("https://www.vips.es/sites/default/files/styles/optimize/public/product/vips/croquetas_categoria.png?itok=4F5ld5el") // Reemplaza "R.drawable.example_salad_img" con el recurso de imagen de ejemplo
-                    .placeholder(R.drawable.ic_load_image)  // Reemplaza "R.drawable.placeholder_image" con el recurso de imagen de marcador de posición
-                    .error(R.drawable.ic_error_load)  // Reemplaza "R.drawable.error_image" con el recurso de imagen de error
+                    .load(URL + orderProduct.getProduct().getImg_id())
+                    .error(R.drawable.ic_error_load)
                     .into(productImage);
 
             llQuantity.setVisibility(View.VISIBLE);

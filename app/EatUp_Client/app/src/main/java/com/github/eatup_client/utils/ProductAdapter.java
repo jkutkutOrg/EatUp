@@ -1,6 +1,7 @@
 package com.github.eatup_client.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private Map<Product, OrderProduct> orderProductMap;
     private MVCManager mvcManager;
     private Context context;
+    private final String URL = "http://159.69.216.101/";
 
     public ProductAdapter(Context context) {
         this.context = context;
@@ -130,10 +132,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             productPrice.setText("$" + product.getPrice());
             productDescription.setText(product.getDescription());
 
+            Log.d("ProductAdapter", "bind: " + URL + product.getImg_id());
+
             Picasso.get()
-                    .load("https://www.vips.es/sites/default/files/styles/optimize/public/product/vips/croquetas_categoria.png?itok=4F5ld5el") // Reemplaza "R.drawable.example_salad_img" con el recurso de imagen de ejemplo
-                    .placeholder(R.drawable.ic_load_image)  // Reemplaza "R.drawable.placeholder_image" con el recurso de imagen de marcador de posición
-                    .error(R.drawable.ic_error_load)  // Reemplaza "R.drawable.error_image" con el recurso de imagen de error
+                    .load(URL + product.getImg_id())
+                    .error(R.drawable.ic_error_load)
                     .into(productImage);
 
             updateQuantityView();

@@ -54,15 +54,12 @@ public class PlaceholderFragment extends Fragment {
                 category = "Starters";
                 break;
             case 2:
-                category = "Appetizers";
-                break;
-            case 3:
                 category = "Main Courses";
                 break;
-            case 4:
+            case 3:
                 category = "Desserts";
                 break;
-            case 5:
+            case 4:
                 category = "Drinks";
                 break;
             default:

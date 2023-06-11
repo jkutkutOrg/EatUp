@@ -18,7 +18,6 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
     @StringRes
     private static final int[] TAB_TITLES = new int[]{
             R.string.tab_category_starters,
-            R.string.tab_category_appetizers,
             R.string.tab_category_main_courses,
             R.string.tab_category_desserts,
             R.string.tab_category_drinks,
