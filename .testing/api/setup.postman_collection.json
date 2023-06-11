@@ -1,0 +1,2106 @@
+{
+	"info": {
+		"_postman_id": "19afdcbe-032a-47b9-a774-ad06c78af7c8",
+		"name": "setup",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26729438"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "status",
+					"item": [
+						{
+							"name": "status",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/status",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"status"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "status installed",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/status",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "11"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:40:09 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "\"installed\""
+								},
+								{
+									"name": "status not_created",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/status",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "13"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:41:08 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "\"not_created\""
+								},
+								{
+									"name": "status created",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/status",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"status"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "9"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:41:22 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "\"created\""
+								}
+							]
+						},
+						{
+							"name": "create",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/create",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"create"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/create",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"create"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:47:49 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "invalid create",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/create",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"create"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "23"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:47:58 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "Project already created"
+								}
+							]
+						},
+						{
+							"name": "install",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"db_usr\": \"admin\",\n    \"db_usr_passwd\": \"adminadmin\",\n    \"server_port\": 8000\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/install",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"install"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "install",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"db_usr\": \"admin\",\n    \"db_usr_passwd\": \"adminadmin\",\n    \"server_port\": 8000\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/install",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"install"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:56:14 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "invalid install 1",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"db_usr\": \"admin\",\n    \"db_usr_passwd\": \"adminadmin\",\n    \"server_port\": 8000\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/install",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"install"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "25"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:56:27 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "Project already installed"
+								},
+								{
+									"name": "invalid install 2",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"db_usr\": \"admin\",\n    \"db_usr_passwd\": \"adminadmin\",\n    \"server_port\": 8000\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/install",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"install"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "19"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 20:58:40 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "Project not created"
+								}
+							]
+						},
+						{
+							"name": "uninstall",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/uninstall",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"uninstall"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "uninstall",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/uninstall",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"uninstall"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:01:59 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "microservices",
+					"item": [
+						{
+							"name": "microservices",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/microservices",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"microservices"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "microservices",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "147"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:08:17 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": null,\n        \"name\": \"eatup_db\",\n        \"state\": \"NotFound\",\n        \"ip\": null,\n        \"port\": null\n    },\n    {\n        \"id\": null,\n        \"name\": \"eatup_server\",\n        \"state\": \"NotFound\",\n        \"ip\": null,\n        \"port\": null\n    }\n]"
+								},
+								{
+									"name": "microservices",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "197"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:11:39 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"79d939bca04a\",\n        \"name\": \"eatup_db\",\n        \"state\": \"Running\",\n        \"ip\": \"172.17.0.5\",\n        \"port\": \"\"\n    },\n    {\n        \"id\": \"4850cec93d18\",\n        \"name\": \"eatup_server\",\n        \"state\": \"Running\",\n        \"ip\": \"172.17.0.6\",\n        \"port\": \"80/tcp -> 0.0.0.0:80\"\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "start_db",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_db",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"microservices",
+										"start",
+										"eatup_db"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "start_db",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_db",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"eatup_db"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:25:27 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "invalid start_db",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_db",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"eatup_db"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "33"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:14:05 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid action start for eatup_db"
+								}
+							]
+						},
+						{
+							"name": "start_random",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/microservices/start/random",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"microservices",
+										"start",
+										"random"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "start_db",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_db",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"eatup_db"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:25:27 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "invalid start_db",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_db",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"eatup_db"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "33"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:14:05 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid action start for eatup_db"
+								},
+								{
+									"name": "start_db Copy",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/random",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"random"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "56"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:34:58 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "This container does not exist or belong to this project."
+								}
+							]
+						},
+						{
+							"name": "stop_db",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/microservices/stop/eatup_db",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"microservices",
+										"stop",
+										"eatup_db"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "stop_db",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/stop/eatup_db",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"stop",
+												"eatup_db"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:30:31 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								}
+							]
+						},
+						{
+							"name": "start_server",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_server",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"microservices",
+										"start",
+										"eatup_server"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "start_server",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_server",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"eatup_server"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "0"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:24:56 GMT"
+										}
+									],
+									"cookie": [],
+									"body": null
+								},
+								{
+									"name": "invalid start_server db",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/api/v1/microservices/start/eatup_server",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"api",
+												"v1",
+												"microservices",
+												"start",
+												"eatup_server"
+											]
+										}
+									},
+									"status": "Conflict",
+									"code": 409,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "access-control-allow-origin",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-methods",
+											"value": "POST, GET, PATCH, OPTIONS"
+										},
+										{
+											"key": "access-control-allow-headers",
+											"value": "*"
+										},
+										{
+											"key": "access-control-allow-credentials",
+											"value": "false"
+										},
+										{
+											"key": "access-control-max-age",
+											"value": "86400"
+										},
+										{
+											"key": "content-length",
+											"value": "27"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 21:34:20 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "DB container is not running"
+								}
+							]
+						},
+						{
+							"name": "stop_server",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/microservices/stop/eatup_server",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"microservices",
+										"stop",
+										"eatup_server"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip}}:{{port}}/",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "status installed",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/status",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "server",
+									"value": "Rocket"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "permissions-policy",
+									"value": "interest-cohort=()"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "POST, GET, PATCH, OPTIONS"
+								},
+								{
+									"key": "access-control-allow-headers",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "false"
+								},
+								{
+									"key": "access-control-max-age",
+									"value": "86400"
+								},
+								{
+									"key": "content-length",
+									"value": "11"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 30 May 2023 20:40:09 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "\"installed\""
+						},
+						{
+							"name": "status not_created",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/status",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "server",
+									"value": "Rocket"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "permissions-policy",
+									"value": "interest-cohort=()"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "POST, GET, PATCH, OPTIONS"
+								},
+								{
+									"key": "access-control-allow-headers",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "false"
+								},
+								{
+									"key": "access-control-max-age",
+									"value": "86400"
+								},
+								{
+									"key": "content-length",
+									"value": "13"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 30 May 2023 20:41:08 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "\"not_created\""
+						},
+						{
+							"name": "status created",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/api/v1/status",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"api",
+										"v1",
+										"status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "server",
+									"value": "Rocket"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "permissions-policy",
+									"value": "interest-cohort=()"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "POST, GET, PATCH, OPTIONS"
+								},
+								{
+									"key": "access-control-allow-headers",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "false"
+								},
+								{
+									"key": "access-control-max-age",
+									"value": "86400"
+								},
+								{
+									"key": "content-length",
+									"value": "9"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 30 May 2023 20:41:22 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "\"created\""
+						},
+						{
+							"name": "status Copy",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "content-type",
+									"value": "application/json"
+								},
+								{
+									"key": "server",
+									"value": "Rocket"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "permissions-policy",
+									"value": "interest-cohort=()"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "POST, GET, PATCH, OPTIONS"
+								},
+								{
+									"key": "access-control-allow-headers",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "false"
+								},
+								{
+									"key": "access-control-max-age",
+									"value": "86400"
+								},
+								{
+									"key": "content-length",
+									"value": "36"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 30 May 2023 21:37:32 GMT"
+								}
+							],
+							"cookie": [],
+							"body": "\"eatup_setup_server up and running!\""
+						}
+					]
+				},
+				{
+					"name": "coors preflight",
+					"request": {
+						"method": "OPTIONS",
+						"header": [],
+						"url": {
+							"raw": "{{ip}}:{{port}}/",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "options_test",
+							"originalRequest": {
+								"method": "OPTIONS",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										""
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "server",
+									"value": "Rocket"
+								},
+								{
+									"key": "x-content-type-options",
+									"value": "nosniff"
+								},
+								{
+									"key": "x-frame-options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "permissions-policy",
+									"value": "interest-cohort=()"
+								},
+								{
+									"key": "access-control-allow-origin",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-methods",
+									"value": "POST, GET, PATCH, OPTIONS"
+								},
+								{
+									"key": "access-control-allow-headers",
+									"value": "*"
+								},
+								{
+									"key": "access-control-allow-credentials",
+									"value": "false"
+								},
+								{
+									"key": "access-control-max-age",
+									"value": "86400"
+								},
+								{
+									"key": "content-length",
+									"value": "0"
+								},
+								{
+									"key": "date",
+									"value": "Tue, 30 May 2023 21:39:13 GMT"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "todo",
+			"item": [
+				{
+					"name": "update sql script",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "file",
+							"file": {
+								"src": "/home/jkutkut/github/EatUp/EatUp/db/load_db.sql"
+							}
+						},
+						"url": {
+							"raw": "{{ip}}:{{port}}/api/v1/create/script",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"api",
+								"v1",
+								"create",
+								"script"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,2571 @@
+{
+	"info": {
+		"_postman_id": "9b32b600-038a-4042-ac38-d935ffce2126",
+		"name": "Eatup Server API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26729438"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "products",
+					"item": [
+						{
+							"name": "products",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(20);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"products"
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "products",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "6744"
+										},
+										{
+											"key": "date",
+											"value": "Mon, 29 May 2023 19:42:15 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"898e96dc-7dd0-4a89-a9fd-d373afcc9da8\",\n        \"name\": \"Bruschetta\",\n        \"description\": \"Tomato, garlic, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 5,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    },\n    {\n        \"id\": \"cfb4c586-983b-4425-b95a-7518739886d1\",\n        \"name\": \"Garlic Bread\",\n        \"description\": \"Garlic, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 4,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    },\n    {\n        \"id\": \"9616e82f-ab99-485d-92f2-5b7ed7f4e79d\",\n        \"name\": \"Fried Calamari\",\n        \"description\": \"Calamari, flour, eggs, breadcrumbs\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 7,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    },\n    {\n        \"id\": \"b21edb72-e65d-4e01-bbdf-3f90f9d2bac2\",\n        \"name\": \"Caprese Salad\",\n        \"description\": \"Tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"e68526af-c6de-4f89-981b-4464943846d0\",\n        \"name\": \"Caesar Salad\",\n        \"description\": \"Lettuce, croutons, parmesan, anchovies\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c9e7b912-ef71-497e-8bb9-92171f74c841\",\n        \"name\": \"Mozzarella Salad\",\n        \"description\": \"Mozzarella, tomato, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"e8d6d590-7ce6-4cb2-9879-c9397bfb7186\",\n        \"name\": \"Spaghetti carbonara\",\n        \"description\": \"Spaghetti, bacon, eggs, parmesan\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                \"name\": \"Egg\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"94d0669d-9c9b-4213-8bda-fa422ae5a177\",\n        \"name\": \"Pizza\",\n        \"description\": \"Tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 10,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                \"name\": \"Egg\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06f1f151-6ca5-4684-9c15-bb3ac736ce63\",\n        \"name\": \"Steak\",\n        \"description\": \"Steak, potatoes, salad\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 15,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c3fc2b1d-6fc2-447e-979b-98e3a1c0180f\",\n        \"name\": \"Risotto\",\n        \"description\": \"Risotto, tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"7393c804-2462-4a55-871f-73045551b10f\",\n        \"name\": \"Tiramisu\",\n        \"description\": \"Mascarpone, eggs, coffee, ladyfingers\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                \"name\": \"Egg\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c18e47d3-b74c-4eed-80b3-885e5d4c128b\",\n        \"name\": \"Panna cotta\",\n        \"description\": \"Cream, sugar, vanilla\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2bb5d65d-f92f-4c31-a3a0-ddf05619e949\",\n        \"name\": \"Cannoli\",\n        \"description\": \"Cannoli, ricotta, chocolate\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"1a8cca9a-d282-436c-99a5-17cfb1dc3745\",\n        \"name\": \"Beer\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 3,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "products_filter_category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(7);",
+											"});",
+											"",
+											"pm.test(\"Valid elements\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    for (let i = 0, p, e, j; i < jsonData.length; i++) {",
+											"        p = jsonData[i];",
+											"        for (j = 0; j < p.categories.length; j++) {",
+											"            e = p.categories[j];",
+											"            pm.expect(e.name).to.satisfy((val) => {",
+											"                return val == \"Drinks\";",
+											"            });",
+											"        }",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?category=Drinks",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "Drinks"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "products_filter_category",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?category=Drinks",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "category",
+													"value": "Drinks"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "1587"
+										},
+										{
+											"key": "date",
+											"value": "Mon, 29 May 2023 19:42:29 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"1a8cca9a-d282-436c-99a5-17cfb1dc3745\",\n        \"name\": \"Beer\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 3,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								},
+								{
+									"name": "invalid products_filter_category",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?category=",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "category",
+													"value": ""
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "2"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 11:41:28 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[]"
+								}
+							]
+						},
+						{
+							"name": "products_filter_allergy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(12);",
+											"});",
+											"",
+											"pm.test(\"Valid elements\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    for (let i = 0, p, e, j; i < jsonData.length; i++) {",
+											"        p = jsonData[i];",
+											"        for (j = 0; j < p.allergies.length; j++) {",
+											"            e = p.allergies[j];",
+											"            pm.expect(e.name).to.satisfy((val) => {",
+											"                return val != \"Gluten\";",
+											"            });",
+											"        }",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=Gluten",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "category",
+											"value": "Starters",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": "Drinks",
+											"disabled": true
+										},
+										{
+											"key": "allergy",
+											"value": "Gluten"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "products_filter_allergy",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=Gluten",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "category",
+													"value": "Starters",
+													"disabled": true
+												},
+												{
+													"key": "category",
+													"value": "Drinks",
+													"disabled": true
+												},
+												{
+													"key": "allergy",
+													"value": "Gluten"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "3280"
+										},
+										{
+											"key": "date",
+											"value": "Mon, 29 May 2023 19:43:18 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"b21edb72-e65d-4e01-bbdf-3f90f9d2bac2\",\n        \"name\": \"Caprese Salad\",\n        \"description\": \"Tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"e68526af-c6de-4f89-981b-4464943846d0\",\n        \"name\": \"Caesar Salad\",\n        \"description\": \"Lettuce, croutons, parmesan, anchovies\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c9e7b912-ef71-497e-8bb9-92171f74c841\",\n        \"name\": \"Mozzarella Salad\",\n        \"description\": \"Mozzarella, tomato, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06f1f151-6ca5-4684-9c15-bb3ac736ce63\",\n        \"name\": \"Steak\",\n        \"description\": \"Steak, potatoes, salad\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 15,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c3fc2b1d-6fc2-447e-979b-98e3a1c0180f\",\n        \"name\": \"Risotto\",\n        \"description\": \"Risotto, tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c18e47d3-b74c-4eed-80b3-885e5d4c128b\",\n        \"name\": \"Panna cotta\",\n        \"description\": \"Cream, sugar, vanilla\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								},
+								{
+									"name": "invalid products_filter_allergy",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=null",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "category",
+													"value": "Starters",
+													"disabled": true
+												},
+												{
+													"key": "category",
+													"value": "Drinks",
+													"disabled": true
+												},
+												{
+													"key": "allergy",
+													"value": "Gluten",
+													"disabled": true
+												},
+												{
+													"key": "allergy",
+													"value": "null"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "6744"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 11:42:21 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"898e96dc-7dd0-4a89-a9fd-d373afcc9da8\",\n        \"name\": \"Bruschetta\",\n        \"description\": \"Tomato, garlic, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 5,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    },\n    {\n        \"id\": \"cfb4c586-983b-4425-b95a-7518739886d1\",\n        \"name\": \"Garlic Bread\",\n        \"description\": \"Garlic, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 4,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    },\n    {\n        \"id\": \"9616e82f-ab99-485d-92f2-5b7ed7f4e79d\",\n        \"name\": \"Fried Calamari\",\n        \"description\": \"Calamari, flour, eggs, breadcrumbs\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 7,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    },\n    {\n        \"id\": \"b21edb72-e65d-4e01-bbdf-3f90f9d2bac2\",\n        \"name\": \"Caprese Salad\",\n        \"description\": \"Tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"e68526af-c6de-4f89-981b-4464943846d0\",\n        \"name\": \"Caesar Salad\",\n        \"description\": \"Lettuce, croutons, parmesan, anchovies\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c9e7b912-ef71-497e-8bb9-92171f74c841\",\n        \"name\": \"Mozzarella Salad\",\n        \"description\": \"Mozzarella, tomato, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"e8d6d590-7ce6-4cb2-9879-c9397bfb7186\",\n        \"name\": \"Spaghetti carbonara\",\n        \"description\": \"Spaghetti, bacon, eggs, parmesan\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                \"name\": \"Egg\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"94d0669d-9c9b-4213-8bda-fa422ae5a177\",\n        \"name\": \"Pizza\",\n        \"description\": \"Tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 10,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                \"name\": \"Egg\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06f1f151-6ca5-4684-9c15-bb3ac736ce63\",\n        \"name\": \"Steak\",\n        \"description\": \"Steak, potatoes, salad\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 15,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c3fc2b1d-6fc2-447e-979b-98e3a1c0180f\",\n        \"name\": \"Risotto\",\n        \"description\": \"Risotto, tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"7393c804-2462-4a55-871f-73045551b10f\",\n        \"name\": \"Tiramisu\",\n        \"description\": \"Mascarpone, eggs, coffee, ladyfingers\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                \"name\": \"Egg\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c18e47d3-b74c-4eed-80b3-885e5d4c128b\",\n        \"name\": \"Panna cotta\",\n        \"description\": \"Cream, sugar, vanilla\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2bb5d65d-f92f-4c31-a3a0-ddf05619e949\",\n        \"name\": \"Cannoli\",\n        \"description\": \"Cannoli, ricotta, chocolate\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            },\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"5bfb0bb1-af5c-47a0-bcbd-3eb379c1090e\",\n                \"name\": \"Desserts\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"1a8cca9a-d282-436c-99a5-17cfb1dc3745\",\n        \"name\": \"Beer\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 3,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "products_filter_categories",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(10);",
+											"});",
+											"",
+											"pm.test(\"Valid elements\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    for (let i = 0, p, e, j; i < jsonData.length; i++) {",
+											"        p = jsonData[i];",
+											"        for (j = 0; j < p.categories.length; j++) {",
+											"            e = p.categories[j];",
+											"            pm.expect(e.name).to.satisfy((val) => {",
+											"                return val == \"Drinks\" || val == \"Starters\";",
+											"            });",
+											"        }",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?category=Starters&category=Drinks",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "allergy",
+											"value": "Lactose",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": "Starters"
+										},
+										{
+											"key": "category",
+											"value": "Drinks"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "products_filter_categories",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?category=Starters&category=Drinks",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "allergy",
+													"value": "Lactose",
+													"disabled": true
+												},
+												{
+													"key": "category",
+													"value": "Starters"
+												},
+												{
+													"key": "category",
+													"value": "Drinks"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "2647"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 11:44:03 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"b21edb72-e65d-4e01-bbdf-3f90f9d2bac2\",\n        \"name\": \"Caprese Salad\",\n        \"description\": \"Tomato, mozzarella, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"e68526af-c6de-4f89-981b-4464943846d0\",\n        \"name\": \"Caesar Salad\",\n        \"description\": \"Lettuce, croutons, parmesan, anchovies\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c9e7b912-ef71-497e-8bb9-92171f74c841\",\n        \"name\": \"Mozzarella Salad\",\n        \"description\": \"Mozzarella, tomato, basil, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 6,\n        \"allergies\": [\n            {\n                \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                \"name\": \"Lactose\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"83b55858-5a73-4edc-ad96-c3bf26cb73f6\",\n                \"name\": \"Starters\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"1a8cca9a-d282-436c-99a5-17cfb1dc3745\",\n        \"name\": \"Beer\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 3,\n        \"allergies\": [\n            {\n                \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "products_filter_allergies",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(7);",
+											"});",
+											"",
+											"pm.test(\"Valid elements\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    for (let i = 0, p, e, j; i < jsonData.length; i++) {",
+											"        p = jsonData[i];",
+											"        for (j = 0; j < p.allergies.length; j++) {",
+											"            e = p.allergies[j];",
+											"            pm.expect(e.name).to.satisfy((val) => {",
+											"                return val != \"Gluten\";",
+											"            });",
+											"        }",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=Lactose&allergy=Gluten",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "allergy",
+											"value": "Lactose"
+										},
+										{
+											"key": "category",
+											"value": "Starters",
+											"disabled": true
+										},
+										{
+											"key": "category",
+											"value": "Drinks",
+											"disabled": true
+										},
+										{
+											"key": "allergy",
+											"value": "Gluten"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "products_filter_allergies",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=Lactose&allergy=Gluten",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "allergy",
+													"value": "Lactose"
+												},
+												{
+													"key": "category",
+													"value": "Starters",
+													"disabled": true
+												},
+												{
+													"key": "category",
+													"value": "Drinks",
+													"disabled": true
+												},
+												{
+													"key": "allergy",
+													"value": "Gluten"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "1525"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 11:43:14 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"06f1f151-6ca5-4684-9c15-bb3ac736ce63\",\n        \"name\": \"Steak\",\n        \"description\": \"Steak, potatoes, salad\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 15,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                \"name\": \"Main Courses\"\n            }\n        ]\n    },\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "products_filter_both",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(6);",
+											"});",
+											"",
+											"pm.test(\"Valid elements\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    for (let i = 0, p, e, j; i < jsonData.length; i++) {",
+											"        p = jsonData[i];",
+											"        for (j = 0; j < p.allergies.length; j++) {",
+											"            e = p.allergies[j];",
+											"            pm.expect(e.name).to.satisfy((val) => {",
+											"                return val != \"Gluten\";",
+											"            });",
+											"        }",
+											"    }",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=Lactose&category=Starters&category=Drinks&allergy=Gluten",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"products"
+									],
+									"query": [
+										{
+											"key": "allergy",
+											"value": "Lactose"
+										},
+										{
+											"key": "category",
+											"value": "Starters"
+										},
+										{
+											"key": "category",
+											"value": "Drinks"
+										},
+										{
+											"key": "allergy",
+											"value": "Gluten"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "products_filter_both",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/products?allergy=Lactose&category=Starters&category=Drinks&allergy=Gluten",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"products"
+											],
+											"query": [
+												{
+													"key": "allergy",
+													"value": "Lactose"
+												},
+												{
+													"key": "category",
+													"value": "Starters"
+												},
+												{
+													"key": "category",
+													"value": "Drinks"
+												},
+												{
+													"key": "allergy",
+													"value": "Gluten"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "content-length",
+											"value": "1283"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 11:44:45 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n        \"name\": \"Coca Cola\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"277cf2eb-d5b9-4bc8-8a5e-b066c69b51e7\",\n        \"name\": \"Nestea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"06d087a7-6a6c-455e-8a50-70205b89c250\",\n        \"name\": \"Water\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 2,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c6887215-895b-45a0-9d1e-f9d3b8d64c01\",\n        \"name\": \"Wine\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 12,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"402cb1a2-43bd-4f64-9db6-47e13a91ccca\",\n        \"name\": \"Coffee\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    },\n    {\n        \"id\": \"c569c490-7759-440b-9e1e-eb3f2c9893c3\",\n        \"name\": \"Tea\",\n        \"description\": \"\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 1,\n        \"allergies\": [],\n        \"categories\": [\n            {\n                \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                \"name\": \"Drinks\"\n            }\n        ]\n    }\n]"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "orders",
+					"item": []
+				},
+				{
+					"name": "sessions",
+					"item": [
+						{
+							"name": "sessions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(3);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"sessions"
+									],
+									"query": [
+										{
+											"key": "in_progress",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "table_id",
+											"value": "t10",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "sessions",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"sessions"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "true",
+													"disabled": true
+												},
+												{
+													"key": "table_id",
+													"value": "t10",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "content-length",
+											"value": "250"
+										},
+										{
+											"key": "date",
+											"value": "Mon, 29 May 2023 18:07:00 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"350b3266-6af9-4fe5-8e0d-d93974e53ec0\",\n        \"table_id\": \"t10\",\n        \"in_progress\": false\n    },\n    {\n        \"id\": \"93a960f0-98a0-4b4f-a040-6a158c54da3e\",\n        \"table_id\": \"t11\",\n        \"in_progress\": false\n    },\n    {\n        \"id\": \"28d630f8-2699-4c3f-baf9-bfcffab67dca\",\n        \"table_id\": \"t12\",\n        \"in_progress\": false\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "sessions_filter_tableid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(1);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions?table_id=t10",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"sessions"
+									],
+									"query": [
+										{
+											"key": "in_progress",
+											"value": "true",
+											"disabled": true
+										},
+										{
+											"key": "table_id",
+											"value": "t10"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "sessions_filter_tableid",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions?table_id=t10",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"sessions"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "true",
+													"disabled": true
+												},
+												{
+													"key": "table_id",
+													"value": "t10"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "content-length",
+											"value": "84"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 16:48:17 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"77af7fb1-d471-4f83-b6a3-b57f98729233\",\n        \"table_id\": \"t10\",\n        \"in_progress\": false\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "sessions_filter_inprogress",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions?in_progress=true",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"sessions"
+									],
+									"query": [
+										{
+											"key": "in_progress",
+											"value": "true"
+										},
+										{
+											"key": "in_progress",
+											"value": "false",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "sessions_filter_inprogress",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions?in_progress=true",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"sessions"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "true"
+												},
+												{
+													"key": "in_progress",
+													"value": "false",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "content-length",
+											"value": "513"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 16:53:48 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"6c6ace06-3d84-4049-a6fb-7ea73162fd2f\",\n        \"table_id\": \"t\",\n        \"in_progress\": true\n    },\n    {\n        \"id\": \"02bf50fe-aeaf-4756-b67e-7320b0a37d3c\",\n        \"table_id\": \"table\",\n        \"in_progress\": true\n    },\n    {\n        \"id\": \"f2d665ae-f5c3-43db-b8e5-1b8f1fedd34f\",\n        \"table_id\": \"tableeeee\",\n        \"in_progress\": true\n    },\n    {\n        \"id\": \"e41ecc80-22ef-4ff9-9c2f-6dcb461c620a\",\n        \"table_id\": \"tableeeeee\",\n        \"in_progress\": true\n    },\n    {\n        \"id\": \"0b1c7923-5f47-4f7d-a3dd-99b7c97e152f\",\n        \"table_id\": \"tableeee\",\n        \"in_progress\": true\n    },\n    {\n        \"id\": \"fd600ccf-7da5-4ff3-91ff-f58cdee3a313\",\n        \"table_id\": \"mesaa\",\n        \"in_progress\": true\n    }\n]"
+								}
+							]
+						},
+						{
+							"name": "sessions_filter_both",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"Is json\", function () {",
+											"    pm.response.to.have.jsonBody();",
+											"    pm.response.to.be.json;",
+											"});",
+											"",
+											"",
+											"pm.test(\"Length test\", function() {",
+											"    var jsonData = pm.response.json();",
+											"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(2);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions?in_progress=false&table_id=t11&table_id=t10",
+									"host": [
+										"{{ip}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"{{api_dir}}",
+										"v1",
+										"sessions"
+									],
+									"query": [
+										{
+											"key": "in_progress",
+											"value": "false"
+										},
+										{
+											"key": "table_id",
+											"value": "t11"
+										},
+										{
+											"key": "table_id",
+											"value": "t10"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "sessions_filter_both",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/sessions?in_progress=false&table_id=t11&table_id=t10",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"sessions"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "false"
+												},
+												{
+													"key": "table_id",
+													"value": "t11"
+												},
+												{
+													"key": "table_id",
+													"value": "t10"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "content-type",
+											"value": "application/json"
+										},
+										{
+											"key": "server",
+											"value": "Rocket"
+										},
+										{
+											"key": "x-frame-options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "permissions-policy",
+											"value": "interest-cohort=()"
+										},
+										{
+											"key": "x-content-type-options",
+											"value": "nosniff"
+										},
+										{
+											"key": "content-length",
+											"value": "167"
+										},
+										{
+											"key": "date",
+											"value": "Tue, 30 May 2023 16:54:11 GMT"
+										}
+									],
+									"cookie": [],
+									"body": "[\n    {\n        \"id\": \"77af7fb1-d471-4f83-b6a3-b57f98729233\",\n        \"table_id\": \"t10\",\n        \"in_progress\": false\n    },\n    {\n        \"id\": \"e0d7ccaf-b956-4bec-ad6a-fb09e1532334\",\n        \"table_id\": \"t11\",\n        \"in_progress\": false\n    }\n]"
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "manual_testing",
+			"item": [
+				{
+					"name": "v1",
+					"item": [
+						{
+							"name": "orders",
+							"item": [
+								{
+									"name": "orders/session_id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Is json\", function () {",
+													"    pm.response.to.have.jsonBody();",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"pm.test(\"Length test\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(20);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/orders/e0d7ccaf",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"orders",
+												"e0d7ccaf"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "orders/session_id",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/orders/e0d7ccaf-b956-4bec-ad6a-fb09e1532334",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"orders",
+														"e0d7ccaf-b956-4bec-ad6a-fb09e1532334"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "content-length",
+													"value": "2542"
+												},
+												{
+													"key": "date",
+													"value": "Tue, 30 May 2023 11:54:41 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "[\n    {\n        \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n        \"products\": [\n            {\n                \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n                \"quantity\": 2,\n                \"product\": {\n                    \"id\": \"898e96dc-7dd0-4a89-a9fd-d373afcc9da8\",\n                    \"name\": \"Bruschetta\",\n                    \"description\": \"Tomato, garlic, basil, olive oil\",\n                    \"img_id\": \"generic_product.png\",\n                    \"price\": 5,\n                    \"allergies\": [\n                        {\n                            \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                            \"name\": \"Gluten\",\n                            \"img_id\": \"generic_allergy.png\"\n                        },\n                        {\n                            \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                            \"name\": \"Lactose\",\n                            \"img_id\": \"generic_allergy.png\"\n                        }\n                    ],\n                    \"categories\": [\n                        {\n                            \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                            \"name\": \"Appetizers\"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n                \"quantity\": 1,\n                \"product\": {\n                    \"id\": \"cfb4c586-983b-4425-b95a-7518739886d1\",\n                    \"name\": \"Garlic Bread\",\n                    \"description\": \"Garlic, olive oil\",\n                    \"img_id\": \"generic_product.png\",\n                    \"price\": 4,\n                    \"allergies\": [\n                        {\n                            \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                            \"name\": \"Gluten\",\n                            \"img_id\": \"generic_allergy.png\"\n                        }\n                    ],\n                    \"categories\": [\n                        {\n                            \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                            \"name\": \"Appetizers\"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n                \"quantity\": 1,\n                \"product\": {\n                    \"id\": \"94d0669d-9c9b-4213-8bda-fa422ae5a177\",\n                    \"name\": \"Pizza\",\n                    \"description\": \"Tomato, mozzarella, basil, olive oil\",\n                    \"img_id\": \"generic_product.png\",\n                    \"price\": 10,\n                    \"allergies\": [\n                        {\n                            \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                            \"name\": \"Gluten\",\n                            \"img_id\": \"generic_allergy.png\"\n                        },\n                        {\n                            \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                            \"name\": \"Lactose\",\n                            \"img_id\": \"generic_allergy.png\"\n                        },\n                        {\n                            \"id\": \"879a6310-4c19-4890-87de-68f6d9911b61\",\n                            \"name\": \"Egg\",\n                            \"img_id\": \"generic_allergy.png\"\n                        }\n                    ],\n                    \"categories\": [\n                        {\n                            \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                            \"name\": \"Main Courses\"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n                \"quantity\": 2,\n                \"product\": {\n                    \"id\": \"06f1f151-6ca5-4684-9c15-bb3ac736ce63\",\n                    \"name\": \"Steak\",\n                    \"description\": \"Steak, potatoes, salad\",\n                    \"img_id\": \"generic_product.png\",\n                    \"price\": 15,\n                    \"allergies\": [],\n                    \"categories\": [\n                        {\n                            \"id\": \"b6db5b6d-2f7d-40fb-8540-674e82b259ed\",\n                            \"name\": \"Main Courses\"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n                \"quantity\": 3,\n                \"product\": {\n                    \"id\": \"2d2a8776-e7a1-46e0-b2ae-9e6596966838\",\n                    \"name\": \"Coca Cola\",\n                    \"description\": \"\",\n                    \"img_id\": \"generic_product.png\",\n                    \"price\": 2,\n                    \"allergies\": [],\n                    \"categories\": [\n                        {\n                            \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                            \"name\": \"Drinks\"\n                        }\n                    ]\n                }\n            },\n            {\n                \"id\": \"e4fee419-b27c-4d00-a97b-4a879b68b15c\",\n                \"quantity\": 1,\n                \"product\": {\n                    \"id\": \"1a8cca9a-d282-436c-99a5-17cfb1dc3745\",\n                    \"name\": \"Beer\",\n                    \"description\": \"\",\n                    \"img_id\": \"generic_product.png\",\n                    \"price\": 3,\n                    \"allergies\": [\n                        {\n                            \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                            \"name\": \"Gluten\",\n                            \"img_id\": \"generic_allergy.png\"\n                        }\n                    ],\n                    \"categories\": [\n                        {\n                            \"id\": \"0cdcb6e4-bd21-4621-9739-9c14b11c65ee\",\n                            \"name\": \"Drinks\"\n                        }\n                    ]\n                }\n            }\n        ]\n    }\n]"
+										},
+										{
+											"name": "invalid orders/session_id",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/orders/e0d7ccaf",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"orders",
+														"e0d7ccaf"
+													]
+												}
+											},
+											"status": "Conflict",
+											"code": 409,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "18"
+												},
+												{
+													"key": "date",
+													"value": "Tue, 30 May 2023 16:16:26 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "invalid session id"
+										}
+									]
+								},
+								{
+									"name": "create_order",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Is json\", function () {",
+													"    pm.response.to.have.jsonBody();",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"pm.test(\"Length test\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(20);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"products\": [\n        {\n            \"quantity\": 2,\n            \"product\": {\n        \"id\": \"7d83e71d-ed10-47ea-96f1-31393ca38ee9\",\n        \"name\": \"Garlic Bread\",\n        \"description\": \"Garlic, olive oil\",\n        \"img_id\": \"generic_product.png\",\n        \"price\": 4.0,\n        \"allergies\": [\n            {\n                \"id\": \"f0e8083e-0a92-4b4f-ad9a-023efb9decf6\",\n                \"name\": \"Gluten\",\n                \"img_id\": \"generic_allergy.png\"\n            }\n        ],\n        \"categories\": [\n            {\n                \"id\": \"0d1d99e2-8cad-4571-98d8-b0dce58bd003\",\n                \"name\": \"Appetizers\"\n            }\n        ]\n    }\n        }\n    ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/orders/0c85c21e-5ed7-4661-acce-97027404526e",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"orders",
+												"0c85c21e-5ed7-4661-acce-97027404526e"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "create_order",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"products\": [\n        {\n            \"quantity\": 3,\n            \"product\": {\n                \"id\": \"898e96dc-7dd0-4a89-a9fd-d373afcc9da8\",\n                \"name\": \"Bruschetta\",\n                \"description\": \"Tomato, garlic, basil, olive oil\",\n                \"img_id\": \"generic_product.png\",\n                \"price\": 5.0,\n                \"allergies\": [\n                    {\n                        \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                        \"name\": \"Gluten\",\n                        \"img_id\": \"generic_allergy.png\"\n                    },\n                    {\n                        \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                        \"name\": \"Lactose\",\n                        \"img_id\": \"generic_allergy.png\"\n                    }\n                ],\n                \"categories\": [\n                    {\n                        \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                        \"name\": \"Appetizers\"\n                    }\n                ]\n            }\n        }\n    ]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/orders/0b1c7923-5f47-4f7d-a3dd-99b7c97e152f",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"orders",
+														"0b1c7923-5f47-4f7d-a3dd-99b7c97e152f"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "15"
+												},
+												{
+													"key": "date",
+													"value": "Mon, 29 May 2023 20:49:58 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "\"Order created\""
+										},
+										{
+											"name": "invalid create_order",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"products\": [\n        {\n            \"quantity\": 3,\n            \"product\": {\n                \"id\": \"898e96dc-7dd0-4a89-a9fd-d373afcc9da8\",\n                \"name\": \"Bruschetta\",\n                \"description\": \"Tomato, garlic, basil, olive oil\",\n                \"img_id\": \"generic_product.png\",\n                \"price\": 5.0,\n                \"allergies\": [\n                    {\n                        \"id\": \"a3b863f3-3e13-45c5-8bc4-a1a3c27cb558\",\n                        \"name\": \"Gluten\",\n                        \"img_id\": \"generic_allergy.png\"\n                    },\n                    {\n                        \"id\": \"58ce1e83-19c4-4e3a-8732-575028b477d9\",\n                        \"name\": \"Lactose\",\n                        \"img_id\": \"generic_allergy.png\"\n                    }\n                ],\n                \"categories\": [\n                    {\n                        \"id\": \"851539ce-1830-44a3-bd5e-4f83292d7d54\",\n                        \"name\": \"Appetizers\"\n                    }\n                ]\n            }\n        }\n    ]\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/orders/0b1c7923-5f47-4f7d-a3dd-99b7c97e152f",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"orders",
+														"0b1c7923-5f47-4f7d-a3dd-99b7c97e152f"
+													]
+												}
+											},
+											"status": "Conflict",
+											"code": 409,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "18"
+												},
+												{
+													"key": "date",
+													"value": "Mon, 29 May 2023 20:49:06 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "Invalid session id"
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "sessions",
+							"item": [
+								{
+									"name": "qr",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Is json\", function () {",
+													"    pm.response.to.have.jsonBody();",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"",
+													"pm.test(\"Length test\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(1);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/qr/1bfcc012-62ee-4a79-be8c-850163941538.png",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"qr",
+												"1bfcc012-62ee-4a79-be8c-850163941538.png"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "invalid qr",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/qr/1bfcc012-62ee-4a79-be8c-850163941538.png",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"qr",
+														"1bfcc012-62ee-4a79-be8c-850163941538.png"
+													]
+												}
+											},
+											"status": "Not Found",
+											"code": 404,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "52"
+												},
+												{
+													"key": "date",
+													"value": "Tue, 30 May 2023 16:56:59 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "\"QR not found. Are you sure the QR should be valid?\""
+										}
+									]
+								},
+								{
+									"name": "create_session",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Is json\", function () {",
+													"    pm.response.to.have.jsonBody();",
+													"    pm.response.to.be.json;",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session/mesa",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"session",
+												"mesa"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "true",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "create_session",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session/mesa",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"session",
+														"mesa"
+													],
+													"query": [
+														{
+															"key": "in_progress",
+															"value": "true",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "content-length",
+													"value": "135"
+												},
+												{
+													"key": "date",
+													"value": "Mon, 29 May 2023 19:36:55 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"simple_id\": \"apple yogurt guitar\",\n    \"id\": \"4270030f-05bc-45a0-ac4f-538d809ef722\",\n    \"qr_img\": \"/qr/4270030f-05bc-45a0-ac4f-538d809ef722.png\"\n}"
+										},
+										{
+											"name": "invalid create_session",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session/mesa",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"session",
+														"mesa"
+													],
+													"query": [
+														{
+															"key": "in_progress",
+															"value": "true",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "Conflict",
+											"code": 409,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "content-length",
+													"value": "53"
+												},
+												{
+													"key": "date",
+													"value": "Mon, 29 May 2023 19:52:03 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "There is already a session in progress for table mesa"
+										}
+									]
+								},
+								{
+									"name": "end_session",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Is json\", function () {",
+													"    pm.response.to.have.jsonBody();",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"",
+													"pm.test(\"Length test\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(1);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session/0055e82b-4e3c-4fd0-aeec-0e4da384771e/end",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"session",
+												"0055e82b-4e3c-4fd0-aeec-0e4da384771e",
+												"end"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "true",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "end_session",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session/0055e82b-4e3c-4fd0-aeec-0e4da384771e/end",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"session",
+														"0055e82b-4e3c-4fd0-aeec-0e4da384771e",
+														"end"
+													],
+													"query": [
+														{
+															"key": "in_progress",
+															"value": "true",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "15"
+												},
+												{
+													"key": "date",
+													"value": "Mon, 29 May 2023 20:02:39 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "\"Session ended\""
+										},
+										{
+											"name": "invalid end_session",
+											"originalRequest": {
+												"method": "PATCH",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session/0055e82b/end",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"session",
+														"0055e82b",
+														"end"
+													],
+													"query": [
+														{
+															"key": "in_progress",
+															"value": "true",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "Conflict",
+											"code": 409,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "18"
+												},
+												{
+													"key": "date",
+													"value": "Tue, 30 May 2023 19:34:28 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "Invalid session id"
+										}
+									]
+								},
+								{
+									"name": "session_id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {",
+													"    pm.response.to.have.status(200);",
+													"});",
+													"",
+													"pm.test(\"Is json\", function () {",
+													"    pm.response.to.have.jsonBody();",
+													"    pm.response.to.be.json;",
+													"});",
+													"",
+													"",
+													"pm.test(\"Length test\", function() {",
+													"    var jsonData = pm.response.json();",
+													"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(3);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session_id/mango octopus tiger",
+											"host": [
+												"{{ip}}"
+											],
+											"port": "{{port}}",
+											"path": [
+												"{{api_dir}}",
+												"v1",
+												"session_id",
+												"mango octopus tiger"
+											],
+											"query": [
+												{
+													"key": "in_progress",
+													"value": "true",
+													"disabled": true
+												},
+												{
+													"key": "table_id",
+													"value": "t10",
+													"disabled": true
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "session_id",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session_id/apple jacket tiger",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"session_id",
+														"apple jacket tiger"
+													],
+													"query": [
+														{
+															"key": "in_progress",
+															"value": "true",
+															"disabled": true
+														},
+														{
+															"key": "table_id",
+															"value": "t10",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "134"
+												},
+												{
+													"key": "date",
+													"value": "Tue, 30 May 2023 16:58:28 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "{\n    \"simple_id\": \"apple jacket tiger\",\n    \"id\": \"178df041-46e2-46e7-ba61-1910664d7af5\",\n    \"qr_img\": \"/qr/178df041-46e2-46e7-ba61-1910664d7af5.png\"\n}"
+										},
+										{
+											"name": "invalid session_id",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{ip}}:{{port}}/{{api_dir}}/v1/session_id/apple jacket",
+													"host": [
+														"{{ip}}"
+													],
+													"port": "{{port}}",
+													"path": [
+														"{{api_dir}}",
+														"v1",
+														"session_id",
+														"apple jacket"
+													],
+													"query": [
+														{
+															"key": "in_progress",
+															"value": "true",
+															"disabled": true
+														},
+														{
+															"key": "table_id",
+															"value": "t10",
+															"disabled": true
+														}
+													]
+												}
+											},
+											"status": "Conflict",
+											"code": 409,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "content-type",
+													"value": "application/json"
+												},
+												{
+													"key": "server",
+													"value": "Rocket"
+												},
+												{
+													"key": "x-frame-options",
+													"value": "SAMEORIGIN"
+												},
+												{
+													"key": "permissions-policy",
+													"value": "interest-cohort=()"
+												},
+												{
+													"key": "x-content-type-options",
+													"value": "nosniff"
+												},
+												{
+													"key": "content-length",
+													"value": "32"
+												},
+												{
+													"key": "date",
+													"value": "Tue, 30 May 2023 16:58:39 GMT"
+												}
+											],
+											"cookie": [],
+											"body": "No session with id apple jacket."
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ping",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Is json\", function () {",
+							"    pm.response.to.have.jsonBody();",
+							"    pm.response.to.be.json;",
+							"});",
+							"",
+							"",
+							"pm.test(\"Length test\", function() {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData).to.be.an(\"array\").with.lengthOf(3);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ip}}:{{port}}/",
+					"host": [
+						"{{ip}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ping",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{ip}}:{{port}}/",
+							"host": [
+								"{{ip}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "content-type",
+							"value": "application/json"
+						},
+						{
+							"key": "server",
+							"value": "Rocket"
+						},
+						{
+							"key": "permissions-policy",
+							"value": "interest-cohort=()"
+						},
+						{
+							"key": "x-frame-options",
+							"value": "SAMEORIGIN"
+						},
+						{
+							"key": "x-content-type-options",
+							"value": "nosniff"
+						},
+						{
+							"key": "content-length",
+							"value": "23"
+						},
+						{
+							"key": "date",
+							"value": "Mon, 29 May 2023 21:16:12 GMT"
+						}
+					],
+					"cookie": [],
+					"body": "\"Eatup up and running!\""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
